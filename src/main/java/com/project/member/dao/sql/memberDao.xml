@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="MemberDao"><!-- 인터페이스 이름 적어줌 -->
+  
+  	
+  		<insert id="insertMember" parameterType="MemberVO" >
+		INSERT	INTO MEMBER (
+			MEMBER_ID
+			, PASSWORD
+			, NAME
+			, NICKNAME
+			, EMAIL
+			, REGISTRATION_DATE
+			, GRADE
+			, ACCESS_COUNT
+		
+		)
+		VALUES (
+			#{id}
+			, #{password}
+			, #{name}
+			, #{nickname}
+			, #{email}
+			, SYSDATE
+			, 1
+			, 1
+		)
+	</insert>
+	  
+  	<select id="loginMember" parameterType="LoginVO" resultType="MemberVO">
+  		
+  		SELECT	*
+  		FROM	MEMBER
+  		WHERE	PASSWORD = #{password}
+  		AND		MEMBER_ID = #{id}			
+  	
+  	
+  	
+  	</select>
+  	
+  	<select id="selectMemberId" parameterType="String" resultType="_int">
+  		SELECT	COUNT(*)
+  		FROM	MEMBER
+  		WHERE	MEMBER_ID = #{id}
+  	</select>
+  	
+  	<select id="selectMemberNickname" parameterType="String" resultType="_int">
+  		SELECT	COUNT(*)
+  		FROM	MEMBER
+  		WHERE	NICKNAME = #{nickname}
+  	</select>
+  	
+  	<select id="selectMemberEmail" parameterType="String" resultType="_int">
+  		SELECT	COUNT(*)
+  		FROM	MEMBER
+  		WHERE	EMAIL = #{email}
+  	</select>
+  	
+  
+  </mapper>
+  

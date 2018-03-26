@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.project.boader.vo.Test" alias="Test" />
+		<typeAlias type="com.project.member.vo.MemberVO" alias="MemberVO" />
+		<typeAlias type="com.project.member.vo.LoginVO" alias="LoginVO" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="/com/project/boader/dao/sql/boarderDao.xml" />
+		<mapper resource="/com/project/member/dao/sql/memberDao.xml" />
+	</mappers>
+</configuration>

@@ -1,0 +1,19 @@
+.totalList {
+	 display : inline-block;
+	 width: 700px;
+	 height: 700px;
+	 box-sizing: border-box; 
+	 border: 1px solid blue; 
+	 
+}
+
+.list1 {
+	display : inline-block; 
+	width : 350px; 
+	height : 350px;
+}
+
+
+.total {
+	position: relative;
+}

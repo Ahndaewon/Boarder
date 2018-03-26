@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="BoarderDao"><!-- 인터페이스 이름 적어줌 -->
+  
+
+  	
+  		<insert id="intputTest" >
+		INSERT	INTO MEMBER (
+			ID
+			, PASSWORD
+			, NAME
+			, NICKNAME
+			, EMAIL
+			, REGISTRATION_DATE
+			, GRADE
+			, ACCESS_COUNT
+		
+		)
+		VALUES (
+			123
+			, 123
+			, 123
+			, 123
+			, 123
+			, SYSDATE
+			, 1
+			, 1
+		)
+	</insert>
+	  
+  	
+  
+  </mapper>
+  

@@ -17,7 +17,6 @@
                <prop key="mail.smtp.auth">true</prop>
                <!-- <prop key="mail.debug">true</prop> -->
 			</props>
-			
 		</property>
 	</bean>
 	

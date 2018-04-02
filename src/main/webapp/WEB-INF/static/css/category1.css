@@ -1,9 +1,12 @@
 .totalList {
-	 display : inline-block;
+	 display : inline-block, table-cell;
+	 vertical-align : middle;
 	 width: 700px;
 	 height: 700px;
 	 box-sizing: border-box; 
 	 border: 1px solid blue; 
+	 text-align: center;
+	 
 	 
 }
 

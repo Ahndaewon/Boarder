@@ -1,5 +1,7 @@
 package com.project.boader.service;
 
+import java.util.List;
+
 import com.project.boader.dao.BoarderDao;
 import com.project.boader.vo.ArticleVO;
 
@@ -23,6 +25,21 @@ public class BoarderServiceImlp implements BoarderService {
 		}
 		
 		return false;
+	}
+
+
+	@Override
+	public List<ArticleVO> selectAll() {
+		
+		List<ArticleVO> articleList = boarderDao.selectAll(); 
+		
+		if ( articleList != null ) {
+			
+			return articleList;
+		}
+		
+		return null;
+			
 	}
 
 

@@ -32,6 +32,19 @@
 	
 	</insert>
   	
+  	
+  	<select id="selectAll" resultType="ArticleVO">
+  		SELECT	ID					id
+				, MEMBER_ID			memberId
+				, TITLE				title
+				, TO_CHAR(WRITE_DATE, 'YYYY-MM-DD') 	writeDate
+				, VIEW_COUNT 		viewCount
+				, RECOMMEND_COUNT 	recommendCount
+				, REQUEST_IP 		requestIp
+				, BODY 				body
+  		FROM	ARTICLE
+  	</select>
+  	
 
   
   </mapper>

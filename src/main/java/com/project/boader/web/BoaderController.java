@@ -1,5 +1,7 @@
 package com.project.boader.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -36,9 +38,23 @@ public class BoaderController {
 
 	
 	@RequestMapping("/category1")
-	public String category1() {
+	public ModelAndView category1() {
 		
-		return "/category/category1";
+		List<ArticleVO> articleList;
+		ModelAndView view = new ModelAndView();
+		articleList = boarderService.selectAll();
+		
+		if ( articleList == null ) {
+			return new ModelAndView("redirect:/404");
+		}
+		
+		System.out.println( articleList.get(0).getViewCount() );
+		view.addObject("articleList", articleList);
+		view.setViewName("/category/category1");
+		
+		
+		
+		return view;
 	}
 
 	@RequestMapping(value="/write1", method=RequestMethod.GET)
@@ -55,7 +71,6 @@ public class BoaderController {
 		if ( member == null ) {
 			return new ModelAndView("redirect:/");
 		}
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println(member.getId());
 		articleVO.setRequestIp(request.getRemoteAddr());
 		articleVO.setMemberId(member.getId());
@@ -64,11 +79,12 @@ public class BoaderController {
 			
 			boarderService.insertArticle(articleVO);
 			return new ModelAndView("redirect:/category1");
-			
 		}
 		
-		return new ModelAndView("redirect:/write1");
-		
+		else {
+			
+			return new ModelAndView("redirect:/write1");
+		}
 	}
 	
 	

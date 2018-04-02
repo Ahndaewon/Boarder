@@ -1,9 +1,12 @@
 package com.project.boader.service;
 
-import com.project.boader.vo.Test;
+import com.project.boader.vo.ArticleVO;
 
 public interface BoarderService {
 	
 	
-	public boolean testService();
+	public boolean insertArticle(ArticleVO articleVO);
+		
+		
+
 }

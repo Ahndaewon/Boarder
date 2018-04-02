@@ -53,7 +53,7 @@
 		
 		</style>
 		
-		<title>회원가입</title>
+		<title>아이디/비밀번호 찾기</title>
 	</head>
 <body>
 	    <div id="wrapper">
@@ -68,7 +68,7 @@
        <!-- login,, category list-->
          <div class="login">
           <!--login-->
-     <jsp:include page="/WEB-INF/view/login.jsp"></jsp:include>
+     		<jsp:include page="/WEB-INF/view/login.jsp"></jsp:include>
 
 
          </div><!--
@@ -76,7 +76,7 @@
 	
          total list
    --><div class="totalList">
-  	    <jsp:include page="/WEB-INF/view/page/joinPage.jsp"></jsp:include>
+  	    <jsp:include page="/WEB-INF/view/page/findPage.jsp"></jsp:include>
       </div>
 
 

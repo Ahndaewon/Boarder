@@ -10,7 +10,7 @@ public interface MemberService {
 	public boolean checkMemberId(String id);
 	public boolean checkMemberNickname(String nickname);
 	public boolean checkMemberEmail(String email);
-	
 	public MemberVO doLogin(LoginVO memberVO);
+	public String findPassword(String email);
 	
 }

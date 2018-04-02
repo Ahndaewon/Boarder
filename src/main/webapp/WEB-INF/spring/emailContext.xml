@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="username" value="dks0815@gmail.com"></property>
+		<property name="password" value="123"></property>
+		
+		<property name="javaMailProperties">
+			<props>
+			   <!-- <prop key="mail.transport.protocol">smtp</prop> -->
+               <prop key="mail.smtp.starttls.enable">true</prop>
+               <prop key="mail.smtp.auth">true</prop>
+               <!-- <prop key="mail.debug">true</prop> -->
+			</props>
+			
+		</property>
+	</bean>
+	
+	<bean id="email" 
+		  class="com.project.mail.Email">
+	</bean>
+	
+	<bean id="emailSender" 
+	      class="com.project.mail.EmailSender">
+	      <property name="mailSender" ref="mailSender"></property>
+		
+	</bean>
+	
+	
+	
+
+</beans>

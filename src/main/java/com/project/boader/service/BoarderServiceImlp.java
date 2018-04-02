@@ -1,12 +1,12 @@
 package com.project.boader.service;
 
 import com.project.boader.dao.BoarderDao;
-import com.project.boader.vo.Test;
+import com.project.boader.vo.ArticleVO;
 
 public class BoarderServiceImlp implements BoarderService {
 
 	
-	BoarderDao boarderDao;
+	private BoarderDao boarderDao;
 	
 	
 	public void setBoarderDao(BoarderDao boarderDao) {
@@ -14,16 +14,19 @@ public class BoarderServiceImlp implements BoarderService {
 	}
 
 
-
-
 	@Override
-	public boolean testService() {
+	public boolean insertArticle(ArticleVO articleVO) {
 		
-		if ( boarderDao.intputTest() > 0 ) {
+		if ( boarderDao.insertArticle(articleVO) > 0) {
 			
 			return true;
 		}
+		
 		return false;
 	}
+
+
+
+
 
 }

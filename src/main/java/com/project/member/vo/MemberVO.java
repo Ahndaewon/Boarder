@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class MemberVO extends LoginVO {
-	
+
 	@NotNull(message = "이름 필수 입력~~~~")
 	@NotEmpty(message = "이름 필수 입력~~~~")
 	String name;
@@ -17,8 +17,6 @@ public class MemberVO extends LoginVO {
 	String registrationDate;
 	int grade;
 	int accessCount;
-
-	
 
 	public String getName() {
 		return name;

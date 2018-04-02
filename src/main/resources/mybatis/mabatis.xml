@@ -6,9 +6,10 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias type="com.project.boader.vo.Test" alias="Test" />
+		
 		<typeAlias type="com.project.member.vo.MemberVO" alias="MemberVO" />
 		<typeAlias type="com.project.member.vo.LoginVO" alias="LoginVO" />
+		<typeAlias type="com.project.boader.vo.ArticleVO" alias="ArticleVO" />
 	</typeAliases>
 
 	<mappers>

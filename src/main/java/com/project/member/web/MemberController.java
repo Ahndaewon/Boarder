@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.mail.Email;
 import com.project.member.service.MemberService;
 import com.project.member.vo.LoginVO;
 import com.project.member.vo.MemberVO;
@@ -24,9 +25,7 @@ import com.project.member.vo.MemberVO;
 @Controller
 public class MemberController {
 	
-	MemberService memberService;
-	
-	
+	private MemberService memberService;
 	
 	public void setMemberService(MemberService memberService) {
 		this.memberService = memberService;
@@ -74,7 +73,9 @@ public class MemberController {
 		//나머지 파라미터 때문에 에러
 		 
 		MemberVO loginMember = memberService.doLogin(loginVO);
-		
+		System.out.println(loginMember.getId());
+		System.out.println(loginMember.getEmail());
+		System.out.println(loginMember.getPassword());
 		
 		if( loginMember == null ) {
 			return new ModelAndView("redirect:/");
@@ -82,6 +83,14 @@ public class MemberController {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~!!!~~~~~~~~~~~");
 		session.setAttribute("__USER__", loginMember);
 		System.out.println("로그인됨");
+		MemberVO member = (MemberVO)session.getAttribute("__USER__");
+		System.out.println(member.getId());
+		System.out.println(member.getEmail());
+		System.out.println(member.getPassword());
+
+		
+		
+		
 		return new ModelAndView("main");
 		
 		
@@ -144,6 +153,12 @@ public class MemberController {
 		
 		return response;
 		
+	}
+	
+	@RequestMapping("/find")
+	public String findIdPw() {
+		
+		return "find";
 	}
 	
 	

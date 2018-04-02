@@ -6,7 +6,7 @@ import com.project.member.vo.MemberVO;
 
 public class MemberServiceImpl implements MemberService {
 
-	MemberDao memberDao;
+	private MemberDao memberDao;
 
 	public void setMemberDao(MemberDao memberDao) {
 		this.memberDao = memberDao;
@@ -62,6 +62,14 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDao.loginMember(memberVO);
 		
+	}
+
+	@Override
+	public String findPassword(String email) {
+		if (memberDao.selectMemberPw(email) != null  ) {
+			return memberDao.selectMemberPw(email);
+		}
+		return null;
 	}
 
 	

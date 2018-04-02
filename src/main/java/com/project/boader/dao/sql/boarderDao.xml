@@ -5,33 +5,34 @@
   
   <mapper namespace="BoarderDao"><!-- 인터페이스 이름 적어줌 -->
   
-
-  	
-  		<insert id="intputTest" >
-		INSERT	INTO MEMBER (
+	<insert id="insertArticle" parameterType="ArticleVO">
+	
+		INSERT INTO ARTICLE (
 			ID
-			, PASSWORD
-			, NAME
-			, NICKNAME
-			, EMAIL
-			, REGISTRATION_DATE
-			, GRADE
-			, ACCESS_COUNT
+			, MEMBER_ID
+			, TITLE
+			, WRITE_DATE
+			, VIEW_COUNT
+			, RECOMMEND_COUNT
+			, REQUEST_IP
+			, BODY
+		)
 		
-		)
 		VALUES (
-			123
-			, 123
-			, 123
-			, 123
-			, 123
-			, SYSDATE
-			, 1
-			, 1
+			ARTICLE_SEQ.NEXTVAL
+			, #{memberId}	
+			, #{title}	
+			, SYSDATE		
+			, 0		
+			, 0		
+			, #{requestIp}		
+			, #{body}
 		)
+	
+	
 	</insert>
-	  
   	
+
   
   </mapper>
   

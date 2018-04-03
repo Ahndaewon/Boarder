@@ -1,6 +1,7 @@
 #wrapper {
 	width: 1000px;
-	margin: 0px;
+	margin : 0px;
+	margin : auto;
 }
 
 .main {
@@ -9,6 +10,7 @@
 	text-align: center;
 	display: table-cell;
 	vertical-align: middle;
+	background-color: #e3e3e3;
 }
 
 .login {
@@ -16,13 +18,9 @@
 	width: 300px; 
 	height: 700px; 
 	vertical-align : top;
+	background-color: #e9fefe;
 }
 
-.main, .list1, .login{
-	 box-sizing: border-box; 
-	 border: 1px solid blue; 
-	 
-}
 
 .list1 {
 	display : inline-block; 

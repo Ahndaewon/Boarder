@@ -32,7 +32,7 @@
          total list
    --><div class="totalList1">
       	<div class="innerBox">
-      		<jsp:include page="/WEB-INF/view/page/writePage1.jsp"></jsp:include>
+      		<jsp:include page="/WEB-INF/view/page/viewPage1.jsp"></jsp:include>
       	</div>
       </div>
       	

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,6 +57,22 @@ public class BoaderController {
 		
 		return view;
 	}
+	
+	@RequestMapping("/view/{id}")
+	public ModelAndView viewPage(@PathVariable int id) {
+		
+		ModelAndView view = new ModelAndView();
+		
+		ArticleVO article = boarderService.selectViewPage(id);
+		
+		view.addObject("article", article);
+		view.setViewName("/category/categoryView1");
+		
+		
+		
+		return view;
+	}
+	
 
 	@RequestMapping(value="/write1", method=RequestMethod.GET)
 	public String article1() {
@@ -66,7 +83,7 @@ public class BoaderController {
 	@RequestMapping(value="/write1", method=RequestMethod.POST)
 	public ModelAndView categoryWrite(@ModelAttribute("articleForm") ArticleVO articleVO, HttpServletRequest request, HttpSession session) {
 		
-		ModelAndView view = new ModelAndView();
+		/*ModelAndView view = new ModelAndView();*/
 		MemberVO member = (MemberVO) session.getAttribute("__USER__");
 		if ( member == null ) {
 			return new ModelAndView("redirect:/");
@@ -82,7 +99,6 @@ public class BoaderController {
 		}
 		
 		else {
-			
 			return new ModelAndView("redirect:/write1");
 		}
 	}

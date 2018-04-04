@@ -10,4 +10,6 @@ public interface BoarderDao {
 	
 	public List<ArticleVO> selectAll();
 	
+	public ArticleVO selectViewPage(int id); 
+	
 }

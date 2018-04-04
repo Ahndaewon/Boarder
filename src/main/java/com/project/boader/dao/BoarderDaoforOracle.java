@@ -21,6 +21,11 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 		return getSqlSession().selectList("BoarderDao.selectAll");
 	}
 
+	@Override
+	public ArticleVO selectViewPage(int id) {
+		return getSqlSession().selectOne("BoarderDao.selectViewPage", id);
+	}
+
 	
 	
 	

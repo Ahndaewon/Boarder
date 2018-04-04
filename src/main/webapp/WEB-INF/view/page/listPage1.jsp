@@ -56,7 +56,7 @@ tr, td, th{
 			<c:forEach items="${articleList}" var="article">
 			<tr style="border-style: double;">
 				<td>${article.id}</td>
-				<td id="titleTd"><a href="<c:url value="/deltail/${article.id}"/>">${article.title}</a></td>
+				<td id="titleTd"><a href="<c:url value="/view/${article.id}"/>">${article.title}</a></td>
 				<td>${article.writeDate}</td>
 				<td>${article.viewCount}</td>
 			</tr>

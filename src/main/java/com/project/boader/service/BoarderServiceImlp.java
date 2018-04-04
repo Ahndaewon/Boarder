@@ -43,6 +43,21 @@ public class BoarderServiceImlp implements BoarderService {
 	}
 
 
+	@Override
+	public ArticleVO selectViewPage(int id) {
+		
+		ArticleVO article = boarderDao.selectViewPage(id);
+		
+		if ( article == null) {
+			return null;
+		}
+		
+		
+		
+		return article;
+	}
+
+
 
 
 

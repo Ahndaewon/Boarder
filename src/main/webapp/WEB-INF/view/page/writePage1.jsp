@@ -40,6 +40,7 @@
 
 </script>
 
+<body>
 
 	<div class="list">
 		
@@ -69,3 +70,4 @@
 		
 		
 	</div>
+</body>

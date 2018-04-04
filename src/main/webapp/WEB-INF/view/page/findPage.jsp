@@ -3,10 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/findPage.css"/>">
+
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>">
 </script>
 <script type="text/javascript">
@@ -29,16 +29,18 @@
 
 
 
-</head>
+
 <body>
 
 	<div class="list">
 	
 		
-		<div>
+	
+		<div class="idBox">
 			<p>아이디 찾기</p>
 			<form id="findIdForm">
-				  
+				Email : <input type="text" id="idMail" name="idMail" placeholder="email">
+				<input type="button" id="idBtn" value="확인">
 			</form>
 		
 		</div>
@@ -46,7 +48,7 @@
 		<hr/>
 	
 	
-		<div>
+		<div class="pwBox">
 			<p>비밀번호 찾기</p> 
 			<form id="findPwForm">
 			
@@ -55,6 +57,7 @@
 			
 			</form>
 		</div>
+	
 	</div>
 	
 

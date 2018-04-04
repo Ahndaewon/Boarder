@@ -11,4 +11,5 @@ public interface BoarderService {
 		
 	public  List<ArticleVO> selectAll();	
 
+	public ArticleVO selectViewPage(int id);
 }

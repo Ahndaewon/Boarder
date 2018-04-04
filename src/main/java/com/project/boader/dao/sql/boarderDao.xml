@@ -45,6 +45,14 @@
   		FROM	ARTICLE
   	</select>
   	
+  	
+  	<select id="selectViewPage" parameterType="_int" resultType="ArticleVO">
+  	
+  		SELECT	*
+  		FROM	ARTICLE
+  		WHERE	ID = #{id}
+  	
+  	</select>
 
   
   </mapper>

@@ -28,7 +28,28 @@
 
 </style>
 <script type="text/javascript">
-
+	
+	
+	function enableBtn(){
+		if ( $("#id").val() != "" &&  $("#nickname").val() != "" && $("#password").val() != "" 
+				&& $("#passwordConfirm").val() != "" && $("#name").val() != "" &&  $("#email").val() != "" ){
+			
+			if ( $("#id").hasClass("valid") &&  $("#nickname").hasClass("valid") &&  $("#password").hasClass("valid")
+					&&  $("#passwordConfirm").hasClass("valid") && $("#name").hasClass("valid") && $("#email").hasClass("valid") ){
+				$("#submitBtn").removeAttr("disabled");
+			}
+			else {
+				$("#submitBtn").prop("disabled", "true");
+			}
+			
+		}
+		else {
+			$("#submitBtn").prop("disabled", "true");
+		}
+		
+	}
+	
+	
 	function inputCheck (){
 		
 		
@@ -69,6 +90,7 @@
 			$("#passwordConfirm").addClass("blank");
 		}
 		
+		enableBtn();
 	}
 	
 	
@@ -88,7 +110,7 @@
 					$("#id").removeClass();
 					$("#id").addClass("blank");
 					$("#idInfo").show();
-					
+					enableBtn();
 				}	
 				
 				else {
@@ -100,11 +122,13 @@
 								if ( response.response ) {
 									$("#id").removeClass();
 									$("#id").addClass("invalid");
+									enableBtn();
 								}
 								
 								else {
 									$("#id").removeClass();
 									$("#id").addClass("valid");
+									enableBtn();
 								}
 					});
 					
@@ -116,9 +140,10 @@
 				$("#id").removeClass();
 				$("#id").addClass("blank");
 				$("#idInfo").show();
+				enableBtn();
 			}
 			
-			inputCheck ();
+			enableBtn();
 			
 		});
 		
@@ -133,15 +158,18 @@
 					$("#password").removeClass();
 					$("#password").addClass("valid");
 					$("#passInfo").hide();
+					enableBtn();
 				}
 				else {
 					$("#password").removeClass();
 					$("#password").addClass("invalid");
 					$("#passInfo").show();
+					enableBtn();
 				}
 				
 				if( passwordConfirm != "" ) {
 					passCheck();
+					enableBtn();
 				}
 			}
 			
@@ -149,12 +177,14 @@
 				$("#password").removeClass();
 				$("#password").addClass("blank");
 				$("#passInfo").show();
+				enableBtn();
 			}
 		});
 		
 		
 		$("#passwordConfirm").keyup(function(){
 			passCheck();
+			enableBtn();
 		});
 		
 		$("#name").keyup(function(){
@@ -166,15 +196,18 @@
 				if ( confirm.test(name) ) {
 					$("#name").removeClass();
 					$("#name").addClass("valid");
+					enableBtn();
 				}
 				else {
 					$("#name").removeClass();
 					$("#name").addClass("invalid");
+					enableBtn();
 				}
 			}
 			else {
 				$("#name").removeClass();
 				$("#name").addClass("blank");
+				enableBtn();
 			}
 			
 		});
@@ -192,11 +225,13 @@
 							if ( response.response ) {
 								$("#nickname").removeClass();
 								$("#nickname").addClass("invalid");
+								enableBtn();
 							}
 							
 							else {
 								$("#nickname").removeClass();
 								$("#nickname").addClass("valid");
+								enableBtn();
 							}
 				});
 				
@@ -204,6 +239,7 @@
 			else {
 				$("#nickname").removeClass();
 				$("#nickname").addClass("blank");
+				enableBtn();
 			}
 		});
 		
@@ -220,6 +256,7 @@
 							$("#emailInfo").show();
 							$("#email").removeClass();
 							$("#email").addClass("blank");
+							enableBtn();
 						}
 						
 						else {
@@ -231,11 +268,13 @@
 										if ( response.response ) {
 											$("#email").removeClass();
 											$("#email").addClass("invalid");
+											enableBtn();
 										}
 										
 										else {
 											$("#email").removeClass();
 											$("#email").addClass("valid");
+											enableBtn();
 										}
 							});
 							
@@ -244,6 +283,7 @@
 					else {
 						$("#email").removeClass();
 						$("#email").addClass("blank");
+						enableBtn();
 					}
 				});
 		
@@ -310,9 +350,9 @@
 				</div>
 								
 			 	<p>
-			 		<button type="submit" id="submitBtn"  >Sign Up</button>
+			 		<button type="submit" id="submitBtn"  disabled="disabled" >Sign Up</button>
 			 		&nbsp;&nbsp;&nbsp;
-			 		<a href="<c:url value="/"/>"><button type="button" id="cancelBtn" disabled="disabled">Cancel</button></a>
+			 		<a href="<c:url value="/"/>"><button type="button" id="cancelBtn">Cancel</button></a>
 			 	</p>
 			 	
 			 </form:form>

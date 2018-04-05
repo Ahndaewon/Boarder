@@ -16,6 +16,7 @@
 			, REGISTRATION_DATE
 			, GRADE
 			, ACCESS_COUNT
+			, SALT
 		
 		)
 		VALUES (
@@ -27,6 +28,7 @@
 			, SYSDATE
 			, 1
 			, 1
+			, #{salt}
 		)
 	</insert>
 	  
@@ -65,6 +67,16 @@
   		SELECT	PASSWORD
   		FROM	MEMBER
   		WHERE	EMAIL = #{email} 
+  	</select>
+  
+  
+  	<select id="selectSalt" parameterType="String" resultType="String">
+  		
+  		SELECT	SALT
+  		FROM	MEMBER
+  		WHERE	ID = #{id}
+  		
+  		
   	</select>
   
   

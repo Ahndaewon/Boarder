@@ -37,6 +37,11 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 	public String selectMemberPw(String email) {
 		return getSqlSession().selectOne("MemberDao.selectMemberPw", email);
 	}
+
+	@Override
+	public String selectSalt(String id) {
+		return getSqlSession().selectOne("MemberDao.selectSalt", id);
+	}
 	
 	
 }

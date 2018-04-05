@@ -10,6 +10,7 @@ public interface MemberDao {
 	public int selectMemberId(String id);
 	public int selectMemberNickname(String nickname);
 	public int selectMemberEmail(String email);
+	public String selectSalt(String id);
 	public String selectMemberPw(String email);
 	
 }

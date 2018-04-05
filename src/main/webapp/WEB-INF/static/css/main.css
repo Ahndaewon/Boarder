@@ -11,6 +11,8 @@
 	display: table-cell;
 	vertical-align: middle;
 	background-color: #e3e3e3;
+	box-sizing: border-box;
+	border: solid #000000 2px;
 }
 
 .login {
@@ -19,6 +21,9 @@
 	height: 700px; 
 	vertical-align : top;
 	background-color: #e9fefe;
+	box-sizing: border-box;
+	border-right: solid #000 2px;
+	border-left: solid #000 2px;
 }
 
 
@@ -32,5 +37,6 @@
 	display : inline-block;
 	 width: 700px;
 	 height: 700px;
+	 
 	 
 }

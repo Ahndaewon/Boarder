@@ -17,6 +17,7 @@ public class MemberVO extends LoginVO {
 	String registrationDate;
 	int grade;
 	int accessCount;
+	String salt;
 
 	public String getName() {
 		return name;
@@ -65,5 +66,14 @@ public class MemberVO extends LoginVO {
 	public void setAccessCount(int accessCount) {
 		this.accessCount = accessCount;
 	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	
 
 }

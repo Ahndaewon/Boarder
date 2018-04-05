@@ -23,3 +23,9 @@
 		vertical-align: top; 
 		text-align: left;
 	}
+	
+	.fail{
+		display: none;
+		color: #ff80c0;
+		font-size: 8pt;
+	}

@@ -8,6 +8,11 @@
 
 	$().ready(function(){
 		
+		<c:if test="${empty sessionScope.__FAIL__}">
+			$(".fail").hide();
+		</c:if>
+		
+		
 		
 		
 		<c:if test="${not empty sessionScope.__USER__}">
@@ -16,6 +21,7 @@
 			$(".log").show();
 			$("#logout").show();
 			$("#logpassword").hide();
+			$(".fail").hide();
 			
 		</c:if>
 	
@@ -29,12 +35,15 @@
 				"method" : "post"
 			}).submit();
 			
-			
-			
-			
+			<c:if test="${sessionScope.__FAIL__ eq 'fail' }">
+				$(".fail").show();				
+			</c:if>
 			
 		});
 		
+		
+		
+
 	});
 
 
@@ -47,27 +56,28 @@
      <div>
      	<form:form modelAttribute="loginForm">
      		<div>
-     			<div class="innerLog1" >
-       		<input type="text" id="logid" name="id" placeholder="ID를 입력하세요" value="${loginForm.id}">
-       		<div class="log" style="display: none">${sessionScope.__USER__.id}</div>
-       		<div>
-       			<form:errors path="id"/>
-       		</div>
-       		
-       		<input type="password" id="logpassword" name="password" placeholder="비밀번호를 입력하세요" value="${loginForm.password}">
-      		<div>
-       			<form:errors path="password"/>
-       		</div>
-      		</div>
+	     		<div class="innerLog1" >
+		       		<input type="text" id="logid" name="id" placeholder="ID를 입력하세요" value="${loginForm.id}">
+		       		<div class="log" style="display: none">${sessionScope.__USER__.id}</div>
+		       		<div>
+		       			<form:errors path="id"/>
+		       		</div>
+		       		
+		       		<input type="password" id="logpassword" name="password" placeholder="비밀번호를 입력하세요" value="${loginForm.password}">
+		      		<div>
+		       			<form:errors path="password"/>
+		       		</div>
+		       		<div class=fail style=" color: #ff80c0; font-size: 8pt;">아이디, 비밀번호를 확인하세요 </div>
+	      		</div>
       	
-      		<div class="innerLog2">
-       		<input type="button"  id="loginBtn" value="로그인"  style=" height: 46px;">
-	       	<a href="<c:url value="/logout"/>">
-	       			<input type="button"  id="logout" value="로그아웃"  style=" height: 46px; display: none">
-	       	</a>
-	       	</div>
+	      		<div class="innerLog2">
+	       		<input type="button"  id="loginBtn" value="로그인"  style=" height: 46px;">
+		       	<a href="<c:url value="/logout"/>">
+		       			<input type="button"  id="logout" value="로그아웃"  style=" height: 46px; display: none">
+		       	</a>
+		       	</div>
        		
-
+				
      		</div>
      		
      		<p><a href="<c:url value="/join"/>">회원가입</a>&nbsp;&nbsp;

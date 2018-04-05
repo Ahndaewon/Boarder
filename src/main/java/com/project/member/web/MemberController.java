@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.constants.Member;
 import com.project.mail.Email;
 import com.project.member.service.MemberService;
 import com.project.member.vo.LoginVO;
@@ -72,24 +73,22 @@ public class MemberController {
 		}
 		//나머지 파라미터 때문에 에러
 		 
-		MemberVO loginMember = memberService.doLogin(loginVO);
-		System.out.println(loginMember.getId());
-		System.out.println(loginMember.getEmail());
-		System.out.println(loginMember.getPassword());
-		
-		if( loginMember == null ) {
+		if ( loginVO == null ) {
+			
 			return new ModelAndView("redirect:/");
 		}
+		
+		MemberVO loginMember = memberService.doLogin(loginVO);
+		
+		if( loginMember == null ) {
+			System.out.println("로그인 실패");
+			session.setAttribute("__FAIL__", "fail");
+			return new ModelAndView("redirect:/");
+		}
+		session.setAttribute("__FAIL__", "");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~!!!~~~~~~~~~~~");
-		session.setAttribute("__USER__", loginMember);
+		session.setAttribute(Member.USER, loginMember);
 		System.out.println("로그인됨");
-		MemberVO member = (MemberVO)session.getAttribute("__USER__");
-		System.out.println(member.getId());
-		System.out.println(member.getEmail());
-		System.out.println(member.getPassword());
-
-		
-		
 		
 		return new ModelAndView("main");
 		

@@ -14,7 +14,9 @@
 	</bean>
 	
 	<mvc:resources location="/WEB-INF/static/" mapping="/static/**" />
-	
+	<mvc:resources location="/WEB-INF/photoUpload/" mapping="/photoUpload/**" />
+
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
@@ -30,6 +32,14 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 		
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		  <property name="defaultEncoding" value="utf-8"></property>
+		  <property name="maxInMemorySize" value="1048576"></property>
+		  <property name="maxUploadSize" value="20971520"></property>
+		
+	</bean>
+	
 	
 
 	<import resource="controllerContext.xml"/>

@@ -69,21 +69,23 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberVO doLogin(LoginVO memberVO) {
+	public MemberVO doLogin(LoginVO login) {
 		
-		String id = memberVO.getId();
-		String password = memberVO.getPassword();
+		
+		String id = login.getId();
+		String password = login.getPassword();
 		
 		String salt = memberDao.selectSalt(id);
 		
-		if ( id == null ) {
+		if ( salt == null ) {
 			return null;
 		}
+		
 		password = SHA256Util.getEncrypt(password, salt);
-		memberVO.setPassword(password);
+		login.setPassword(password);
 		
 		
-		return memberDao.loginMember(memberVO);
+		return memberDao.loginMember(login);
 		
 	}
 

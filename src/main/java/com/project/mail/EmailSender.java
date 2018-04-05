@@ -3,6 +3,7 @@ package com.project.mail;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.management.RuntimeErrorException;
 
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,15 +27,13 @@ public class EmailSender {
 			msg.setRecipients( MimeMessage.RecipientType.TO, InternetAddress.parse( email.getReceiver() ) );
 			
 		} catch (MessagingException e) {
-			System.out.println("MessagingException");
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage(), e);
 		}
 		
 		try {
 			mailSender.send(msg);
 		} catch (MailException e) {
-			System.out.println("MailException 발생");
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 	

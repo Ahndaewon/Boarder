@@ -7,9 +7,17 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css"/>">
+		
 		<title>Main</title>
 	</head>
+
+	
+	
+	
 	<body>
+	
+	
+	
 	     <div id="wrapper">
 	
 	        <!--main-->

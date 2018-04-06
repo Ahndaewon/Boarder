@@ -16,6 +16,7 @@
 			, RECOMMEND_COUNT
 			, REQUEST_IP
 			, BODY
+			, FILENAME
 		)
 		
 		VALUES (
@@ -27,6 +28,7 @@
 			, 0		
 			, #{requestIp}		
 			, #{body}
+			, #{fileName}
 		)
 	
 	
@@ -42,6 +44,7 @@
 				, RECOMMEND_COUNT 	recommendCount
 				, BODY 				body
   		FROM	ARTICLE
+  		ORDER 	BY ID DESC
   	</select>
   	
   	

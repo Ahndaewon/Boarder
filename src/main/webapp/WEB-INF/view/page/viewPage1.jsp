@@ -15,13 +15,17 @@
 	<div class="list">
 		
 		
-		<p>
+		<p style="text-align: left; font: bold;">
 			${article.title}
 		</p>
-		
-		<p>
+		<p style="border: 1px dotted;"></p>
+		<p style="text-align: left; ">
 			${article.body}
 		</p>
+		
+		
+		
+		
 		
 		
 	</div>

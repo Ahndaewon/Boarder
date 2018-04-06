@@ -36,12 +36,12 @@ public class BoaderController {
 		this.boarderService = boarderService;
 	}
 
-	@RequestMapping(value="/send", method=RequestMethod.POST)
+/*	@RequestMapping(value="/send", method=RequestMethod.POST)
 	public String sendBody(@RequestParam("editor") String body) {
 		System.out.println(body);
 		return "";
 	}
-	
+	*/
 	// 다중파일업로드
     @RequestMapping(value = "/fileUploader",
                   method = RequestMethod.POST)
@@ -101,7 +101,7 @@ public class BoaderController {
 			return new ModelAndView("redirect:/404");
 		}
 		
-		System.out.println( articleList.get(0).getViewCount() );
+		
 		view.addObject("articleList", articleList);
 		view.setViewName("/category/category1");
 		
@@ -126,13 +126,13 @@ public class BoaderController {
 	}
 	
 
-	
+	/*
 	@RequestMapping(value="/write2", method=RequestMethod.GET)
 	public String article2() {
 		
 		return "editor";
 	}
-
+*/
 	
 	
 	
@@ -153,8 +153,12 @@ public class BoaderController {
 			return new ModelAndView("redirect:/");
 		}
 		System.out.println(member.getId());
+		System.out.println(articleVO.getBody());
+		System.out.println(articleVO.getFile().getOriginalFilename());
+		
 		articleVO.setRequestIp(request.getRemoteAddr());
-		articleVO.setMemberId(member.getId());
+		articleVO.setMemberId(member.getId());// 로그인한 멤버 아이디 넣어줌
+		articleVO.save();
 		
 		if( articleVO != null ) {
 			
@@ -162,9 +166,9 @@ public class BoaderController {
 			return new ModelAndView("redirect:/category1");
 		}
 		
-		else {
-			return new ModelAndView("redirect:/write1");
-		}
+		
+		return new ModelAndView("redirect:/write1");
+		
 	}
 	
 	

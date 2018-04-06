@@ -19,6 +19,8 @@ public class BoarderServiceImlp implements BoarderService {
 	@Override
 	public boolean insertArticle(ArticleVO articleVO) {
 		
+		System.out.println(articleVO.getFileName());
+		
 		if ( boarderDao.insertArticle(articleVO) > 0) {
 			
 			return true;

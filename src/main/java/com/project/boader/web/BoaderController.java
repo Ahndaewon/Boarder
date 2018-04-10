@@ -3,11 +3,13 @@ package com.project.boader.web;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import com.project.boader.service.BoarderService;
 import com.project.boader.vo.ArticleVO;
 import com.project.member.vo.LoginVO;
 import com.project.member.vo.MemberVO;
+import com.project.util.DownloadUtil;
 
 @Controller
 public class BoaderController {
@@ -36,12 +39,6 @@ public class BoaderController {
 		this.boarderService = boarderService;
 	}
 
-/*	@RequestMapping(value="/send", method=RequestMethod.POST)
-	public String sendBody(@RequestParam("editor") String body) {
-		System.out.println(body);
-		return "";
-	}
-	*/
 	// 다중파일업로드
     @RequestMapping(value = "/fileUploader",
                   method = RequestMethod.POST)
@@ -78,17 +75,12 @@ public class BoaderController {
         }
         return sb.toString();
     }
-
-
-
-	
+    
 	@RequestMapping("/")
 	public String mainPage() {
 		
-		
 		return "main";
 	}
-
 	
 	@RequestMapping("/category1")
 	public ModelAndView category1() {
@@ -110,6 +102,8 @@ public class BoaderController {
 		return view;
 	}
 	
+	
+	//category1 글보기
 	@RequestMapping("/view/{id}")
 	public ModelAndView viewPage(@PathVariable int id) {
 		
@@ -120,23 +114,14 @@ public class BoaderController {
 		view.addObject("article", article);
 		view.setViewName("/category/categoryView1");
 		
+		System.out.println(article.getId());
 		
 		
 		return view;
 	}
 	
-
-	/*
-	@RequestMapping(value="/write2", method=RequestMethod.GET)
-	public String article2() {
-		
-		return "editor";
-	}
-*/
 	
-	
-	
-	
+	//category1 글쓰기
 	@RequestMapping(value="/write1", method=RequestMethod.GET)
 	public String article1() {
 		
@@ -168,6 +153,25 @@ public class BoaderController {
 		
 		
 		return new ModelAndView("redirect:/write1");
+		
+	}
+	
+	@RequestMapping("/download/{id}")
+	public void downloadFile(@PathVariable int id, HttpServletRequest request
+									, HttpServletResponse response) {
+		
+		ArticleVO article = boarderService.selectViewPage(id);
+		
+		String filename = article.getFileName();
+		
+		DownloadUtil download = new DownloadUtil("D:\\Upload/"+ filename);
+		
+		try {
+			download.download(request, response, filename);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
 		
 	}
 	

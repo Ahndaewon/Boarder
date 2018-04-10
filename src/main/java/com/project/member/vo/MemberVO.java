@@ -7,17 +7,17 @@ public class MemberVO extends LoginVO {
 
 	@NotNull(message = "이름 필수 입력~~~~")
 	@NotEmpty(message = "이름 필수 입력~~~~")
-	String name;
+	private String name;
 	@NotNull(message = "닉네임 필수 입력~~~~")
 	@NotEmpty(message = "닉네임 필수 입력~~~~")
-	String nickname;
+	private String nickname;
 	@NotNull(message = "이메일은 필수 입력~~~~")
 	@NotEmpty(message = "이메일은 필수 입력~~~~")
-	String email;
-	String registrationDate;
-	int grade;
-	int accessCount;
-	String salt;
+	private String email;
+	private String registrationDate;
+	private int grade;
+	private int accessCount;
+	private String salt;
 
 	public String getName() {
 		return name;

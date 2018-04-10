@@ -5,6 +5,32 @@
   
   <mapper namespace="BoarderDao"><!-- 인터페이스 이름 적어줌 -->
   
+  
+  <resultMap type="ArticleVO" id="ArticleVOMap">
+  	<id column="A_ID" property="id"/>
+  	<result column="MEMBER_ID" property="memberId"/>
+  	<result column="TITLE" property="title"/>
+  	<result column="WRITE_DATE" property="writeDate"/>
+  	<result column="VIEW_COUNT" property="viewCount"/>
+  	<result column="RECOMMEND_COUNT" property="recommendCount"/>
+  	<result column="REQUEST_IP" property="requestIp"/>
+  	<result column="BODY" property="body"/>
+  	<result column="FILENAME" property="fileName"/>
+  	<association property="memberVO" javaType="MemberVO">
+  		<id column="ID" property="id"/>
+  		<result column="PASSWORD" property="password"/>
+  		<result column="NAME" property="name"/>
+  		<result column="NICKNAME" property="nickname"/>
+  		<result column="EMAIL" property="email"/>
+  		<result column="REGISTRATION_DATE" property="registrationDate"/>
+  		<result column="GRADE" property="grade"/>
+  		<result column="ACCESS_COUNT" property="accessCount"/>
+  		<result column="SALT" property="salt"/>
+  	</association>
+  	
+  </resultMap>
+  
+  
 	<insert id="insertArticle" parameterType="ArticleVO">
 	
 		INSERT INTO ARTICLE (
@@ -36,23 +62,33 @@
   	
   	
   	<select id="selectAll" resultType="ArticleVO">
-  		SELECT	ID					id
-				, MEMBER_ID			memberId
-				, TITLE				title
+  		SELECT	ID					
+				, MEMBER_ID			
+				, TITLE				
 				, TO_CHAR(WRITE_DATE, 'YYYY-MM-DD') 	writeDate
 				, VIEW_COUNT 		viewCount
 				, RECOMMEND_COUNT 	recommendCount
-				, BODY 				body
+				, BODY 				
   		FROM	ARTICLE
   		ORDER 	BY ID DESC
   	</select>
   	
   	
-  	<select id="selectViewPage" parameterType="_int" resultType="ArticleVO">
+  	<select id="selectViewPage" parameterType="_int" resultMap="ArticleVOMap">
   	
-  		SELECT	*
-  		FROM	ARTICLE
-  		WHERE	ID = #{id}
+  		SELECT	A.ID 				A_ID
+  				, MEMBER_ID 		
+  				, TITLE
+  				, BODY
+  				, WRITE_DATE		
+  				, VIEW_COUNT		
+  				, RECOMMEND_COUNT	
+  				, REQUEST_IP		
+  				, FILENAME 
+  				, M.NICKNAME
+  		FROM	ARTICLE A, MEMBER M
+  		WHERE	A.MEMBER_ID = M.ID
+  		AND		A.ID = #{id}
   	
   	</select>
 

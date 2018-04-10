@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>에디터</title>
- 
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/category1Write.css"/>">  
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="/static/editor/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
  
@@ -44,13 +45,16 @@
    
     <div id="smartEditor">
    		<form:form action="/write1" method="post" modelAttribute="insertBoardFrm"  enctype="multipart/form-data">
-				
-			<div>
+			<p style="margin-bottom: 100px;"></p>
+			<p></p>
+			<p></p>
+			
+			<div id="titleBox" style="text-align: left">
 				<input type="text" id="title" name="title" placeholder="제목을 입력하세요" style="width: 650px;" >
 			</div>
 			
 			<div id="bodyBox">
-				<textarea id="editor"; name="body" style="width: 650px; height: 400px; margin: 0 px auto"></textarea>
+				<textarea id="editor"; name="body" style="width: 650px; height: 400px;"></textarea>
 			</div>
 			
 			<div style="text-align: left;">

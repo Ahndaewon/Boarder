@@ -7,11 +7,11 @@ public class LoginVO {
 	
 	@NotNull(message = "아이디 필수 입력~~~~")
 	@NotEmpty(message = "아이디 필수 입력~~~~")
-	String id;
+	private String id;
 	
 	@NotNull(message = "비밀번호 필수 입력~~~~")
 	@NotEmpty(message = "비밀번호 필수 입력~~~~")
-	String password;
+	private String password;
 
 	public String getId() {
 		return id;

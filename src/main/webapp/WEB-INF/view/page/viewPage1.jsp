@@ -7,24 +7,49 @@
 </script>
 
 <script type="text/javascript">
-
-	
 </script>
 
 <body>
+<style>
+#articleTitle {
+	text-align:	justify;
+	padding: 10px 0px 10px 20px;
+	font-weight: bold;
+	font-size: 20px;
+	border-bottom: 1px solid #CCC;
+	position: relative;
+	
+	
+	
+ }
+#articleBody {
+	text-align: left;
+	padding-left: 20px;
+}
+#articleInfo {
+	font-size: 14px;
+	font-weight: normal;
+	position: absolute;
+	right: 20px;
+}
+
+</style>
+	<div>&nbsp</div>
+	<div>&nbsp</div>
 	<div class="list">
 		
 		
-		<p style="text-align: left; font: bold;">
-			${article.title}
-		</p>
-		<p style="border: 1px dotted;"></p>
-		<p style="text-align: left; ">
+		<div id="articleTitle">
+			<span>${article.id} : ${article.title}</span>   
+			<span id="articleInfo">${article.memberVO.nickname}( ${article.memberId} ) | ${article.writeDate}</span>
+		</div>
+		
+		<div id="articleBody">
+			<span><a href="<c:url value="/download/${article.id}"/>">
+			 <img src="<c:url value="/static/img/fileIcon.jpg"/>">
+			 ${article.fileName}</a></span>
 			${article.body}
-		</p>
-		
-		
-		
+		</div>
 		
 		
 		

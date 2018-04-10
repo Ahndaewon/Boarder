@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.member.vo.MemberVO;
+
 public class ArticleVO {
 
 	private int id;
@@ -17,6 +19,7 @@ public class ArticleVO {
 	private String requestIp;
 	private String fileName;
 	private MultipartFile file;
+	private MemberVO memberVO;
 	
 	public int getId() {
 		return id;
@@ -101,6 +104,16 @@ public class ArticleVO {
 		this.file = file;
 	}
 	
+	
+	
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+
 	public String save() {
 		
 		if ( file != null && !file.isEmpty() ) {

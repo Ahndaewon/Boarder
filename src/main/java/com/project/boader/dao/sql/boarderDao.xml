@@ -61,8 +61,8 @@
 	</insert>
   	
   	
-  	<select id="selectAll" resultType="ArticleVO">
-  		SELECT	ID					
+  	<select id="selectAll" resultMap="ArticleVOMap" parameterType="Pager">
+  		<!-- SELECT	ID					
 				, MEMBER_ID			
 				, TITLE				
 				, TO_CHAR(WRITE_DATE, 'YYYY-MM-DD') 	writeDate
@@ -70,7 +70,31 @@
 				, RECOMMEND_COUNT 	recommendCount
 				, BODY 				
   		FROM	ARTICLE
-  		ORDER 	BY ID DESC
+  		ORDER 	BY ID DESC -->
+  			    
+	   SELECT *
+	   FROM (
+	   
+	        SELECT ROWNUM RNUM, C.*
+	        FROM (
+	                SELECT	A.ID 				A_ID
+	                        , MEMBER_ID 		
+	                        , TITLE
+	                        , BODY
+	                        , TO_CHAR(WRITE_DATE, 'YYYY.MM.DD HH24:MI') WRITE_DATE	
+	                        , VIEW_COUNT		
+	                        , RECOMMEND_COUNT	
+	                        , REQUEST_IP		
+	                        , FILENAME 
+	                        , M.NICKNAME
+	                FROM	ARTICLE A, MEMBER M
+	                WHERE	A.MEMBER_ID = M.ID(+)
+	                ORDER	BY A.ID	DESC
+	                ) C
+	        WHERE   ROWNUM <![CDATA[<=]]> #{endRow}     
+	        ) 
+	    WHERE    RNUM >= #{startRow} 
+  		
   	</select>
   	
   	
@@ -80,7 +104,7 @@
   				, MEMBER_ID 		
   				, TITLE
   				, BODY
-  				, WRITE_DATE		
+  				, TO_CHAR(WRITE_DATE, 'YYYY.MM.DD HH24:MI') WRITE_DATE	
   				, VIEW_COUNT		
   				, RECOMMEND_COUNT	
   				, REQUEST_IP		
@@ -91,6 +115,16 @@
   		AND		A.ID = #{id}
   	
   	</select>
+  	
+  	<select id="selectAllcount" resultType="_int">
+  	
+  	
+  		SELECT	COUNT(A.ID)
+  		FROM	ARTICLE A, MEMBER M 
+  		WHERE	A.MEMBER_ID = M.ID(+)
+  	
+  	</select>
+
 
   
   </mapper>

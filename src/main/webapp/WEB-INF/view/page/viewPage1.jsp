@@ -7,6 +7,17 @@
 </script>
 
 <script type="text/javascript">
+	$().ready(function(){
+		
+		$("#fileIcon").click(function(){
+			
+			$("#fileLink").toggle();
+		});
+		
+		
+		
+	});
+	
 </script>
 
 <body>
@@ -18,36 +29,74 @@
 	font-size: 20px;
 	border-bottom: 1px solid #CCC;
 	position: relative;
-	
-	
-	
  }
 #articleBody {
 	text-align: left;
-	padding-left: 20px;
+	padding-left: 10px;
 }
 #articleInfo {
 	font-size: 14px;
 	font-weight: normal;
 	position: absolute;
 	right: 20px;
+	top : 15px;
+}
+
+
+#fileIcon {
+	width: 20px; 
+	height: 20px;
+}
+
+#fileBox {
+	position : relative;
+	text-align: right;
+	margin: 10px 10px 0px 0px;
+	cursor: pointer;
+}
+#fileLink {
+	
+	
+	width : 150px;
+	background-color : #e4e2e6;
+	text-overflow : ellipsis; 
+	font-size: 12px;
+	text-decoration: none;
+	display: none;
+	position: absolute;
+	right : 0px;
+	top:  20px;
+	white-space : nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+	
 }
 
 </style>
-	<div>&nbsp</div>
-	<div>&nbsp</div>
-	<div class="list">
+	<div class="list" style="margin-top: 50px;">
 		
 		
 		<div id="articleTitle">
-			<span>${article.id} : ${article.title}</span>   
+			<span>${article.title}</span>   
 			<span id="articleInfo">${article.memberVO.nickname}( ${article.memberId} ) | ${article.writeDate}</span>
 		</div>
 		
+		
+		
+		
 		<div id="articleBody">
-			<span><a href="<c:url value="/download/${article.id}"/>">
-			 <img src="<c:url value="/static/img/fileIcon.jpg"/>">
-			 ${article.fileName}</a></span>
+			<c:if test="${not empty article.fileName}">
+				<div id="fileBox">
+					<span>
+						<img id="fileIcon" src="<c:url value="/static/img/fileIcon.png"/>">
+						<div id="fileLink"><a style="text-decoration: none; color: #000;" 
+						href="<c:url value="/download/${article.id}"/>">${article.fileName}</a></div>
+						
+					</span>
+				</div>
+			</c:if>				
+
 			${article.body}
 		</div>
 		

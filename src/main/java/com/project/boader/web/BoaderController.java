@@ -26,6 +26,7 @@ import com.project.boader.vo.ArticleVO;
 import com.project.member.vo.LoginVO;
 import com.project.member.vo.MemberVO;
 import com.project.util.DownloadUtil;
+import com.project.util.Pager;
 
 @Controller
 public class BoaderController {
@@ -83,18 +84,43 @@ public class BoaderController {
 	}
 	
 	@RequestMapping("/category1")
-	public ModelAndView category1() {
-		
+	public ModelAndView category1(HttpServletRequest request
+			, @RequestParam(defaultValue="1") int pagenum
+			) {
+		Pager pager = new Pager();
 		List<ArticleVO> articleList;
 		ModelAndView view = new ModelAndView();
-		articleList = boarderService.selectAll();
 		
+		
+		int totalCount = boarderService.selectAllcount();
+		
+		pager.setTotalCount(totalCount); //전체 게시글 개수
+		pager.setPageNum(pagenum); // 현재 페이지
+		
+		pager.setCurrentBlock(pagenum); // 현재 페이지 블록이 몇번째 블록인지
+		pager.setLastBlock(); // 마지막 블록 번호
+		
+		pager.setStartRow(pagenum);
+		pager.setEndRow(pagenum);
+		
+		pager.prevNext(pagenum);
+		//현재 페이지 번호로 화살표를 나타낼지 정한다
+		pager.setStartPage();
+		//해당 블럭의 시작페이지
+		pager.setEndPage();
+		//해당블럭의 마지막 페이지
+		//pageNation
+		
+		
+		articleList = boarderService.selectAll(pager);
+		System.out.println(articleList.get(0).getId()+"!!!!!");
 		if ( articleList == null ) {
 			return new ModelAndView("redirect:/404");
 		}
 		
 		
 		view.addObject("articleList", articleList);
+		view.addObject("pager", pager);
 		view.setViewName("/category/category1");
 		
 		

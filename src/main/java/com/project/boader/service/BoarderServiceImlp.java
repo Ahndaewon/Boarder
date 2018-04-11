@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.boader.dao.BoarderDao;
 import com.project.boader.vo.ArticleVO;
+import com.project.util.Pager;
 
 public class BoarderServiceImlp implements BoarderService {
 
@@ -31,9 +32,10 @@ public class BoarderServiceImlp implements BoarderService {
 
 
 	@Override
-	public List<ArticleVO> selectAll() {
+	public List<ArticleVO> selectAll(Pager pager) {
 		
-		List<ArticleVO> articleList = boarderDao.selectAll(); 
+		List<ArticleVO> articleList = boarderDao.selectAll(pager); 
+		
 		
 		if ( articleList != null ) {
 			
@@ -57,6 +59,12 @@ public class BoarderServiceImlp implements BoarderService {
 		
 		
 		return article;
+	}
+
+
+	@Override
+	public int selectAllcount() {
+		return boarderDao.selectAllcount();
 	}
 
 

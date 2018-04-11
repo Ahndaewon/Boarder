@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.project.boader.vo.ArticleVO;
+import com.project.util.Pager;
 
 
 
@@ -17,8 +18,8 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 	}
 
 	@Override
-	public List<ArticleVO> selectAll() {
-		return getSqlSession().selectList("BoarderDao.selectAll");
+	public List<ArticleVO> selectAll(Pager pager) {
+		return getSqlSession().selectList("BoarderDao.selectAll", pager);
 	}
 
 	@Override
@@ -26,8 +27,11 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 		return getSqlSession().selectOne("BoarderDao.selectViewPage", id);
 	}
 
-	
-	
+	@Override
+	public int selectAllcount() {
+		return getSqlSession().selectOne("BoarderDao.selectAllcount");
+	}
+
 	
 	
 	

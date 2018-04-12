@@ -15,5 +15,8 @@ public interface BoarderDao {
 	
 	public int selectAllcount();
 	
+	public int removeArticle(int id);
+	
+	public int increamentViewCount(int id);
 	
 }

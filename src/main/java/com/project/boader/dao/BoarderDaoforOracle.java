@@ -32,6 +32,16 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 		return getSqlSession().selectOne("BoarderDao.selectAllcount");
 	}
 
+	@Override
+	public int removeArticle(int id) {
+		return getSqlSession().delete("BoarderDao.removeArticle", id);
+	}
+
+	@Override
+	public int increamentViewCount(int id) {
+		return getSqlSession().update("BoarderDao.increamentViewCount", id);
+	}
+
 	
 	
 	

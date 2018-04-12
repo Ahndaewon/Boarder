@@ -62,16 +62,7 @@
   	
   	
   	<select id="selectAll" resultMap="ArticleVOMap" parameterType="Pager">
-  		<!-- SELECT	ID					
-				, MEMBER_ID			
-				, TITLE				
-				, TO_CHAR(WRITE_DATE, 'YYYY-MM-DD') 	writeDate
-				, VIEW_COUNT 		viewCount
-				, RECOMMEND_COUNT 	recommendCount
-				, BODY 				
-  		FROM	ARTICLE
-  		ORDER 	BY ID DESC -->
-  			    
+  	
 	   SELECT *
 	   FROM (
 	   
@@ -81,7 +72,7 @@
 	                        , MEMBER_ID 		
 	                        , TITLE
 	                        , BODY
-	                        , TO_CHAR(WRITE_DATE, 'YYYY.MM.DD HH24:MI') WRITE_DATE	
+	                        , TO_CHAR(WRITE_DATE, 'YY.MM.DD HH24:MI') WRITE_DATE	
 	                        , VIEW_COUNT		
 	                        , RECOMMEND_COUNT	
 	                        , REQUEST_IP		
@@ -111,7 +102,7 @@
   				, FILENAME 
   				, M.NICKNAME
   		FROM	ARTICLE A, MEMBER M
-  		WHERE	A.MEMBER_ID = M.ID
+  		WHERE	A.MEMBER_ID = M.ID(+)
   		AND		A.ID = #{id}
   	
   	</select>
@@ -125,6 +116,19 @@
   	
   	</select>
 
+	<delete id="removeArticle" parameterType="_int">
+		
+		DELETE
+  		FROM	ARTICLE 
+  		WHERE	ID = #{id}
+  		
+	</delete>
+	
+	<update id="increamentViewCount" parameterType="_int">
+		UPDATE	ARTICLE
+		SET		VIEW_COUNT = VIEW_COUNT + 1
+		WHERE	ID = #{id}
+	</update>
 
   
   </mapper>

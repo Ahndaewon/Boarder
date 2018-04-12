@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.boader.service.BoarderService;
 import com.project.boader.vo.ArticleVO;
+import com.project.constants.Article;
+import com.project.constants.Member;
 import com.project.member.vo.LoginVO;
 import com.project.member.vo.MemberVO;
 import com.project.util.DownloadUtil;
@@ -94,6 +96,8 @@ public class BoaderController {
 		
 		int totalCount = boarderService.selectAllcount();
 		
+		//TODO pager 정리
+		
 		pager.setTotalCount(totalCount); //전체 게시글 개수
 		pager.setPageNum(pagenum); // 현재 페이지
 		
@@ -113,7 +117,6 @@ public class BoaderController {
 		
 		
 		articleList = boarderService.selectAll(pager);
-		System.out.println(articleList.get(0).getId()+"!!!!!");
 		if ( articleList == null ) {
 			return new ModelAndView("redirect:/404");
 		}
@@ -129,19 +132,30 @@ public class BoaderController {
 	}
 	
 	
+	@RequestMapping("/read/{id}") 
+	public String readPage( @PathVariable int id ) {
+		
+		boarderService.increamentViewCount(id);
+		
+		return "redirect:/view/"+id;
+	}
+	
+	
 	//category1 글보기
 	@RequestMapping("/view/{id}")
-	public ModelAndView viewPage(@PathVariable int id) {
+	public ModelAndView viewPage(@PathVariable int id ) {
 		
 		ModelAndView view = new ModelAndView();
 		
+		
 		ArticleVO article = boarderService.selectViewPage(id);
+		
+		if ( article == null ) {
+			return new ModelAndView("redirect:/category1");
+		}
 		
 		view.addObject("article", article);
 		view.setViewName("/category/categoryView1");
-		
-		System.out.println(article.getId());
-		
 		
 		return view;
 	}
@@ -180,6 +194,42 @@ public class BoaderController {
 		
 		return new ModelAndView("redirect:/write1");
 		
+	}
+	@RequestMapping("/remove/{id}")
+	public String removeArticle (@PathVariable int id, HttpSession session) {
+		
+		LoginVO member = (LoginVO)session.getAttribute(Member.USER);
+		ArticleVO article = boarderService.selectViewPage(id);
+		
+		
+		//존재하지 않는 글이면
+		if ( article == null ) {
+			return "redirect:/";
+		}
+		
+		
+		System.out.println(id);
+		session.removeAttribute(Article.REMOVE);
+		
+		//url로의 접근을 막음
+		//자신의 글이 아니면 삭제 못하게
+		if ( !member.getId().equals(article.getMemberId()) ) {
+			
+			session.setAttribute(Article.REMOVE, "fail");
+			
+			return "redirect:/view/"+id;
+		}
+		
+		boolean isDelete = boarderService.removeArticle(id);
+		
+		
+		if ( isDelete ) {
+
+			return "redirect:/category1";
+			
+		}
+		
+		return "redirect:/view/"+ id;
 	}
 	
 	@RequestMapping("/download/{id}")

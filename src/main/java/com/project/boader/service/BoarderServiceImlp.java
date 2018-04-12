@@ -64,7 +64,35 @@ public class BoarderServiceImlp implements BoarderService {
 
 	@Override
 	public int selectAllcount() {
+		
 		return boarderDao.selectAllcount();
+		
+	}
+
+
+	@Override
+	public boolean removeArticle(int id) {
+		
+		if( boarderDao.removeArticle(id) > 0 ) {
+			return true;
+		}
+		
+		return false;
+	}
+
+
+	@Override
+	public boolean increamentViewCount(int id) {
+		
+		
+		
+		if ( boarderDao.increamentViewCount(id) > 0 ) {
+			
+			return true;
+		}
+		
+		
+		return false;
 	}
 
 

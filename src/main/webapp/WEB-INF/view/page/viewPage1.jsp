@@ -9,12 +9,32 @@
 <script type="text/javascript">
 	$().ready(function(){
 		
+		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
+			alert("잘못된 경로로 접근하셨습니다.");
+			<c:remove var="__REMOVE__" scope="session" />
+			location.href = "<c:url value="/"/>";
+		</c:if>
+		
 		$("#fileIcon").click(function(){
 			
 			$("#fileLink").toggle();
 		});
 		
+		$("#listBtn1").click(function(){
+			$(location).attr("href", "<c:url value="/category1"/>");
+		});
+		$("#listBtn2").click(function(){
+			$(location).attr("href", "<c:url value="/category1"/>");
+		});
 		
+		$("#removeBtn").click(function(){
+			$(location).attr("href", "<c:url value="/remove/${article.id}"/>");
+			
+		});
+		
+		$("#modifyBtn").click(function(){
+			$(location).attr("href", "<c:url value="/modify/${article.id}"/>");
+		});
 		
 	});
 	
@@ -73,13 +93,42 @@
 	
 }
 
+.selectBtn {
+	width: 150px;
+	background-color: #c8c8ce;
+	vertical-align : middle;
+	display: inline-block;
+	padding: 10px;
+	cursor: pointer;
+	
+	
+}
+
+#listBtn1 {
+	border-top-left-radius: 10px; 
+	border-bottom-left-radius: 10px
+}
+
+#listBtn2 {
+	border-radius: 10px;
+}
+
+#removeBtn {
+	border-top-right-radius: 10px; 
+	border-bottom-right-radius: 10px;
+}
+#modifyBtn {
+	margin : 0px 5px 0px 5px;
+}
+
 </style>
 	<div class="list" style="margin-top: 50px;">
 		
 		
 		<div id="articleTitle">
 			<span>${article.title}</span>   
-			<span id="articleInfo">${article.memberVO.nickname}( ${article.memberId} ) | ${article.writeDate}</span>
+			<span id="articleInfo">${article.memberVO.nickname}( ${article.memberId} )
+			 | 조회수 : ${article.viewCount} | ${article.writeDate}</span>
 		</div>
 		
 		
@@ -101,6 +150,27 @@
 		</div>
 		
 		
-		
 	</div>
+		<c:if test="${ sessionScope.__USER__.id ne	article.memberId}">
+			<div id="listBtn2" class="selectBtn">
+			목록
+			</div>	
+		</c:if>
+		
+			
+		
+		<c:if test="${ sessionScope.__USER__.id eq	article.memberId}">
+			<div id="listBtn1" class="selectBtn">
+				목록
+			</div>
+			
+			<div id="modifyBtn" class="selectBtn">
+				수정
+			</div>
+			
+			<div id="removeBtn" class="selectBtn">
+				삭제
+			</div>
+		</c:if>
+		
 </body>

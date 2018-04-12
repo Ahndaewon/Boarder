@@ -37,15 +37,15 @@ public class EmailController {
 			email.setReceiver(mail);
 			email.setSubject( mail +"님 비밀번호 찾기 메일 입니다.");
 			emailSender.sendMail(email);
-			System.out.println("1");
+			
 			view = new ModelAndView("redirect:/");
 		}
 		else {
-			System.out.println("2");
+			
 			view = new ModelAndView("redirect:/");
 			
 		}
-		System.out.println("3");
+		
 		return view;
 	}
 	

@@ -15,4 +15,9 @@ public interface BoarderService {
 	public ArticleVO selectViewPage(int id);
 	
 	public int selectAllcount();
+	
+	public boolean removeArticle(int id);
+	
+	public boolean increamentViewCount(int id);
+	
 }

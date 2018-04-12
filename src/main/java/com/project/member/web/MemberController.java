@@ -85,7 +85,7 @@ public class MemberController {
 			session.setAttribute("__FAIL__", "fail");
 			return new ModelAndView("redirect:/");
 		}
-		session.setAttribute("__FAIL__", "");
+		session.setAttribute("__FAIL__", "");// 지워도 될듯
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~!!!~~~~~~~~~~~");
 		session.setAttribute(Member.USER, loginMember);
 		System.out.println("로그인됨");

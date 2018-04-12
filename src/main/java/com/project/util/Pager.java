@@ -2,7 +2,7 @@ package com.project.util;
 
 public class Pager {
 	
-	private int contentNum = 10; // 한페이지에 몇개 표시할지
+	private int contentNum = 15; // 한페이지에 몇개 표시할지
 	private int contentBlock = 5; // 한블럭에 몇개 페이지 표시할지
 	
 	private int startRow;
@@ -32,19 +32,19 @@ public class Pager {
 		if ( pageNum >=1 && pageNum <= contentBlock) {
 			setPrev(false);
 			setNext(true);
-			System.out.println("1~~!!!");
+			
 		}
 		
 		else if ( currentBlock == lastBlock ) {
 			setPrev(true);
 			setNext(false);
-			System.out.println("2~~~!!");
+			
 		}
 		
 		else {
 			setPrev(true);
 			setNext(true);
-			System.out.println("3~~~!!");
+			
 		}
 		
 	}

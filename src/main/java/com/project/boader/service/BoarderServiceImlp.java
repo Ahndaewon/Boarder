@@ -96,6 +96,14 @@ public class BoarderServiceImlp implements BoarderService {
 	}
 
 
+	@Override
+	public List<ArticleVO> selectCategory1() {
+		
+		return boarderDao.selectCategory1();
+		
+	}
+
+
 
 
 

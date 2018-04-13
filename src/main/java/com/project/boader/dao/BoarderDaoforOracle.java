@@ -42,6 +42,12 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 		return getSqlSession().update("BoarderDao.increamentViewCount", id);
 	}
 
+	@Override
+	public List<ArticleVO> selectCategory1() {
+		
+		return getSqlSession().selectList("BoarderDao.selectCategory1");
+	}
+
 	
 	
 	

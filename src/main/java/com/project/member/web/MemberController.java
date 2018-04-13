@@ -69,7 +69,8 @@ public class MemberController {
 		
 		if (errors.hasErrors()) {
 			System.out.println("에러");
-			return new ModelAndView("main");
+			/*return new ModelAndView("main");*/
+			return new ModelAndView("redirect:/");
 		}
 		//나머지 파라미터 때문에 에러
 		 
@@ -90,7 +91,7 @@ public class MemberController {
 		session.setAttribute(Member.USER, loginMember);
 		System.out.println("로그인됨");
 		
-		return new ModelAndView("main");
+		return new ModelAndView("redirect:/");
 		
 		
 	}
@@ -100,7 +101,7 @@ public class MemberController {
 		session.invalidate();
 		System.out.println("로그아웃");
 		
-		return "main";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value="/api/exists/id", method=RequestMethod.POST)

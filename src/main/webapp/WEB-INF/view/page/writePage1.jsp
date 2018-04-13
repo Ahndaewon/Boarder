@@ -13,6 +13,38 @@
  
 </head>
 <script type="text/javascript">
+	
+	function strCheck(){
+		
+		var str = $("#title").val();
+		if ( $("#title").val().length > 50 ) {
+			alert("글자수는 50글자로 제한합니다.");
+			var subStr = str.substring(0,39);
+			$("#title").val(subStr);
+			return false;
+			
+	    }
+	}
+
+
+
+
+
+	$().ready(function(){
+		$("#title").focus();
+		
+		$("#title").keyup(function(){
+			strCheck();
+		});
+		
+		
+	});
+
+	
+
+
+
+
     $(function(){
         //전역변수
         var obj = [];              
@@ -36,9 +68,29 @@
             //id가 smarteditor인 textarea에 에디터에서 대입
             obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
             //폼 submit
+            
+            
+            strCheck();
+            
+           if ( $("#title").val() == "") {
+    			alert("제목을 입력하세요");
+    			$("#title").focus();
+    			return false;
+    		}
+    		if ( $("#editor").val().length == 0 || $("#editor").val() == "<p>&nbsp;</p>" || $("#editor").val() == "" ) {
+    			alert("내용을 입력하세요");
+    			$("#editor").focus();
+    			return false;
+    		}
+			
+			
             $("#insertBoardFrm").submit();
         });
     });
+    
+    
+   
+    
 </script>
 <body>
  
@@ -71,4 +123,3 @@
  
 </body>
 </html>
-

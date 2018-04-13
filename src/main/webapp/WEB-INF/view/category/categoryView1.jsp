@@ -8,6 +8,21 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css"/>">
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/category1.css"/>"> 
 
+	<script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>">
+	</script>
+	
+	<script type="text/javascript">
+		
+		$().ready(function(){
+		 	var innerHeight = $(".innerBox").height();
+			
+			$(".login").css("height", innerHeight);
+			 
+			
+		});
+	
+	
+	</script>
 		<title>category1</title>
 	</head>
 <body>
@@ -35,14 +50,12 @@
       		<jsp:include page="/WEB-INF/view/page/viewPage1.jsp"></jsp:include>
       	</div>
       </div>
-      	
-
-
-
 
      </div>
 
-
+	 <div>
+	 	<jsp:include page="/WEB-INF/view/footer.jsp"></jsp:include>
+	 </div>
 
    </div>
 	

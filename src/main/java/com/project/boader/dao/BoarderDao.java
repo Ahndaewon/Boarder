@@ -19,4 +19,6 @@ public interface BoarderDao {
 	
 	public int increamentViewCount(int id);
 	
+	public List<ArticleVO> selectCategory1();
+	
 }

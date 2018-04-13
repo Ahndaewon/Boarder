@@ -2,7 +2,7 @@
 		 width : 300px;
 		 height : 150px; 
 		 box-sizing: border-box; 
-		 border-bottom: 2px solid #000;
+		 border-bottom: 2px solid #8c8c8c;
 		 display: table-cell; 
 		 vertical-align: middle; 
 		 text-align: center; 
@@ -25,7 +25,7 @@
 	}
 	
 	.fail{
-		display: none;
+		
 		color: #ff80c0;
 		font-size: 8pt;
 	}

@@ -1,18 +1,23 @@
+
+
+
 #wrapper {
 	width: 1000px;
-	margin : 0px;
 	margin : auto;
+
 }
 
 .main {
 	width: 1000px;
-	height: 50px;
+	height: 70px;
 	text-align: center;
 	display: table-cell;
 	vertical-align: middle;
 	background-color: #e3e3e3;
 	box-sizing: border-box;
-	border: solid #000000 2px;
+	
+	border-style: outset;
+	border-radius: 15px;
 }
 
 .login {
@@ -22,8 +27,11 @@
 	vertical-align : top;
 	background-color: #e9fefe;
 	box-sizing: border-box;
-	border-right: solid #000 2px;
-	border-left: solid #000 2px;
+	border: solid #8c8c8c 2px;
+	border-radius: 15px; 
+	margin-top: 10px;
+	
+	      
 }
 
 

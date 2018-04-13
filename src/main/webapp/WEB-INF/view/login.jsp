@@ -6,13 +6,50 @@
 <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+
+	function submitLogin(){
+		
+		$(".fail").remove();
+		var needId = $("<div class='fail'>아이디를 입력하세요 </div>");
+		var needPass = $("<div class='fail'>비밀번호를 입력하세요 </div>");
+		
+		if ($("#logid").val() == "") {
+			
+			$("#logid").focus();
+			$(".innerLog1").append(needId);
+			return false;
+		}
+		
+		if ($("#logpassword").val() == "") {
+			
+			$("#logpassword").focus();
+			$(".innerLog1").append(needPass);
+			return false;
+			
+		}
+		
+		$("#loginForm").attr({
+			"action" : "<c:url value="/login"/>",
+			"method" : "post"
+		}).submit();
+	} 
+
+
+
 	$().ready(function(){
 		
-		<c:if test="${empty sessionScope.__FAIL__}">
-			$(".fail").hide();
-		</c:if>
+		var failLogin = $("<div class='fail'>아이디, 비밀번호를 확인하세요 </div>");
+		<c:choose>
+			<c:when test="${empty sessionScope.__FAIL__ eq 'fail'}">
+				$(".innerLog1").append(failLogin);	
+			</c:when>
+			
+			<c:otherwise>
+				$(".fail").remove();	 
+			</c:otherwise>
+		</c:choose>  
 		
-		
+		<c:remove var="__FAIL__" scope="session" />
 		
 		
 		<c:if test="${not empty sessionScope.__USER__}">
@@ -21,28 +58,34 @@
 			$(".log").show();
 			$("#logout").show();
 			$("#logpassword").hide();
-			$(".fail").hide();
 			
 		</c:if>
 	
 		
-		
+	<!--로그인 엔터 구현 및 입력값 validation check-->	
 		
 		$("#loginBtn").click(function(){
 			
-			$("#loginForm").attr({
-				"action" : "<c:url value="/login"/>",
-				"method" : "post"
-			}).submit();
 			
-			<c:if test="${sessionScope.__FAIL__ eq 'fail' }">
-				$(".fail").show();				
-			</c:if>
+			
+			
+			submitLogin();
 			
 		});
 		
+		$("#logid").keyup(function(e){
+			if ( e.keyCode == 13 ) {
+				submitLogin();
+			}
+		});
 		
-		
+		$("#logpassword").keyup(function(e){
+			
+			if ( e.keyCode == 13 ) {
+				submitLogin();
+			}
+		});
+		 
 
 	});
 
@@ -54,6 +97,7 @@
  <div class="logInput" >
      
      <div>
+     	<!--validation check로 인한 메시지 나오지 않음 /login에서 / url로 redirect -->
      	<form:form modelAttribute="loginForm">
      		<div>
 	     		<div class="innerLog1" >
@@ -67,7 +111,6 @@
 		      		<div>
 		       			<form:errors path="password"/>
 		       		</div>
-		       		<div class=fail style=" color: #ff80c0; font-size: 8pt;">아이디, 비밀번호를 확인하세요 </div>
 	      		</div>
       	
 	      		<div class="innerLog2">

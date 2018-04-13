@@ -20,4 +20,6 @@ public interface BoarderService {
 	
 	public boolean increamentViewCount(int id);
 	
+	public List<ArticleVO> selectCategory1();
+	
 }

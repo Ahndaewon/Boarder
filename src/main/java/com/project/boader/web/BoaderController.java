@@ -80,9 +80,22 @@ public class BoaderController {
     }
     
 	@RequestMapping("/")
-	public String mainPage() {
+	public ModelAndView mainPage() {
 		
-		return "main";
+		ModelAndView view = new ModelAndView();
+		view.setViewName("main");
+		
+		List<ArticleVO> articleList = boarderService.selectCategory1();
+		
+		if ( articleList == null ) {
+			return new ModelAndView("/view/error/404");
+		}	
+		
+		view.addObject("articleList", articleList);
+		
+		
+		
+		return view;
 	}
 	
 	@RequestMapping("/category1")
@@ -230,6 +243,19 @@ public class BoaderController {
 		}
 		
 		return "redirect:/view/"+ id;
+	}
+	
+	
+	@RequestMapping("modify/{id}")
+	public ModelAndView modify() {
+		
+		ModelAndView view = new ModelAndView();
+		
+		
+		
+		return view;
+		
+		
 	}
 	
 	@RequestMapping("/download/{id}")

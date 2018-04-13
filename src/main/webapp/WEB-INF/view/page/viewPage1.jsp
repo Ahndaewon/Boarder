@@ -9,6 +9,8 @@
 <script type="text/javascript">
 	$().ready(function(){
 		
+		
+		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
 			alert("잘못된 경로로 접근하셨습니다.");
 			<c:remove var="__REMOVE__" scope="session" />

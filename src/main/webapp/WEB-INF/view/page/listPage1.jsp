@@ -4,6 +4,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/listPage.css"/>">
 
+
 <style>
 table {
 	/* border: 1px solid #444444; */
@@ -61,7 +62,7 @@ td#titleTd > a{
 	text-align: center;
 }
 
-#titleTd > img {
+#titleTd > a > img {
 	width: 15px;
 	height: 15px;
 }
@@ -77,6 +78,7 @@ td#titleTd > a{
 	function page(idx){
 		var pagenum = idx;
 		location.href="/category1?pagenum="+ pagenum;
+		
 	
 	
 }
@@ -86,7 +88,7 @@ td#titleTd > a{
 	<div class="list" style="margin-top: 50px;">
 		
 		
-		<table style="margin-top: 50px; ">
+		<table style="margin-top: 30px; ">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -104,11 +106,13 @@ td#titleTd > a{
 						
 							<a href="<c:url value="/read/${article.id}"/>">
 								${article.title}
+							
+								<c:if test="${not empty article.fileName}">
+									<img src="<c:url value="/static/img/fileIcon.png"/>"/>
+								</c:if>
 							</a>
 						
-							<c:if test="${not empty article.fileName}">
-								<img src="<c:url value="/static/img/fileIcon.png"/>"/>
-							</c:if>
+							
 							
 						</td>
 						<td id="dateTd">${article.writeDate}</td>
@@ -125,16 +129,16 @@ td#titleTd > a{
 		
 			<div id="pageBox">
 				<c:if test="${pager.prev}">
-							<a style="text-decoration: none;" href="javascript:page(${pager.startPage}-1)">이전</a>
+							<a style="text-decoration: none;" href="javascript:page(${pager.startPage}-1)">이전&nbsp</a>
 						</c:if>
 						
 						<c:forEach begin="${pager.startPage}" end="${pager.endPage}" var="idx"> 
 							<c:choose>
 								<c:when test="${pager.pageNum eq idx}">
-									<a style="text-decoration: none; font-weight: bold; color: #000;" href="javascript:page(${idx})">${idx}</a>
+									<a style="text-decoration: none; font-weight: bold; color: #000;" href="javascript:page(${idx})">${idx}&nbsp</a>
 								</c:when>
 								<c:otherwise>
-									<a style="text-decoration: none;" href="javascript:page(${idx})">${idx}</a>
+									<a style="text-decoration: none;" href="javascript:page(${idx})">${idx}&nbsp</a>
 								</c:otherwise>
 								
 							</c:choose>

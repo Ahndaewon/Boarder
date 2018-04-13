@@ -130,6 +130,29 @@
 		WHERE	ID = #{id}
 	</update>
 
+	<select id="selectCategory1" resultMap="ArticleVOMap">
+		
+		  SELECT ROWNUM RNUM, C.*
+	        FROM (
+	                SELECT	A.ID 				A_ID
+	                        , MEMBER_ID 		
+	                        , TITLE
+	                        , BODY
+	                        , TO_CHAR(WRITE_DATE, 'YY.MM.DD HH24:MI') WRITE_DATE	
+	                        , VIEW_COUNT		
+	                        , RECOMMEND_COUNT	
+	                        , REQUEST_IP		
+	                        , FILENAME 
+	                        , M.NICKNAME
+	                FROM	ARTICLE A, MEMBER M
+	                WHERE	A.MEMBER_ID = M.ID(+)
+	                ORDER	BY A.ID	DESC
+	                ) C
+	        WHERE   ROWNUM <![CDATA[<=]]> 6
+	
+	</select>
+
+
   
   </mapper>
   

@@ -21,4 +21,6 @@ public interface BoarderDao {
 	
 	public List<ArticleVO> selectCategory1();
 	
+	public int updateArticle(ArticleVO article);
+	
 }

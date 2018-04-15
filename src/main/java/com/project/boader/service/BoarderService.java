@@ -22,4 +22,6 @@ public interface BoarderService {
 	
 	public List<ArticleVO> selectCategory1();
 	
+	public boolean updateArticle(ArticleVO article);
+	
 }

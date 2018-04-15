@@ -69,10 +69,9 @@
             obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
             //폼 submit
             
-            
             strCheck();
-            
-           if ( $("#title").val() == "") {
+             
+        	if ( $("#title").val() == "") {
     			alert("제목을 입력하세요");
     			$("#title").focus();
     			return false;
@@ -82,6 +81,13 @@
     			$("#editor").focus();
     			return false;
     		}
+			
+    		var mode = "${mode}";
+    		if ( mode == "modify" ) {
+    			$(".formClass").attr("action","/modify/${article.id}");
+    		}
+    		
+    		
 			
 			
             $("#insertBoardFrm").submit();
@@ -94,25 +100,41 @@
 </script>
 <body>
  
-   
     <div id="smartEditor">
-   		<form:form action="/write1" method="post" modelAttribute="insertBoardFrm"  enctype="multipart/form-data">
+   		<form:form action="/write1" method="post" modelAttribute="insertBoardFrm"  class="formClass" enctype="multipart/form-data">
 			<p style="margin-bottom: 100px;"></p>
 			<p></p>
 			<p></p>
 			
 			<div id="titleBox" style="text-align: left">
-				<input type="text" id="title" name="title" placeholder="제목을 입력하세요" style="width: 650px;" >
-			</div>
-			
-			<div id="bodyBox">
-				<textarea id="editor"; name="body" style="width: 650px; height: 400px;"></textarea>
-			</div>
-			
-			<div style="text-align: left;">
-				<input type="button" id="insertBoard" value="글쓰기" >
+				<input type="text" id="title" name="title" placeholder="제목을 입력하세요" 
+												style="width: 650px;" value="${article.title}" >
 			</div>
 			<div>
+				<form:errors path="title"/>
+			</div>
+   
+			
+			<div id="bodyBox">
+				<textarea id="editor"; name="body" style="width: 650px; height: 400px;">${article.body}</textarea>
+			</div>
+			<div>
+				<form:errors path="body"/>
+			</div>
+			<div style="text-align: right;">
+				<input type="button" id="insertBoard" value="글쓰기" >
+			</div>
+			
+			<c:if test="${ mode eq 'modify' && not empty article.fileName }">
+			
+				<div class="inputFile">
+					첨부파일:<input type="checkbox" id="fileName" name="fileName" class="fileName" value="${article.fileName}">
+					<label for="fileName">${article.fileName}</label>
+					
+				</div>
+			</c:if>
+			
+			<div class="inputFile">
 				<input type="file" id="file" name="file">			
 			</div>
 			

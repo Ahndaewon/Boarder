@@ -1,5 +1,6 @@
 package com.project.boader.web;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,8 +12,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -176,14 +179,23 @@ public class BoaderController {
 	
 	//category1 글쓰기
 	@RequestMapping(value="/write1", method=RequestMethod.GET)
-	public String article1() {
+	public String article1(HttpSession session) {
 		
 		return "/category/categoryWrite1";
 	}
 
 	@RequestMapping(value="/write1", method=RequestMethod.POST)
-	public ModelAndView categoryWrite(@ModelAttribute("articleForm") ArticleVO articleVO, 
+	public ModelAndView categoryWrite(@ModelAttribute("articleForm") @Valid ArticleVO articleVO, Errors errors, 
 							HttpServletRequest request, HttpSession session) {
+		
+		
+		
+		if ( errors.hasErrors() || articleVO.getBody().equals("<p>&nbsp;</p>") ) {
+			System.out.println("글작성 실패");
+			return new ModelAndView("/category/categoryWrite1");
+		}
+		
+		
 		
 		/*ModelAndView view = new ModelAndView();*/
 		MemberVO member = (MemberVO) session.getAttribute("__USER__");
@@ -233,7 +245,18 @@ public class BoaderController {
 			return "redirect:/view/"+id;
 		}
 		
+		//업로드한 파일이 존재하면 지워줌
+		String fileName = article.getFileName();
+		
+		if ( fileName != null ) {
+			File file = 
+					new File("D:\\Upload/"+ fileName);
+			file.delete();
+		}
+		
 		boolean isDelete = boarderService.removeArticle(id);
+		
+		
 		
 		
 		if ( isDelete ) {
@@ -246,18 +269,112 @@ public class BoaderController {
 	}
 	
 	
-	@RequestMapping("modify/{id}")
-	public ModelAndView modify() {
+	@RequestMapping(value="modify/{id}", method=RequestMethod.GET)
+	public ModelAndView modifyGet(@PathVariable int id, HttpSession session) {
 		
 		ModelAndView view = new ModelAndView();
+		
+		MemberVO member = (MemberVO)session.getAttribute(Member.USER);
+		
+		ArticleVO article = boarderService.selectViewPage(id);
+		
+		if ( !article.getMemberId().equals(member.getId()) ) {
+			//본인의 글이 아닐시 수정 막음
+			return new ModelAndView("redirect:/view"+id);
+		}
+		System.out.println(article.getFileName());
+		view.addObject("article", article);
+		view.addObject("mode", "modify");
+		view.setViewName("/category/categoryWrite1");
 		
 		
 		
 		return view;
-		
-		
 	}
 	
+	@RequestMapping(value="/modify/{id}", method=RequestMethod.POST)
+	public String modifyPost( @PathVariable int id 
+				,@ModelAttribute("articleForm") @Valid ArticleVO articleVO, Errors errors, 
+				HttpServletRequest request, HttpSession session) {
+		
+		if ( errors.hasErrors() || articleVO.getBody().equals("<p>&nbsp;</p>") ) {
+			System.out.println("글수정 실패");
+			return "/category/categoryWrite1";
+		}
+		
+		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
+		
+		ArticleVO originalArticle = boarderService.selectViewPage(id);
+		
+		if ( !member.getId().equals(originalArticle.getMemberId()) ) {
+			System.out.println("본인글 아님");
+			return "redirect:/";
+		}
+		
+		boolean isModify = false;
+		ArticleVO newArticle = new ArticleVO();
+		
+		/*
+		0. 아이피 변경 확인  
+		1. 제목 변경확인
+		2. 내용 변경 확인
+		3. 파일변경 확인
+		4. 변경이 모두 안됬는지
+		
+		변경될때 날짜
+		*/
+		newArticle.setId(originalArticle.getId());
+		newArticle.setMemberId( member.getId() );
+		
+		
+		//아이피 변경
+		String ip = request.getRemoteAddr();
+		if ( !ip.equals( originalArticle.getRequestIp())  ) {
+			newArticle.setRequestIp(ip);
+			System.out.println("1");
+			isModify = true;
+		}
+		
+		if ( !originalArticle.getTitle().equals( articleVO.getTitle()) ) {
+			newArticle.setTitle( articleVO.getTitle() );
+			System.out.println("2");
+			isModify = true;
+		}
+		if ( !originalArticle.getBody().equals(articleVO.getBody()) ) {
+			newArticle.setBody(articleVO.getBody());
+			System.out.println("3");
+		}
+		
+		if ( articleVO.getFileName().length() > 0 ) {
+			File file = 
+					new File("D:\\Upload/" + articleVO.getFileName());
+			file.delete();
+			newArticle.setFileName("");
+			System.out.println("4");
+		}
+		else {
+			System.out.println("5");
+			newArticle.setFileName(originalArticle.getFileName());
+		}
+		
+		
+		articleVO.save();//변경됬으면 sava
+		if ( !originalArticle.getFileName().equals(articleVO.getFileName()) ) {
+			newArticle.setFileName(articleVO.getFileName());
+			isModify = true;
+			
+			System.out.println("6");
+		}
+		
+		if ( isModify ) {
+			System.out.println("수정완료");
+			boarderService.updateArticle(newArticle);
+			return "redirect:/category1";
+		}
+		System.out.println("변경없음");		
+		return "redirect:/category1";
+	}
+
 	@RequestMapping("/download/{id}")
 	public void downloadFile(@PathVariable int id, HttpServletRequest request
 									, HttpServletResponse response) {

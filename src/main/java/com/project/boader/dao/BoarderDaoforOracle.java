@@ -48,6 +48,12 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 		return getSqlSession().selectList("BoarderDao.selectCategory1");
 	}
 
+	@Override
+	public int updateArticle(ArticleVO article) {
+		System.out.println(article.getBody()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		return getSqlSession().update("BoarderDao.updateArticle", article);
+	}
+
 	
 	
 	

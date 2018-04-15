@@ -32,3 +32,19 @@
 #bodyBox {
 	
 }
+
+#filName, #file {
+	text-align: left;
+	
+}
+
+#insertBoard {
+	margin-right: 18px;
+	width: 100px;
+	height: 50px;
+}
+.inputFile {
+	text-align: left;	
+}
+
+

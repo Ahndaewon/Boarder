@@ -11,8 +11,11 @@
 		<config>src/main/webapp/WEB-INF/spring/boarderContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/controllerContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/emailContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/testContext.xml</config>
 	</configs>
 	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/spring/applicationContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/rootContext.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

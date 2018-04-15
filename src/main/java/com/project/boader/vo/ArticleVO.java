@@ -3,6 +3,8 @@ package com.project.boader.vo;
 import java.io.File;
 import java.io.IOException;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.member.vo.MemberVO;
@@ -11,7 +13,10 @@ public class ArticleVO {
 
 	private int id;
 	private String memberId;
+	
+	@NotEmpty(message="제목을 입력하세요")
 	private String title;
+	@NotEmpty(message="내용을 입력하세요")
 	private String body;
 	private String writeDate;
 	private int viewCount;

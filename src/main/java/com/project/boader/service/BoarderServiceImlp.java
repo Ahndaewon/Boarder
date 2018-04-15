@@ -104,6 +104,17 @@ public class BoarderServiceImlp implements BoarderService {
 	}
 
 
+	@Override
+	public boolean updateArticle(ArticleVO article) {
+
+		if ( boarderDao.updateArticle(article) > 0 ) {
+			return true;
+		}
+		
+		return false;
+	}
+
+
 
 
 

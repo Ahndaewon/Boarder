@@ -151,7 +151,23 @@
 	        WHERE   ROWNUM <![CDATA[<=]]> 6
 	
 	</select>
-
+	
+	<update id="updateArticle" parameterType="ArticleVO">
+		UPDATE	ARTICLE
+		SET		WRITE_DATE = SYSDATE
+		
+			<if test="title != null and title != '' ">
+				,TITLE = #{title}
+			</if>
+			<if test="body != null and body != '' ">
+				,body = #{body}
+			</if>
+			<if test="requestIp != null and requestIp != '' ">
+				,REQUEST_IP = #{requestIp}
+			</if>
+				,FILENAME = #{fileName}
+		WHERE	ID = #{id}
+	</update>
 
   
   </mapper>

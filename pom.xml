@@ -25,7 +25,18 @@
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-webmvc</artifactId>
   		<version>5.0.4.RELEASE</version>
+	  	<exclusions>
+	  			<exclusion>
+	  				<groupId>org.springframework</groupId>
+	  				<artifactId>spring-jcl</artifactId>
+	  			</exclusion>
+	  	</exclusions>
+  	<!--스프링 로그 제외  -->
   	</dependency>
+  	
+  	
+  	
+  	
   	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>jstl</artifactId>
@@ -71,13 +82,13 @@
   		<version>1.4</version>
   	</dependency>
 
-
-
-  	<dependency>
+	<dependency>
   		<groupId>commons-logging</groupId>
   		<artifactId>commons-logging</artifactId>
   		<version>1.2</version>
   	</dependency>
+
+  
   	<dependency>
   		<groupId>com.fasterxml.jackson.core</groupId>
   		<artifactId>jackson-databind</artifactId>
@@ -90,6 +101,9 @@
   		<artifactId>spring-context-support</artifactId>
   		<version>5.0.4.RELEASE</version>
   	</dependency>
+  	
+  	
+  	
   	<dependency>
   		<groupId>javax.mail</groupId>
   		<artifactId>mail</artifactId>
@@ -123,6 +137,11 @@
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-api</artifactId>
   		<version>1.7.25</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.quartz-scheduler</groupId>
+  		<artifactId>quartz</artifactId>
+  		<version>2.3.0</version>
   	</dependency>
   </dependencies>
 </project>

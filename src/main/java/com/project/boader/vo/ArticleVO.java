@@ -13,19 +13,20 @@ public class ArticleVO {
 
 	private int id;
 	private String memberId;
-	
-	@NotEmpty(message="제목을 입력하세요")
+
+	@NotEmpty(message = "제목을 입력하세요")
 	private String title;
-	@NotEmpty(message="내용을 입력하세요")
+	@NotEmpty(message = "내용을 입력하세요")
 	private String body;
 	private String writeDate;
 	private int viewCount;
 	private int recommendCount;
-	private String requestIp;
+	private int IpId;
 	private String fileName;
 	private MultipartFile file;
 	private MemberVO memberVO;
-	
+	private ArticleIpVO articleIpVO;
+
 	public int getId() {
 		return id;
 	}
@@ -82,16 +83,16 @@ public class ArticleVO {
 		this.recommendCount = recommendCount;
 	}
 
-	public String getRequestIp() {
-		return requestIp;
+	public int getIpId() {
+		return IpId;
 	}
 
-	public void setRequestIp(String requestIp) {
-		this.requestIp = requestIp;
+	public void setIpId(int ipId) {
+		IpId = ipId;
 	}
 
 	public String getFileName() {
-		if ( fileName == null ) {
+		if (fileName == null) {
 			fileName = "";
 		}
 		return fileName;
@@ -108,9 +109,7 @@ public class ArticleVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
-	
+
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}
@@ -119,14 +118,22 @@ public class ArticleVO {
 		this.memberVO = memberVO;
 	}
 
+	public ArticleIpVO getArticleIpVO() {
+		return articleIpVO;
+	}
+
+	public void setArticleIpVO(ArticleIpVO articleIpVO) {
+		this.articleIpVO = articleIpVO;
+	}
+
 	public String save() {
-		
-		if ( file != null && !file.isEmpty() ) {
-			
+
+		if (file != null && !file.isEmpty()) {
+
 			fileName = file.getOriginalFilename();
 			System.out.println("filename" + file.getOriginalFilename());
-			File newFile = new File("D:\\Upload/"+ file.getOriginalFilename() ) ;
-			
+			File newFile = new File("D:\\Upload/" + file.getOriginalFilename());
+
 			try {
 				file.transferTo(newFile);
 				return newFile.getAbsolutePath();
@@ -135,10 +142,10 @@ public class ArticleVO {
 			} catch (IllegalStateException e) {
 				throw new RuntimeException(e.getMessage(), e);
 			}
-			
+
 		}
 		return null;
-		
+
 	}
 
 }

@@ -3,6 +3,7 @@ package com.project.boader.service;
 import java.util.List;
 
 import com.project.boader.dao.BoarderDao;
+import com.project.boader.vo.ArticleIpVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
@@ -18,13 +19,27 @@ public class BoarderServiceImlp implements BoarderService {
 
 
 	@Override
-	public boolean insertArticle(ArticleVO articleVO) {
+	public boolean insertArticle(ArticleVO articleVO, ArticleIpVO articleIp) {
 		
-		System.out.println(articleVO.getFileName());
+		//Iptable ID
+		int ipId = boarderDao.selectGetIpId();
 		
-		if ( boarderDao.insertArticle(articleVO) > 0) {
+		int articleId = boarderDao.selectGetArticleId();
+		
+		articleVO.setIpId(ipId);
+		articleVO.setId(articleId);
+		
+		articleIp.setId(ipId);
+		articleIp.setArticleId(articleId);
+		
+		
+		boolean isSuccess = boarderDao.insertIp(articleIp) > 0;
+		
+		
+		if ( boarderDao.insertArticle(articleVO) > 0 && isSuccess ) {
 			
 			return true;
+			
 		}
 		
 		return false;
@@ -73,7 +88,11 @@ public class BoarderServiceImlp implements BoarderService {
 	@Override
 	public boolean removeArticle(int id) {
 		
-		if( boarderDao.removeArticle(id) > 0 ) {
+		
+		boolean isSuccess = boarderDao.removeAtricleIp(id) > 0;
+		
+		
+		if( boarderDao.removeArticle(id) > 0 && isSuccess ) {
 			return true;
 		}
 		
@@ -82,17 +101,33 @@ public class BoarderServiceImlp implements BoarderService {
 
 
 	@Override
-	public boolean increamentViewCount(int id) {
+	public boolean increamentViewCount(int articleId, String memberId, String ip) {
 		
 		
+		ArticleIpVO articleIpVO = boarderDao.selectViewIp(memberId, articleId);
+		System.out.println(articleIpVO);
+		if ( articleIpVO == null ) {
 		
-		if ( boarderDao.increamentViewCount(id) > 0 ) {
+			ArticleIpVO articleIp = new ArticleIpVO();
+			int id;
+			id = boarderDao.selectGetIpId();
+			
+			System.out.println(memberId);
+			System.out.println(articleId);
+			
+			articleIp.setId(id);
+			articleIp.setMemberId(memberId);
+			articleIp.setArticleId(articleId);
+			articleIp.setRequestIp(ip);
+			
+			boarderDao.insertIp(articleIp);
+			boarderDao.increamentViewCount(articleId);
 			
 			return true;
 		}
 		
+			return false;
 		
-		return false;
 	}
 
 
@@ -105,12 +140,30 @@ public class BoarderServiceImlp implements BoarderService {
 
 
 	@Override
-	public boolean updateArticle(ArticleVO article) {
+	public boolean updateArticle(ArticleVO article, ArticleIpVO newArticleIpVO) {
 
-		if ( boarderDao.updateArticle(article) > 0 ) {
+		int id = article.getId();
+		
+		newArticleIpVO.setArticleId(id);
+		
+		boolean isSuccess = false;
+		
+		if ( newArticleIpVO.getRequestIp() != null ) {
+			boarderDao.updateArticleIp(newArticleIpVO);
+			isSuccess = true;
+		}
+		
+		if ( boarderDao.updateArticle(article) > 0 && isSuccess ) {
 			return true;
 		}
 		
+		return false;
+	}
+
+
+	@Override
+	public boolean insertIp() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

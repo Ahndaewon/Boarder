@@ -2,13 +2,14 @@ package com.project.boader.service;
 
 import java.util.List;
 
+import com.project.boader.vo.ArticleIpVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
 public interface BoarderService {
 	
 	
-	public boolean insertArticle(ArticleVO articleVO);
+	public boolean insertArticle(ArticleVO articleVO, ArticleIpVO articleIp);
 		
 	public  List<ArticleVO> selectAll(Pager pager);	
 
@@ -18,10 +19,14 @@ public interface BoarderService {
 	
 	public boolean removeArticle(int id);
 	
-	public boolean increamentViewCount(int id);
+	public boolean increamentViewCount(int articleId, String memberId, String ip);
 	
 	public List<ArticleVO> selectCategory1();
 	
-	public boolean updateArticle(ArticleVO article);
+	public boolean updateArticle(ArticleVO article, ArticleIpVO newArticleIpVO);
+	
+	public boolean	insertIp();
+	
+	
 	
 }

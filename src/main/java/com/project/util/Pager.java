@@ -2,7 +2,7 @@ package com.project.util;
 
 public class Pager {
 	
-	private int contentNum = 15; // 한페이지에 몇개 표시할지
+	private int contentNum = 5; // 한페이지에 몇개 표시할지
 	private int contentBlock = 5; // 한블럭에 몇개 페이지 표시할지
 	
 	private int startRow;
@@ -13,7 +13,7 @@ public class Pager {
 	private int startPage =1; // 현재 페이지 블록의 시작페이지
 	private int endPage = 5; // 현재페이지 블록의 마지막 페이지
 	private boolean prev = false; // 이전 페이지로 가는 화살표
-	private boolean next; // 다음 페이지로 가는 화살표
+	private boolean next = false; // 다음 페이지로 가는 화살표
 	private int currentBlock; // 현재 페이지 블록
 	private int lastBlock; // 마지막 페이지 블록
 	
@@ -29,7 +29,14 @@ public class Pager {
 	
 	public void prevNext( int pageNum ) {
 		
-		if ( pageNum >=1 && pageNum <= contentBlock) {
+		int test = calcPage(totalCount);
+		
+		if ( test <= contentBlock ) {
+			setPrev(false);
+			setNext(false);
+		}
+		
+		else if ( pageNum >=1 && pageNum <= contentBlock + 1) {
 			setPrev(false);
 			setNext(true);
 			
@@ -90,6 +97,8 @@ public class Pager {
 
 	public void setEndPage() {
 		//해당 블럭의 마지막 페이지
+		
+		
 		
 		//마지막 블럭일때
 		if ( lastBlock == currentBlock ) {

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.boader.service.BoarderService;
+import com.project.boader.vo.ArticleIpVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.constants.Article;
 import com.project.constants.Member;
@@ -148,27 +149,35 @@ public class BoaderController {
 	}
 	
 	
-	@RequestMapping("/read/{id}") 
+	/*@RequestMapping("/read/{id}") 
 	public String readPage( @PathVariable int id ) {
 		
-		boarderService.increamentViewCount(id);
 		
 		return "redirect:/view/"+id;
-	}
+	}*/
 	
 	
 	//category1 글보기
 	@RequestMapping("/view/{id}")
-	public ModelAndView viewPage(@PathVariable int id ) {
+	public ModelAndView viewPage(@PathVariable int id, HttpSession session, HttpServletRequest request) {
 		
 		ModelAndView view = new ModelAndView();
-		
 		
 		ArticleVO article = boarderService.selectViewPage(id);
 		
 		if ( article == null ) {
 			return new ModelAndView("redirect:/category1");
 		}
+		
+		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
+		
+		String memberId = member.getId();
+		
+		
+		String ip = request.getRemoteAddr();
+		
+		boarderService.increamentViewCount(id, memberId, ip) ;
+		
 		
 		view.addObject("article", article);
 		view.setViewName("/category/categoryView1");
@@ -206,13 +215,17 @@ public class BoaderController {
 		System.out.println(articleVO.getBody());
 		System.out.println(articleVO.getFile().getOriginalFilename());
 		
-		articleVO.setRequestIp(request.getRemoteAddr());
 		articleVO.setMemberId(member.getId());// 로그인한 멤버 아이디 넣어줌
 		articleVO.save();
 		
+		ArticleIpVO articleIp = new ArticleIpVO();
+		articleIp.setMemberId(member.getId());
+		articleIp.setRequestIp( request.getRemoteAddr() );
+		
+		
 		if( articleVO != null ) {
 			
-			boarderService.insertArticle(articleVO);
+			boarderService.insertArticle(articleVO, articleIp);
 			return new ModelAndView("redirect:/category1");
 		}
 		
@@ -245,18 +258,17 @@ public class BoaderController {
 			return "redirect:/view/"+id;
 		}
 		
-		//업로드한 파일이 존재하면 지워줌
 		String fileName = article.getFileName();
 		
+		//업로드한 파일이 존재하면 지워줌
 		if ( fileName != null ) {
 			File file = 
 					new File("D:\\Upload/"+ fileName);
 			file.delete();
 		}
+		//iptatable에서 
 		
 		boolean isDelete = boarderService.removeArticle(id);
-		
-		
 		
 		
 		if ( isDelete ) {
@@ -303,8 +315,9 @@ public class BoaderController {
 		}
 		
 		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
-		
 		ArticleVO originalArticle = boarderService.selectViewPage(id);
+		
+		
 		
 		if ( !member.getId().equals(originalArticle.getMemberId()) ) {
 			System.out.println("본인글 아님");
@@ -329,8 +342,12 @@ public class BoaderController {
 		
 		//아이피 변경
 		String ip = request.getRemoteAddr();
-		if ( !ip.equals( originalArticle.getRequestIp())  ) {
-			newArticle.setRequestIp(ip);
+		String originalIp = originalArticle.getArticleIpVO().getRequestIp();
+		
+		ArticleIpVO newArticleIpVO = new ArticleIpVO();
+		
+		if ( !ip.equals( originalIp ) ) {
+			newArticleIpVO.setRequestIp(ip);
 			System.out.println("1");
 			isModify = true;
 		}
@@ -340,8 +357,10 @@ public class BoaderController {
 			System.out.println("2");
 			isModify = true;
 		}
+		
 		if ( !originalArticle.getBody().equals(articleVO.getBody()) ) {
 			newArticle.setBody(articleVO.getBody());
+			isModify = true;
 			System.out.println("3");
 		}
 		
@@ -368,12 +387,14 @@ public class BoaderController {
 		
 		if ( isModify ) {
 			System.out.println("수정완료");
-			boarderService.updateArticle(newArticle);
+			
+			boarderService.updateArticle(newArticle, newArticleIpVO);
 			return "redirect:/category1";
 		}
 		System.out.println("변경없음");		
 		return "redirect:/category1";
 	}
+	
 
 	@RequestMapping("/download/{id}")
 	public void downloadFile(@PathVariable int id, HttpServletRequest request

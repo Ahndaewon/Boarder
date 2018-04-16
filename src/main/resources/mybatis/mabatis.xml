@@ -11,6 +11,7 @@
 		<typeAlias type="com.project.member.vo.LoginVO" alias="LoginVO" />
 		<typeAlias type="com.project.boader.vo.ArticleVO" alias="ArticleVO" />
 		<typeAlias type="com.project.util.Pager" alias="Pager" />
+		<typeAlias type="com.project.boader.vo.ArticleIpVO" alias="ArticleIpVO" />
 	</typeAliases>
 
 	<mappers>

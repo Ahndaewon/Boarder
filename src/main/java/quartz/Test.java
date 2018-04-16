@@ -1,28 +1,18 @@
-package test;
+package quartz;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-public class JobDetailBean  extends QuartzJobBean {
+public class Test extends QuartzJobBean{
 
-	private DummyTask dummyTask;
-	
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		
-		dummyTask.print();
 		
+		System.out.println("test!!!");
 		
-	}
-
-	public void setDummyTask(DummyTask dummyTask) {
-		this.dummyTask = dummyTask;
 	}
 	
 	
-	
-	
-	
-
 }

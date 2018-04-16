@@ -104,7 +104,7 @@ td#titleTd > a{
 						<td id="idTd">${article.id}</td>
 						<td id="titleTd">
 						
-							<a href="<c:url value="/read/${article.id}"/>">
+							<a href="<c:url value="/view/${article.id}"/>">
 								${article.title}
 							
 								<c:if test="${not empty article.fileName}">

@@ -1,9 +1,12 @@
 package com.project.boader.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import com.project.boader.vo.ArticleIpVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
@@ -38,6 +41,12 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 	}
 
 	@Override
+	public int removeAtricleIp(int id) {
+		return getSqlSession().delete("BoarderDao.removeAtricleIp", id);
+	}
+	
+	
+	@Override
 	public int increamentViewCount(int id) {
 		return getSqlSession().update("BoarderDao.increamentViewCount", id);
 	}
@@ -50,9 +59,42 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 
 	@Override
 	public int updateArticle(ArticleVO article) {
-		System.out.println(article.getBody()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		return getSqlSession().update("BoarderDao.updateArticle", article);
 	}
+
+	@Override
+	public int insertIp(ArticleIpVO articleIpVO) {
+		
+		return getSqlSession().insert("BoarderDao.insertIp", articleIpVO);
+	}
+
+	@Override
+	public int selectGetIpId() {
+		return getSqlSession().selectOne("BoarderDao.selectGetIpId");
+	}
+
+	@Override
+	public int selectGetArticleId() {
+		return getSqlSession().selectOne("BoarderDao.selectGetArticleId");
+	}
+
+	@Override
+	public int updateArticleIp(ArticleIpVO articleIpVO) {
+		return getSqlSession().update("BoarderDao.updateArticleIp");
+	}
+
+	@Override
+	public ArticleIpVO selectViewIp(String memberId ,int articleId) {
+		
+		Map<String, Object> idMap = new HashMap<String, Object>();
+		
+		idMap.put("memberId", memberId);
+		idMap.put("articleId", articleId);
+		
+		return getSqlSession().selectOne("BoarderDao.selectViewIp", idMap);
+	}
+
+	
 
 	
 	

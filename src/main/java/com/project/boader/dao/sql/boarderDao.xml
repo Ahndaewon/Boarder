@@ -13,9 +13,10 @@
   	<result column="WRITE_DATE" property="writeDate"/>
   	<result column="VIEW_COUNT" property="viewCount"/>
   	<result column="RECOMMEND_COUNT" property="recommendCount"/>
-  	<result column="REQUEST_IP" property="requestIp"/>
+  	<result column="IP_ID" property="ipId"/>
   	<result column="BODY" property="body"/>
   	<result column="FILENAME" property="fileName"/>
+  	
   	<association property="memberVO" javaType="MemberVO">
   		<id column="ID" property="id"/>
   		<result column="PASSWORD" property="password"/>
@@ -26,6 +27,13 @@
   		<result column="GRADE" property="grade"/>
   		<result column="ACCESS_COUNT" property="accessCount"/>
   		<result column="SALT" property="salt"/>
+  	</association>
+  	
+  	<association property="articleIpVO" javaType="ArticleIpVO">
+  		<result column="I_ID" property="id"/>
+  		<result column="ARTICLE_ID" property="articleId"/>
+  		<result column="I_MEMBER_ID" property="memberId"/>
+  		<result column="I_REQUEST_IP" property="requestIp"/>
   	</association>
   	
   </resultMap>
@@ -40,19 +48,19 @@
 			, WRITE_DATE
 			, VIEW_COUNT
 			, RECOMMEND_COUNT
-			, REQUEST_IP
+			, IP_ID
 			, BODY
 			, FILENAME
 		)
 		
 		VALUES (
-			ARTICLE_SEQ.NEXTVAL
+			#{id}
 			, #{memberId}	
 			, #{title}	
 			, SYSDATE		
 			, 0		
 			, 0		
-			, #{requestIp}		
+			, #{ipId}		
 			, #{body}
 			, #{fileName}
 		)
@@ -75,7 +83,7 @@
 	                        , TO_CHAR(WRITE_DATE, 'YY.MM.DD HH24:MI') WRITE_DATE	
 	                        , VIEW_COUNT		
 	                        , RECOMMEND_COUNT	
-	                        , REQUEST_IP		
+	                        , IP_ID		
 	                        , FILENAME 
 	                        , M.NICKNAME
 	                FROM	ARTICLE A, MEMBER M
@@ -92,17 +100,18 @@
   	<select id="selectViewPage" parameterType="_int" resultMap="ArticleVOMap">
   	
   		SELECT	A.ID 				A_ID
-  				, MEMBER_ID 		
+  				, A.MEMBER_ID 		
   				, TITLE
   				, BODY
   				, TO_CHAR(WRITE_DATE, 'YYYY.MM.DD HH24:MI') WRITE_DATE	
   				, VIEW_COUNT		
   				, RECOMMEND_COUNT	
-  				, REQUEST_IP		
+  				, I.REQUEST_IP		I_REQUEST_IP
   				, FILENAME 
   				, M.NICKNAME
-  		FROM	ARTICLE A, MEMBER M
+  		FROM	ARTICLE A, MEMBER M, AIP I
   		WHERE	A.MEMBER_ID = M.ID(+)
+  		AND		I.ID = A.IP_ID
   		AND		A.ID = #{id}
   	
   	</select>
@@ -124,6 +133,15 @@
   		
 	</delete>
 	
+	<delete id="removeAtricleIp" parameterType="_int">
+		DELETE
+		FROM	AIP
+		WHERE	ARTICLE_ID = #{id}
+		
+		
+	</delete>
+	
+	
 	<update id="increamentViewCount" parameterType="_int">
 		UPDATE	ARTICLE
 		SET		VIEW_COUNT = VIEW_COUNT + 1
@@ -141,7 +159,7 @@
 	                        , TO_CHAR(WRITE_DATE, 'YY.MM.DD HH24:MI') WRITE_DATE	
 	                        , VIEW_COUNT		
 	                        , RECOMMEND_COUNT	
-	                        , REQUEST_IP		
+	                        , IP_ID		
 	                        , FILENAME 
 	                        , M.NICKNAME
 	                FROM	ARTICLE A, MEMBER M
@@ -162,13 +180,73 @@
 			<if test="body != null and body != '' ">
 				,body = #{body}
 			</if>
-			<if test="requestIp != null and requestIp != '' ">
-				,REQUEST_IP = #{requestIp}
-			</if>
 				,FILENAME = #{fileName}
 		WHERE	ID = #{id}
 	</update>
+	
+	<update id="updateArticleIp" parameterType="ArticleIpVO">
+		UPDATE 	ARTICLE
+		SET		REQUEST_IP = #{requestIp}
+		WHERE	ARTICLE_ID = #{articleId}
+	</update>
 
+  
+  
+  	<insert id="insertIp"  parameterType="articleIpVO">
+  		INSERT INTO	AIP (
+  				ID
+  				<if test="articleId != null and articleId != '' ">
+  				,ARTICLE_ID
+  				</if>
+  				<if test="memberId != null and memberId != '' ">
+  				,MEMBER_ID
+  				</if>
+  				,VIEW_DATE 
+  				,REQUEST_IP
+  				
+  		)
+  		VALUES (
+  				#{id}
+  				<if test="articleId != null and articleId != '' ">
+  				,#{articleId}
+  				</if>
+  				<if test="memberId != null and memberId != '' ">
+  				,#{memberId}
+  				</if>
+  				,SYSDATE 
+  				,#{requestIp}
+  				
+  		)
+  	
+  	</insert>
+  	
+  	<select id="selectGetIpId" resultType="_int">
+  	
+  		SELECT	ARTICLE_IP_SEQ.NEXTVAL
+  		FROM	DUAL 
+  	
+  	</select>
+  	
+  	<select id="selectGetArticleId" resultType="_int">
+  	
+  		SELECT	ARTICLE_SEQ.NEXTVAL
+  		FROM	DUAL 
+  	
+  	</select>
+  	
+  	
+  	<select id="selectViewIp" parameterType="map" resultType="ArticleIpVO">
+  		SELECT	ID
+  				,ARTICLE_ID 	articleId
+  				,MEMBER_ID		memberId
+  				,REQUEST_IP		requestIp
+  				,VIEW_DATE		viewDate
+  		FROM	AIP
+  		WHERE	MEMBER_ID = #{memberId}
+  		AND		ARTICLE_ID = #{articleId}
+  	</select>
+  		
+  	
   
   </mapper>
   

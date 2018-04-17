@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.boader.service.BoarderService;
 import com.project.boader.vo.ArticleIpVO;
+import com.project.boader.vo.ArticleLikeVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.constants.Article;
 import com.project.constants.Member;
@@ -149,34 +150,24 @@ public class BoaderController {
 	}
 	
 	
-	/*@RequestMapping("/read/{id}") 
-	public String readPage( @PathVariable int id ) {
-		
-		
-		return "redirect:/view/"+id;
-	}*/
-	
-	
 	//category1 글보기
 	@RequestMapping("/view/{id}")
 	public ModelAndView viewPage(@PathVariable int id, HttpSession session, HttpServletRequest request) {
 		
 		ModelAndView view = new ModelAndView();
+		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
 		
+		String memberId = member.getId();
+		String ip = request.getRemoteAddr();
+		boarderService.increamentViewCount(id, memberId, ip) ;
 		ArticleVO article = boarderService.selectViewPage(id);
 		
 		if ( article == null ) {
 			return new ModelAndView("redirect:/category1");
 		}
 		
-		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
-		
-		String memberId = member.getId();
 		
 		
-		String ip = request.getRemoteAddr();
-		
-		boarderService.increamentViewCount(id, memberId, ip) ;
 		
 		
 		view.addObject("article", article);
@@ -414,6 +405,29 @@ public class BoaderController {
 		
 		
 	}
+	
+	
+	@RequestMapping(value="/like/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public int likeAction(@PathVariable int id, HttpSession session) {
+		
+		ArticleLikeVO likeVO = new ArticleLikeVO();
+		
+		MemberVO member = (MemberVO)session.getAttribute(Member.USER);
+		
+		String memberId = member.getId();
+		
+		likeVO.setArticleId(id);		
+		likeVO.setMemberId(memberId);
+		
+		int count = boarderService.likeAction(likeVO);
+		
+		
+		return count;
+	}
+	
+	
+	
 	
 	
 	@RequestMapping("/category2")

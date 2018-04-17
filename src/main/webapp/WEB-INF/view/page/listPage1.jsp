@@ -5,70 +5,6 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/listPage.css"/>">
 
 
-<style>
-table {
-	/* border: 1px solid #444444; */
-	margin : 0px auto;
-	vertical-align : middle;
-	text-align : center;
-	border: 1px solid bal;
-	font-size: 12px;
-    font-family: Gulim, 돋움, Dotum, Arial, AppleSDGothicNeo, AppleGothic, Sans-Serif;
-	
-}
-thead, #idTd, #dateTd  {
-	background-color: #DAE9F7;
-	
-}
-
-#titleTd {
-	text-align: left;
-	padding-left: 8px;
-	width : 250px;
-	
-}
-
-td, th {
-	height: 30px;
-}
-
-tr{
-	border-collapse : separate;
-	border-bottom: 1px solid #000;
-}
-#writeBox {
-	text-align: right;
-	
-	
-}
-td#writeBox > a {
-	text-decoration: none;
-	color: #000;
-	overflow:hidden;
-}
-
-td#titleTd > a{
-	overflow : hidden;
-	text-overflow : ellipsis;
-	white-space: nowrap;
-	display: inline-block;
-	width: 250px;
-	
-	
-}
-
-
-#pageBox {
-	text-align: center;
-}
-
-#titleTd > a > img {
-	width: 15px;
-	height: 15px;
-}
-
-</style>
-
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>">
 </script>
 
@@ -78,9 +14,6 @@ td#titleTd > a{
 	function page(idx){
 		var pagenum = idx;
 		location.href="/category1?pagenum="+ pagenum;
-		
-	
-	
 }
 </script>
 

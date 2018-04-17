@@ -2,16 +2,16 @@ package com.project.boader.vo;
 
 public class ArticleLikeVO {
 
-	private int likeId;
+	private int id;
 	private int articleId;
 	private String memberId;
 
-	public int getLikeId() {
-		return likeId;
+	public int getId() {
+		return id;
 	}
 
-	public void setLikeId(int likeId) {
-		this.likeId = likeId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getArticleId() {

@@ -3,6 +3,7 @@ package com.project.boader.dao;
 import java.util.List;
 
 import com.project.boader.vo.ArticleIpVO;
+import com.project.boader.vo.ArticleLikeVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
@@ -37,5 +38,13 @@ public interface BoarderDao {
 	public int selectGetIpId();
 	
 	public int selectGetArticleId();
+	
+	
+	//좋아요
+	public int insertLike(ArticleLikeVO likeVO);
+	
+	public int likeCount(int id);
+	
+	public int selectLike(ArticleLikeVO likeVO);
 	
 }

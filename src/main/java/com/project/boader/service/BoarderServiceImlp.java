@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.boader.dao.BoarderDao;
 import com.project.boader.vo.ArticleIpVO;
+import com.project.boader.vo.ArticleLikeVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
@@ -31,6 +32,7 @@ public class BoarderServiceImlp implements BoarderService {
 		
 		articleIp.setId(ipId);
 		articleIp.setArticleId(articleId);
+		articleIp.setOwner(1);
 		
 		
 		boolean isSuccess = boarderDao.insertIp(articleIp) > 0;
@@ -112,13 +114,12 @@ public class BoarderServiceImlp implements BoarderService {
 			int id;
 			id = boarderDao.selectGetIpId();
 			
-			System.out.println(memberId);
-			System.out.println(articleId);
-			
+
 			articleIp.setId(id);
 			articleIp.setMemberId(memberId);
 			articleIp.setArticleId(articleId);
 			articleIp.setRequestIp(ip);
+			articleIp.setOwner(0);
 			
 			boarderDao.insertIp(articleIp);
 			boarderDao.increamentViewCount(articleId);
@@ -162,9 +163,14 @@ public class BoarderServiceImlp implements BoarderService {
 
 
 	@Override
-	public boolean insertIp() {
-		// TODO Auto-generated method stub
-		return false;
+	public int likeAction(ArticleLikeVO likeVO) {
+		
+		boarderDao.insertLike(likeVO);
+		
+		int id = likeVO.getArticleId();
+		int count = boarderDao.likeCount(id);
+		
+		return count;
 	}
 
 

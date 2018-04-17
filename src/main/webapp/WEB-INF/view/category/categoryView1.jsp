@@ -16,7 +16,11 @@
 		$().ready(function(){
 		 	var innerHeight = $(".innerBox").height();
 			
-			$(".login").css("height", innerHeight);
+		 	if ( 700 < innerHeight ) {
+		 		
+				$(".login").css("height", innerHeight);
+		 	}
+		 	
 			 
 			
 		});

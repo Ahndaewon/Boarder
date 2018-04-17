@@ -11,11 +11,27 @@
 		
 		
 		
+		
+		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
 			alert("잘못된 경로로 접근하셨습니다.");
 			<c:remove var="__REMOVE__" scope="session" />
 			location.href = "<c:url value="/"/>";
 		</c:if>
+		
+		
+		var like = "<img id='likeImg' style='width: 30px;' src='<c:url value='/static/img/like.PNG'/>'>";
+		
+		$("#like").append(like);
+		
+		
+		$("#like").on("click", "#likeImg" ,function(){
+			$.get("<c:url value="/like/${article.id}"/>", {}, function(response){
+				alert(response);
+			}); 
+		});
+		
+		
 		
 		$("#fileIcon").click(function(){
 			
@@ -38,6 +54,10 @@
 			$(location).attr("href", "<c:url value="/modify/${article.id}"/>");
 		});
 		
+		
+		
+		
+		
 	});
 	
 </script>
@@ -55,6 +75,7 @@
 #articleBody {
 	text-align: left;
 	padding-left: 10px;
+	
 }
 #articleInfo {
 	font-size: 14px;
@@ -123,6 +144,18 @@
 	margin : 0px 5px 0px 5px;
 }
 
+#like {
+	text-align: center;
+	
+	
+}
+#list {
+	
+}
+
+img {
+	cursor: pointer;
+}
 </style>
 	<div class="list" style="margin-top: 50px;">
 		
@@ -149,6 +182,9 @@
 			</c:if>				
 
 			${article.body}
+			<div id="like" style="padding-bottom: 10px; padding-top: 10px;">
+				
+			</div>
 		</div>
 		
 		

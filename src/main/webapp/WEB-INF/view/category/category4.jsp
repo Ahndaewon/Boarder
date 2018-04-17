@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css"/>">
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/category1.css"/>"> 
 
-		<title>category4</title>
+		<title>category3</title>
 	</head>
 <body>
 	    <div id="wrapper">
@@ -32,7 +32,7 @@
          total list
    --><div class="totalList">
       	
-      	<jsp:include page="/WEB-INF/view/page/listPage4.jsp"></jsp:include>
+      	<jsp:include page="/WEB-INF/view/page/listPage3.jsp"></jsp:include>
       
       </div>
       	

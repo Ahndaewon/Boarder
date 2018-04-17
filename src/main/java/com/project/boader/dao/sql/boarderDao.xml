@@ -106,12 +106,10 @@
   				, TO_CHAR(WRITE_DATE, 'YYYY.MM.DD HH24:MI') WRITE_DATE	
   				, VIEW_COUNT		
   				, RECOMMEND_COUNT	
-  				, I.REQUEST_IP		I_REQUEST_IP
   				, FILENAME 
   				, M.NICKNAME
-  		FROM	ARTICLE A, MEMBER M, AIP I
+  		FROM	ARTICLE A, MEMBER M
   		WHERE	A.MEMBER_ID = M.ID(+)
-  		AND		I.ID = A.IP_ID
   		AND		A.ID = #{id}
   	
   	</select>
@@ -203,6 +201,7 @@
   				</if>
   				,VIEW_DATE 
   				,REQUEST_IP
+  				,OWNER
   				
   		)
   		VALUES (
@@ -215,7 +214,7 @@
   				</if>
   				,SYSDATE 
   				,#{requestIp}
-  				
+  				,#{owner}
   		)
   	
   	</insert>
@@ -246,6 +245,37 @@
   		AND		ARTICLE_ID = #{articleId}
   	</select>
   		
+  		
+  	<select id="insertLike" parameterType="ArticleLikeVO" resultType="_int">
+  		
+  		INSERT INTO ALIKE (
+  				ID
+  				,ARTICLE_ID
+  				,MEMBER_ID
+  		)
+  		VALUES (
+  				ARTICLE_LIKE_SEQ.NEXTVAL
+  				,#{articleId}
+  				,#{memberId}
+  		)
+  		
+  	</select>
+  	
+  	<select id="likeCount" parameterType="_int" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM	ALIKE
+  		WHERE	ARTICLE_ID = #{id}
+  		
+  	</select>	
+  	
+  	<select id="selectLike" parameterType="ArticleLikeVO" resultType="_int">
+  	
+  		SELECT COUNT(*)
+  		FROM	ALIKE
+  		WHERE	ARTICLE_ID = #{articleId}
+  		AND		MEMBER_ID = #{memberId}
+  	
+  	</select>
   	
   
   </mapper>

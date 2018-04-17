@@ -7,6 +7,7 @@ import java.util.Map;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.project.boader.vo.ArticleIpVO;
+import com.project.boader.vo.ArticleLikeVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
@@ -92,6 +93,22 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 		idMap.put("articleId", articleId);
 		
 		return getSqlSession().selectOne("BoarderDao.selectViewIp", idMap);
+	}
+
+	@Override
+	public int insertLike(ArticleLikeVO likeVO) {
+		return getSqlSession().insert("BoarderDao.insertLike", likeVO);
+	}
+
+	@Override
+	public int likeCount(int id) {
+		return getSqlSession().selectOne("BoarderDao.likeCount", id );
+	}
+
+	@Override
+	public int selectLike(ArticleLikeVO likeVO) {
+		
+		return getSqlSession().selectOne("BoarderDao.selectLike", likeVO);
 	}
 
 	

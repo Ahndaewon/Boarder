@@ -3,6 +3,7 @@ package com.project.boader.service;
 import java.util.List;
 
 import com.project.boader.vo.ArticleIpVO;
+import com.project.boader.vo.ArticleLikeVO;
 import com.project.boader.vo.ArticleVO;
 import com.project.util.Pager;
 
@@ -25,7 +26,7 @@ public interface BoarderService {
 	
 	public boolean updateArticle(ArticleVO article, ArticleIpVO newArticleIpVO);
 	
-	public boolean	insertIp();
+	public int likeAction(ArticleLikeVO likeVO);
 	
 	
 	

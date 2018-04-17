@@ -7,6 +7,7 @@ public class ArticleIpVO {
 	private String memberId;
 	private String requestIp;
 	private String viewDate;
+	private int owner;
 
 	public int getId() {
 		return id;
@@ -46,6 +47,14 @@ public class ArticleIpVO {
 
 	public void setViewDate(String viewDate) {
 		this.viewDate = viewDate;
+	}
+
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
 	}
 
 }

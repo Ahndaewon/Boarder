@@ -97,6 +97,32 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Override
+	public int updateToken(String token, String id) {
+		return memberDao.updateToken(token, id);
+	}
+
+	@Override
+	public MemberVO selectMember(String id) {
+		return memberDao.selectMember(id);
+	}
+
+	@Override
+	public int updatePassword(String password, String id) {
+		
+		String salt = SHA256Util.generateSalt();
+		
+		password = SHA256Util.getEncrypt(password, salt);
+		
+		
+		return memberDao.updatePassword(password, id, salt);
+	}
+
+	@Override
+	public long selectTime() {
+		return memberDao.selectTime();
+	}
+
 	
 
 

@@ -165,14 +165,53 @@ public class BoarderServiceImlp implements BoarderService {
 	@Override
 	public int likeAction(ArticleLikeVO likeVO) {
 		
-		boarderDao.insertLike(likeVO);
+		boolean isExists;
 		
-		int id = likeVO.getArticleId();
-		int count = boarderDao.likeCount(id);
+		int articleId = likeVO.getArticleId();
+		String memberId = likeVO.getMemberId();
+		
+		//해당글에 대한 좋아요가 있는지 체크
+		isExists = boarderDao.selectLike(articleId, memberId) > 0;
+		
+		if ( isExists ) {
+			//있으면 삭제
+			boarderDao.deleteLike(articleId, memberId);
+		}
+		else {
+			//없으면 추가
+			boarderDao.insertLike(likeVO);
+		}
+		//좋아요 개수
+		int count = boarderDao.likeCount(articleId);
+		
+		ArticleVO article = boarderDao.selectViewPage(articleId);
+		
+		ArticleVO newArticle = new ArticleVO();
+		
+		newArticle.setRecommendCount(count);
+		newArticle.setFileName( article.getFileName() );
+		newArticle.setId(articleId);
+		
+		boarderDao.updateArticle(newArticle);
 		
 		return count;
 	}
 
+
+	@Override
+	public int selectLike(int articleId, String memberId) {
+ 
+		return boarderDao.selectLike(articleId, memberId);
+	}
+
+
+	@Override
+	public int likeCount(int articleId) {
+		return boarderDao.likeCount(articleId);
+	}
+
+
+	
 
 
 

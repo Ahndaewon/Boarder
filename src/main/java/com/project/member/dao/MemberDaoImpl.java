@@ -1,5 +1,8 @@
 package com.project.member.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.project.member.vo.LoginVO;
@@ -42,6 +45,40 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 	public String selectSalt(String id) {
 		return getSqlSession().selectOne("MemberDao.selectSalt", id);
 	}
+
+	@Override
+	public int updateToken(String token, String id) {
+		
+		Map<String, String> tokenMap = new HashMap<String, String>();
+		tokenMap.put("id", id);
+		tokenMap.put("token", token);
+		
+		
+		return getSqlSession().update("MemberDao.updateToken", tokenMap);
+	}
+
+	@Override
+	public MemberVO selectMember(String id) {
+		return getSqlSession().selectOne("MemberDao.selectMember", id);
+	}
+
+	@Override
+	public int updatePassword(String password, String id, String salt) {
+		
+		Map<String, String> passMap = new HashMap<String, String>();
+		passMap.put("password", password);
+		passMap.put("id", id);
+		passMap.put("salt", salt);
+		
+		return getSqlSession().update("MemberDao.updatePassword", passMap);
+	}
+
+	@Override
+	public long selectTime() {
+		return getSqlSession().selectOne("MemberDao.selectTime");
+	}
+
+	
 	
 	
 }

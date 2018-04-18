@@ -64,7 +64,7 @@
   
   
   	<select id="selectMemberPw" parameterType="String" resultType="String">
-  		SELECT	PASSWORD
+  		SELECT	ID
   		FROM	MEMBER
   		WHERE	EMAIL = #{email} 
   	</select>
@@ -78,7 +78,54 @@
   		
   		
   	</select>
+  	
+  	<update id="updateToken" parameterType="map">
+ 
+		UPDATE	MEMBER
+		
+  		SET		<choose>
+  					<when test="token != null and token != '' " >
+  						TOKEN = #{token}
+						,TOKEN_TIME = SYSDATE
+  					</when>
+  					<otherwise>
+  						TOKEN = #{token}
+						,TOKEN_TIME = ''
+  						
+  					</otherwise>
+  				</choose>	      
+		WHERE	ID = #{id}
+  	</update>
+  
+  	<select id="selectMember" parameterType="string" resultType="MemberVO">
+  	
+  		SELECT	ID
+  				,NAME
+  				,NICKNAME
+  				,EMAIL
+  				,REGISTRATION_DATE	registrationDate
+  				,GRADE
+  				,ACCESS_COUNT		accessCount
+  				,SALT
+  				,TOKEN
+  				,TO_NUMBER(TO_CHAR(TOKEN_TIME, 'YYYYMMDDHH24MI'))	tokenTime
+  		FROM	MEMBER
+  		WHERE	ID	=	#{id}
+  	</select>
+  	
+  	<update id="updatePassword" parameterType="map">
+  		UPDATE	MEMBER
+  		SET		PASSWORD = #{password}
+  				,SALT = #{salt}
+  		WHERE	ID	=	#{id}
+  	</update>
   
   
+  	<select id="selectTime" resultType="_long">
+  		
+  		SELECT	TO_NUMBER(TO_CHAR(SYSDATE, 'YYYYMMDDHH24MI'))
+  		FROM	DUAL
+  	
+  	</select>
   </mapper>
   

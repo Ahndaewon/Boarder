@@ -20,14 +20,41 @@
 		</c:if>
 		
 		
-		var like = "<img id='likeImg' style='width: 30px;' src='<c:url value='/static/img/like.PNG'/>'>";
+		var likeOff = "<img id='likeImg' style='width: 30px;' src='<c:url value='/static/img/like1.PNG'/>'>";
+		var likeOn = "<img id='likeImg' style='width: 30px;' src='<c:url value='/static/img/like2.PNG'/>'>";
+		var likeCount = "<span id='likeCount' style='font-weight : bold;'>&nbsp"+ ${count} +"</span>";
 		
-		$("#like").append(like);
+		var existsLike = "${exists}";
+		
+		if ( existsLike == "on" ) {
+			$("#like").append(likeOn);
+			$("#like").append(likeCount);
+			
+		}
+		else {
+			$("#like").append(likeOff);
+			$("#like").append(likeCount);
+		}
+		
 		
 		
 		$("#like").on("click", "#likeImg" ,function(){
 			$.get("<c:url value="/like/${article.id}"/>", {}, function(response){
-				alert(response);
+				var count = response.count;
+				var likeCount = "<span id='likeCount' style='font-weight : bold;'>&nbsp"+ count +"</span>";
+				
+				$("#likeImg").remove();
+				$("#likeCount").remove();
+				
+				if ( response.isExists == "on" ) {
+					$("#like").append(likeOn);
+					$("#like").append(likeCount);
+				}
+				else {
+					$("#like").append(likeOff);
+					$("#like").append(likeCount);
+				}
+				
 			}); 
 		});
 		
@@ -63,100 +90,10 @@
 </script>
 
 <body>
-<style>
-#articleTitle {
-	text-align:	justify;
-	padding: 10px 0px 10px 20px;
-	font-weight: bold;
-	font-size: 20px;
-	border-bottom: 1px solid #CCC;
-	position: relative;
- }
-#articleBody {
-	text-align: left;
-	padding-left: 10px;
+
 	
-}
-#articleInfo {
-	font-size: 14px;
-	font-weight: normal;
-	position: absolute;
-	right: 20px;
-	top : 15px;
-}
 
 
-#fileIcon {
-	width: 20px; 
-	height: 20px;
-}
-
-#fileBox {
-	position : relative;
-	text-align: right;
-	margin: 10px 10px 0px 0px;
-	cursor: pointer;
-}
-#fileLink {
-	
-	
-	width : 150px;
-	background-color : #e4e2e6;
-	text-overflow : ellipsis; 
-	font-size: 12px;
-	text-decoration: none;
-	display: none;
-	position: absolute;
-	right : 0px;
-	top:  20px;
-	white-space : nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	text-align: center;
-	
-}
-
-.selectBtn {
-	width: 150px;
-	background-color: #c8c8ce;
-	vertical-align : middle;
-	display: inline-block;
-	padding: 10px;
-	cursor: pointer;
-	
-	
-}
-
-#listBtn1 {
-	border-top-left-radius: 10px; 
-	border-bottom-left-radius: 10px
-}
-
-#listBtn2 {
-	border-radius: 10px;
-}
-
-#removeBtn {
-	border-top-right-radius: 10px; 
-	border-bottom-right-radius: 10px;
-}
-#modifyBtn {
-	margin : 0px 5px 0px 5px;
-}
-
-#like {
-	text-align: center;
-	
-	
-}
-#list {
-	
-}
-
-img {
-	cursor: pointer;
-}
-</style>
 	<div class="list" style="margin-top: 50px;">
 		
 		

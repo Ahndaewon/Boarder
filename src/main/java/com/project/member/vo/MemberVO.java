@@ -17,6 +17,8 @@ public class MemberVO extends LoginVO {
 	private String registrationDate;
 	private int grade;
 	private int accessCount;
+	private String token;
+	private String tokenTime;
 	private String salt;
 
 	public String getName() {
@@ -61,6 +63,23 @@ public class MemberVO extends LoginVO {
 
 	public int getAccessCount() {
 		return accessCount;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	
+	public String getTokenTime() {
+		return tokenTime;
+	}
+
+	public void setTokenTime(String tokenTime) {
+		this.tokenTime = tokenTime;
 	}
 
 	public void setAccessCount(int accessCount) {

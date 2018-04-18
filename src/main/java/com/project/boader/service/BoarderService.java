@@ -28,6 +28,11 @@ public interface BoarderService {
 	
 	public int likeAction(ArticleLikeVO likeVO);
 	
+	public int selectLike(int articleId, String memberId);
+	
+	public int likeCount(int articleId);
+	
+	
 	
 	
 }

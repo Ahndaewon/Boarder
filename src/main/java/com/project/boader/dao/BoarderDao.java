@@ -17,19 +17,20 @@ public interface BoarderDao {
 	
 	public int selectAllcount();
 	
-	public ArticleIpVO selectViewIp(String memberId, int articleId);
-	
-	
-	
 	public int removeArticle(int id);
-	
-	public int removeAtricleIp(int id);
 	
 	public int increamentViewCount(int id);
 	
 	public List<ArticleVO> selectCategory1();
 	
 	public int updateArticle(ArticleVO article);
+	
+	public int removeAtricleIp(int id);
+	
+	
+	
+
+	public ArticleIpVO selectViewIp(String memberId, int articleId);
 	
 	public int updateArticleIp(ArticleIpVO articleIpVO);
 	
@@ -45,6 +46,7 @@ public interface BoarderDao {
 	
 	public int likeCount(int id);
 	
-	public int selectLike(ArticleLikeVO likeVO);
+	public int selectLike(int articleId, String memberId);
 	
+	public int deleteLike(int articleId, String memberId);
 }

@@ -60,6 +60,7 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 
 	@Override
 	public int updateArticle(ArticleVO article) {
+		System.out.println(article.getRecommendCount() + "recommendCount");
 		return getSqlSession().update("BoarderDao.updateArticle", article);
 	}
 
@@ -106,11 +107,27 @@ public class BoarderDaoforOracle extends SqlSessionDaoSupport implements Boarder
 	}
 
 	@Override
-	public int selectLike(ArticleLikeVO likeVO) {
+	public int selectLike(int articleId, String memberId) {
 		
-		return getSqlSession().selectOne("BoarderDao.selectLike", likeVO);
+		Map<String, Object> idMap = new HashMap<String, Object>();
+		
+		idMap.put("articleId", articleId);
+		idMap.put("memberId", memberId);
+		
+		return getSqlSession().selectOne("BoarderDao.selectLike", idMap);
 	}
 
+	@Override
+	public int deleteLike(int articleId, String memberId) {
+		Map<String, Object> idMap = new HashMap<String, Object>();
+		
+		idMap.put("articleId", articleId);
+		idMap.put("memberId", memberId);
+		
+		return getSqlSession().delete("BoarderDao.deleteLike", idMap);
+	}
+
+	
 	
 
 	

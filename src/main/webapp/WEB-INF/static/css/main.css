@@ -83,6 +83,10 @@ a {
 	border-bottom: 1px solid #EAEAEA;
 	margin: 0px;
 	padding: 7px;
+	overflow : hidden;
+	text-overflow : ellipsis;
+	white-space: nowrap;
+	width: 280px;
 } 
 
 .listInner > .titleBox > a > p {

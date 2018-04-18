@@ -13,4 +13,11 @@ public interface MemberDao {
 	public String selectSalt(String id);
 	public String selectMemberPw(String email);
 	
+	public MemberVO selectMember(String id);
+	
+	public int updateToken(String token, String id);
+	public int updatePassword(String password, String id, String salt);
+	public long selectTime();
+	
+	
 }

@@ -10,12 +10,14 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.boader.service.BoarderService;
 import com.project.constants.Member;
 import com.project.mail.Email;
 import com.project.member.service.MemberService;
@@ -161,7 +163,73 @@ public class MemberController {
 		return "find";
 	}
 	
+	@RequestMapping(value = "/changepw/{token}/{id}", method=RequestMethod.GET)
+	public String changePassword(@PathVariable String token, @PathVariable String id, HttpSession session ) {
+		
+		
+		MemberVO member =  memberService.selectMember(id);
+		if ( member.getToken() == null || member == null) {
+			return "info/notlink";
+		}
+		
+		long nowTime = memberService.selectTime();
+		
+		
+		
+		
+		String tokenTimeStr = member.getTokenTime();
+		long tokenTime;
+		try {
+			tokenTime = Long.parseLong(tokenTimeStr);
+			System.out.println(tokenTime + "tokenTime try");
+		} catch (NumberFormatException nfe) {
+			tokenTime = 0;
+		}
+		
+		
+		
+		
+		System.out.println(tokenTimeStr + "tokenTimeStr");
+		System.out.println(tokenTime + "tokenTime");
+		long calc = nowTime - tokenTime;
+		System.out.println(calc + ": CALC");
+		
+		//8800 -> 12시간
+		if ( calc >= 8800 ) {
+			//12시간이 경과하였으면 토큰 삭제
+			/*memberService.updateToken(token, id);*/
+			return "info/notlink";
+		}
+		
+		
+		if ( member.getToken().equals(token) ) {
+			
+			session.setAttribute("id", id);
+			
+			return "chagePassword";
+		}
+		
+		return "redirect:/";
+	}
 	
-	
+	@RequestMapping(value = "/changepw", method=RequestMethod.POST)
+	public String changePassword(@RequestParam	String password, HttpSession session) {
+		
+		String id = (String)session.getAttribute("id");
+		String token = "";
+		session.removeAttribute("id");
 
+		//토큰 정보 삭제
+		memberService.updateToken(token, id);
+		
+		
+		int check = memberService.updatePassword(password, id);
+		
+		if ( check <= 0 ) {
+			
+			return "info/failPassword";
+		}
+		
+		return "info/completePassword";
+	}
 }

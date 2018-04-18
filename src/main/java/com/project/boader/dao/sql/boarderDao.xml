@@ -30,11 +30,13 @@
   	</association>
   	
   	<association property="articleIpVO" javaType="ArticleIpVO">
-  		<result column="I_ID" property="id"/>
+  		<id column="I_ID" property="id"/>
   		<result column="ARTICLE_ID" property="articleId"/>
   		<result column="I_MEMBER_ID" property="memberId"/>
-  		<result column="I_REQUEST_IP" property="requestIp"/>
+  		<result column="REQUEST_IP" property="requestIp"/>
   	</association>
+  	
+  	
   	
   </resultMap>
   
@@ -80,7 +82,13 @@
 	                        , MEMBER_ID 		
 	                        , TITLE
 	                        , BODY
-	                        , TO_CHAR(WRITE_DATE, 'YY.MM.DD HH24:MI') WRITE_DATE	
+	                        , CASE 
+        					WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') = 0 
+        					THEN   TO_CHAR(WRITE_DATE,'hh24:ss')<!-- 당일글 -->
+       					    WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') >= 10000 
+       					    THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')<!-- 일년전 -->
+        					ELSE TO_CHAR(WRITE_DATE,'MM-DD')
+        					END as WRITE_DATE		
 	                        , VIEW_COUNT		
 	                        , RECOMMEND_COUNT	
 	                        , IP_ID		
@@ -103,13 +111,21 @@
   				, A.MEMBER_ID 		
   				, TITLE
   				, BODY
-  				, TO_CHAR(WRITE_DATE, 'YYYY.MM.DD HH24:MI') WRITE_DATE	
+  				, CASE 
+        		WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') = 0 
+        		THEN   TO_CHAR(WRITE_DATE,'hh24:ss')<!-- 당일글 -->
+       			WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') >= 10000 
+       			THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')<!-- 일년전 -->
+        		ELSE TO_CHAR(WRITE_DATE,'MM-DD')
+        		END as WRITE_DATE	
   				, VIEW_COUNT		
   				, RECOMMEND_COUNT	
+  				, REQUEST_IP
   				, FILENAME 
   				, M.NICKNAME
-  		FROM	ARTICLE A, MEMBER M
+  		FROM	ARTICLE A, MEMBER M, AIP I
   		WHERE	A.MEMBER_ID = M.ID(+)
+  		AND		I.ARTICLE_ID = A.ID
   		AND		A.ID = #{id}
   	
   	</select>
@@ -170,15 +186,15 @@
 	
 	<update id="updateArticle" parameterType="ArticleVO">
 		UPDATE	ARTICLE
-		SET		WRITE_DATE = SYSDATE
-		
+		SET		
+				FILENAME = #{fileName}
+				,RECOMMEND_COUNT = #{recommendCount}
 			<if test="title != null and title != '' ">
 				,TITLE = #{title}
 			</if>
 			<if test="body != null and body != '' ">
 				,body = #{body}
 			</if>
-				,FILENAME = #{fileName}
 		WHERE	ID = #{id}
 	</update>
 	
@@ -268,7 +284,7 @@
   		
   	</select>	
   	
-  	<select id="selectLike" parameterType="ArticleLikeVO" resultType="_int">
+  	<select id="selectLike" parameterType="map" resultType="_int">
   	
   		SELECT COUNT(*)
   		FROM	ALIKE
@@ -277,6 +293,22 @@
   	
   	</select>
   	
+  
+  	<delete id="deleteLike" parameterType="map">
+  		DELETE
+  		FROM	ALIKE
+  		WHERE	ARTICLE_ID = #{articleId}
+  		AND		MEMBER_ID = #{memberId}
+  	</delete>
+  	
+  	
+  	<select id="selectFindId" parameterType="string" resultType="_int">
+  	
+  		SELECT	COUNT(ID)
+  		FROM	ARTICLE
+  		WHERE	EMAIL = #{email}
+  	
+  	</select>
   
   </mapper>
   

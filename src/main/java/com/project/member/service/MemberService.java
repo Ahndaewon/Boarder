@@ -12,5 +12,10 @@ public interface MemberService {
 	public boolean checkMemberEmail(String email);
 	public MemberVO doLogin(LoginVO memberVO);
 	public String findPassword(String email);
+	public int updateToken(String token, String id);
 	
+	public MemberVO selectMember(String id);
+	
+	public int updatePassword(String password, String id);
+	public long selectTime();
 }

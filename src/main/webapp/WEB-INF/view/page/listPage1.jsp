@@ -18,7 +18,7 @@
 </script>
 
 
-	<div class="list" style="margin-top: 50px;">
+	<div class="list" style="margin-top: 50px; min-height: 600px;">
 		
 		
 		<table style="margin-top: 30px; ">
@@ -38,12 +38,15 @@
 						<td id="titleTd">
 						
 							<a href="<c:url value="/view/${article.id}"/>">
-								${article.title}
+								<span>${article.title}</span>
 							
+							</a>
 								<c:if test="${not empty article.fileName}">
 									<img src="<c:url value="/static/img/fileIcon.png"/>"/>
 								</c:if>
-							</a>
+								<c:if test="${article.recommendCount > 0 }">
+									<img src="<c:url value="/static/img/like2.PNG"/>"/>[${article.recommendCount}]
+								</c:if>
 						
 							
 							

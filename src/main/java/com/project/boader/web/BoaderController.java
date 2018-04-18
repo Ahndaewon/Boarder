@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,7 +113,7 @@ public class BoaderController {
 		List<ArticleVO> articleList;
 		ModelAndView view = new ModelAndView();
 		
-		
+		//총 게시글 개수
 		int totalCount = boarderService.selectAllcount();
 		
 		//TODO pager 정리
@@ -134,6 +136,7 @@ public class BoaderController {
 		//pageNation
 		
 		
+		//게시글 받아오기
 		articleList = boarderService.selectAll(pager);
 		if ( articleList == null ) {
 			return new ModelAndView("redirect:/404");
@@ -167,9 +170,19 @@ public class BoaderController {
 		}
 		
 		
+		int like = boarderService.selectLike(id, memberId);
 		
+		if ( like > 0 ) {
+			view.addObject("exists", "on" );
+		}
 		
+		else {
+			view.addObject("exists", "off" );
+		}
 		
+		int count = boarderService.likeCount(id);
+		
+		view.addObject("count", count);
 		view.addObject("article", article);
 		view.setViewName("/category/categoryView1");
 		
@@ -329,12 +342,12 @@ public class BoaderController {
 		*/
 		newArticle.setId(originalArticle.getId());
 		newArticle.setMemberId( member.getId() );
-		
+		newArticle.setRecommendCount(originalArticle.getRecommendCount());
 		
 		//아이피 변경
 		String ip = request.getRemoteAddr();
 		String originalIp = originalArticle.getArticleIpVO().getRequestIp();
-		
+		System.out.println(originalIp);
 		ArticleIpVO newArticleIpVO = new ArticleIpVO();
 		
 		if ( !ip.equals( originalIp ) ) {
@@ -359,11 +372,15 @@ public class BoaderController {
 			File file = 
 					new File("D:\\Upload/" + articleVO.getFileName());
 			file.delete();
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~!!!~~~~~~~~~~~~~~~~~");
 			newArticle.setFileName("");
+			System.out.println(newArticle.getFileName());
 			System.out.println("4");
+			isModify = true;
 		}
 		else {
 			System.out.println("5");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1너냐~!~!");
 			newArticle.setFileName(originalArticle.getFileName());
 		}
 		
@@ -409,10 +426,10 @@ public class BoaderController {
 	
 	@RequestMapping(value="/like/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public int likeAction(@PathVariable int id, HttpSession session) {
+	public Map<String, Object> likeAction(@PathVariable int id, HttpSession session) {
 		
 		ArticleLikeVO likeVO = new ArticleLikeVO();
-		
+		Map<String, Object> likeMap = new HashMap<String, Object>();
 		MemberVO member = (MemberVO)session.getAttribute(Member.USER);
 		
 		String memberId = member.getId();
@@ -420,10 +437,21 @@ public class BoaderController {
 		likeVO.setArticleId(id);		
 		likeVO.setMemberId(memberId);
 		
+		boolean isExists;
+		
+		isExists = boarderService.selectLike(id, memberId) > 0;
+		
+		if (isExists) {
+			likeMap.put("isExists", "off");
+		}
+		else {
+			likeMap.put("isExists", "on");
+		}
+		
 		int count = boarderService.likeAction(likeVO);
+		likeMap.put("count", count);
 		
-		
-		return count;
+		return likeMap;
 	}
 	
 	

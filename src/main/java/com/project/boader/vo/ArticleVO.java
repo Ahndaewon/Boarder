@@ -126,6 +126,8 @@ public class ArticleVO {
 		this.articleIpVO = articleIpVO;
 	}
 
+	
+	
 	public String save() {
 
 		if (file != null && !file.isEmpty()) {

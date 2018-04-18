@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css"/>">
 		<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/category1.css"/>"> 
 
-		<title>category1</title>
+		<title>유효하지 않은 링크</title>
 	</head>
 <body>
 	    <div id="wrapper">
@@ -32,7 +32,9 @@
          total list
    --><div class="totalList1">
       	<div class="innerBox">
-      		<jsp:include page="/WEB-INF/view/page/findPage.jsp"></jsp:include>
+      		<div style="margin-top: 150px;">
+      			<h3>유효하지 않은 링크 입니다.</h3>
+      		</div>
       	</div>
       </div>
       	
@@ -42,10 +44,7 @@
 
      </div>
 
-	 <div>
-	 	<jsp:include page="/WEB-INF/view/footer.jsp"></jsp:include>
-	 </div>
-	
+
 
    </div>
 	

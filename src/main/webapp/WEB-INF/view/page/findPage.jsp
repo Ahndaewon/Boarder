@@ -13,6 +13,10 @@
 	
 	$().ready(function(){
 		
+		<c:if test="${not empty exists}">
+			alert("이메일을 확인해주세요");
+		</c:if>
+		
 		
 		$("#pwBtn").click(function(){
 			
@@ -27,15 +31,28 @@
 	
 </script>
 
+<style>
+.list1 {
+	margin-top: 150px; 
+	border: 1px solid #000;
+}
+.idBox, .pwBox{
+	margin-top: 50px;
+    margin-bottom: 50px;
+}
 
+
+</style>
 
 
 <body>
 
-	<div class="list">
+	
+
+	<div class="list1">
 	
 		
-	
+			
 		<div class="idBox">
 			<p>아이디 찾기</p>
 			<form id="findIdForm">

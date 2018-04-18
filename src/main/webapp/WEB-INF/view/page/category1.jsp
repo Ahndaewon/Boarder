@@ -30,9 +30,9 @@
 
 	
          total list
-   --><div class="totalList1">
+   --><div class="totalList">
       	<div class="innerBox">
-      		<jsp:include page="/WEB-INF/view/page/findPage.jsp"></jsp:include>
+      		<jsp:include page="/WEB-INF/view/page/listPage1.jsp"></jsp:include>
       	</div>
       </div>
       	
@@ -41,11 +41,11 @@
 
 
      </div>
-
 	 <div>
 	 	<jsp:include page="/WEB-INF/view/footer.jsp"></jsp:include>
 	 </div>
 	
+
 
    </div>
 	

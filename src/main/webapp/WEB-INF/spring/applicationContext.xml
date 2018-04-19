@@ -28,6 +28,7 @@
 			<mvc:exclude-mapping path="/find"/>
 			<mvc:exclude-mapping path="/sendpw"/>
 			<mvc:exclude-mapping path="/changepw/**"/>
+			<mvc:exclude-mapping path="/findid"/>
 			<bean id="sessionInterceptor" 
 				  class="com.project.interceptor.SessionInterceptor">
 			</bean>

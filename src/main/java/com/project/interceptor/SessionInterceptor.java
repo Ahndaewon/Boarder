@@ -21,6 +21,21 @@ public class SessionInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		String str = "0123";
+		
+		int a;
+		
+		try {
+			a = Integer.parseInt(str);
+			System.out.println(a +"  try");
+		} catch (NumberFormatException nfe) {
+			a = 0;
+			System.out.println(a+"  catch");
+		}
+		
+		
+		
+		
 		if ( request.getSession().getAttribute(Member.USER) == null ) {
 			
 			System.out.println("interceptor~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!");

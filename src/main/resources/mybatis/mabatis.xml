@@ -13,12 +13,14 @@
 		<typeAlias type="com.project.util.Pager" alias="Pager" />
 		<typeAlias type="com.project.boader.vo.ArticleIpVO" alias="ArticleIpVO" />
 		<typeAlias type="com.project.boader.vo.ArticleLikeVO" alias="ArticleLikeVO" />
+		<typeAlias type="com.project.reply.vo.ReplyVO" alias="ReplyVO" />
 		
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/com/project/boader/dao/sql/boarderDao.xml" />
 		<mapper resource="/com/project/member/dao/sql/memberDao.xml" />
+		<mapper resource="/com/project/reply/dao/sql/replyDao.xml" />
 		
 	</mappers>
 </configuration>

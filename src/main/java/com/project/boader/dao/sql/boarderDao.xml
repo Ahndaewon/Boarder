@@ -84,9 +84,14 @@
 	                        , BODY
 	                        , CASE 
         					WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') = 0 
-        					THEN   TO_CHAR(WRITE_DATE,'hh24:ss')<!-- 당일글 -->
+        					THEN  'h' || TO_CHAR(WRITE_DATE,'hh24:ss')<!-- 당일글 -->
+        					
+        					WHEN WRITE_DATE > SYSDATE-1 
+        					THEN   'h' || TO_CHAR(WRITE_DATE,'MM-DD')<!-- 24시간 -->
+        					
        					    WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') >= 10000 
-       					    THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')<!-- 일년전 -->
+       					    THEN   TO_CHAR(WRITE_DATE,'YYYY-MM-DD')<!-- 일년전 -->
+       					    
         					ELSE TO_CHAR(WRITE_DATE,'MM-DD')
         					END as WRITE_DATE		
 	                        , VIEW_COUNT		
@@ -113,11 +118,17 @@
   				, BODY
   				, CASE 
         		WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') = 0 
-        		THEN   TO_CHAR(WRITE_DATE,'hh24:ss')<!-- 당일글 -->
+        		THEN  'h' || TO_CHAR(WRITE_DATE,'hh24:ss')<!-- 당일글 -->
+        		
+        		WHEN WRITE_DATE > SYSDATE-1 
+        		THEN   'h' || TO_CHAR(WRITE_DATE,'MM-DD')<!-- 24시간 -->
+        		
        			WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') >= 10000 
        			THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')<!-- 일년전 -->
+       			
         		ELSE TO_CHAR(WRITE_DATE,'MM-DD')
         		END as WRITE_DATE	
+        		
   				, VIEW_COUNT		
   				, RECOMMEND_COUNT	
   				, REQUEST_IP
@@ -180,7 +191,7 @@
 	                WHERE	A.MEMBER_ID = M.ID(+)
 	                ORDER	BY A.ID	DESC
 	                ) C
-	        WHERE   ROWNUM <![CDATA[<=]]> 6
+	        WHERE   ROWNUM <![CDATA[<=]]> 8
 	
 	</select>
 	

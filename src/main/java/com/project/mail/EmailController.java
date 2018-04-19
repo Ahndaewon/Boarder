@@ -18,13 +18,9 @@ public class EmailController {
 	private EmailSender emailSender;
 	private Email email;
 	private MemberService memberService;
-	private BoarderService boarderService;
 	
 	
-		
-	public void setBoarderService(BoarderService boarderService) {
-		this.boarderService = boarderService;
-	}
+
 	public void setEmailSender(EmailSender emailSender) {
 		this.emailSender = emailSender;
 	}
@@ -67,20 +63,9 @@ public class EmailController {
 			
 			view = new ModelAndView("redirect:/");
 		}
-		
-		
 		return view;
 	}
 	
-	@RequestMapping("/test")
-	public String test() {
 		
-		System.out.println("~~!!!!");
-		return "/";
-		
-	}
-	
-	
-	
 	
 }

@@ -2,7 +2,7 @@ package com.project.util;
 
 public class Pager {
 	
-	private int contentNum = 5; // 한페이지에 몇개 표시할지
+	private int contentNum = 10; // 한페이지에 몇개 표시할지
 	private int contentBlock = 5; // 한블럭에 몇개 페이지 표시할지
 	
 	private int startRow;

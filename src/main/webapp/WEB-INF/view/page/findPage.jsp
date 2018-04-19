@@ -17,6 +17,17 @@
 			alert("이메일을 확인해주세요");
 		</c:if>
 		
+		$("#idBtn").click(function(){
+			
+			$("#findIdForm").attr({
+				"method" : "post",
+				"action" : "<c:url value="/findid"/>"
+				
+			}).submit();
+			
+		});
+		
+		
 		
 		$("#pwBtn").click(function(){
 			
@@ -34,7 +45,8 @@
 <style>
 .list1 {
 	margin-top: 150px; 
-	border: 1px solid #000;
+	border: 3px solid #dcdcdc;
+	border-radius: 15px;
 }
 .idBox, .pwBox{
 	margin-top: 50px;
@@ -56,7 +68,7 @@
 		<div class="idBox">
 			<p>아이디 찾기</p>
 			<form id="findIdForm">
-				Email : <input type="text" id="idMail" name="idMail" placeholder="email">
+				Email : <input type="text" id="email" name="email" placeholder="email">
 				<input type="button" id="idBtn" value="확인">
 			</form>
 		

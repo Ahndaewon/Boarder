@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/listPage.css"/>">
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>">
 </script>
@@ -66,10 +67,10 @@
 		});
 		
 		$("#listBtn1").click(function(){
-			$(location).attr("href", "<c:url value="/category1"/>");
+			location.href="/category1?pagenum="+ ${pagenum};
 		});
 		$("#listBtn2").click(function(){
-			$(location).attr("href", "<c:url value="/category1"/>");
+			location.href="/category1?pagenum="+ ${pagenum};
 		});
 		
 		$("#removeBtn").click(function(){
@@ -97,10 +98,26 @@
 	<div class="list" style="margin-top: 50px;">
 		
 		
+
+		
 		<div id="articleTitle">
-			<span>${article.title}</span>   
+			<span>${article.title}
+				<c:if test="${fn:contains(article.writeDate, 'h')}">
+					<!--24시간 new-->
+					<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>
+				</c:if>
+			</span>   
 			<span id="articleInfo">${article.memberVO.nickname}( ${article.memberId} )
-			 | 조회수 : ${article.viewCount} | ${article.writeDate}</span>
+			 | 조회수 : ${article.viewCount} |
+			  <c:choose>
+			<c:when test="${fn:contains(article.writeDate, 'h')}">
+				${fn:replace(article.writeDate, "h", "")}
+			</c:when>
+			<c:otherwise>
+				${article.writeDate}
+			</c:otherwise>
+		</c:choose>	
+			</span>
 		</div>
 		
 		
@@ -124,6 +141,22 @@
 			</div>
 		</div>
 		
+		<div id="replies"></div>
+		<div id="createReplyDiv">
+			<div id="createReply">
+				<form id="writeReplyFrom">
+					<input type="hidden" id="parentReplyId" name="parentReplyId" value="0"/>
+					<div>
+					<textarea id="body" name="body" style="width: 592px; height: 65px;"></textarea>
+					</div> 
+					
+					<div>
+						<input type="button" id="writeReplyBtn" value="등록"/>
+					</div>
+				</form>
+			
+			</div>
+		</div>
 		
 	</div>
 		<c:if test="${ sessionScope.__USER__.id ne	article.memberId}">

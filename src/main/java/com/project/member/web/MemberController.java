@@ -163,6 +163,23 @@ public class MemberController {
 		return "find";
 	}
 	
+	@RequestMapping(value = "/findid", method=RequestMethod.POST)
+	public ModelAndView findAction(@RequestParam String email ) {
+		
+		ModelAndView view = new ModelAndView();
+		
+		String id = memberService.findPassword(email);
+		
+		if ( id == null ) {
+			view.setViewName("find");
+			view.addObject("idExists", "idExists");
+			return view;
+		}
+		view.addObject("id", id);
+		view.setViewName("findId");
+		return view;
+	}
+	
 	@RequestMapping(value = "/changepw/{token}/{id}", method=RequestMethod.GET)
 	public String changePassword(@PathVariable String token, @PathVariable String id, HttpSession session ) {
 		
@@ -186,18 +203,18 @@ public class MemberController {
 			tokenTime = 0;
 		}
 		
+		System.out.println("현재시간 : " + nowTime);
+		System.out.println("토큰시간 : " + tokenTime);
 		
 		
-		
-		System.out.println(tokenTimeStr + "tokenTimeStr");
-		System.out.println(tokenTime + "tokenTime");
 		long calc = nowTime - tokenTime;
 		System.out.println(calc + ": CALC");
 		
-		//8800 -> 12시간
-		if ( calc >= 8800 ) {
+		//1200 -> 12시간
+		if ( calc >= 1200 ) {
 			//12시간이 경과하였으면 토큰 삭제
-			/*memberService.updateToken(token, id);*/
+			token = "";
+			memberService.updateToken(token, id);
 			return "info/notlink";
 		}
 		

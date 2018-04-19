@@ -46,7 +46,12 @@
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
 	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>"><p>- ${article.title}</p></a>
+	                  	<a href="<c:url value="/view/${article.id}"/>">
+		                  	<p>
+		                  		<span class="arrow">▶</span> 
+		                  		${article.title}
+		                  	</p>
+	                  	</a>
 	                  	
 	                  	</c:forEach>
 	                  </div>
@@ -61,7 +66,12 @@
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
 	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>"><p>- ${article.title}</p></a>
+	                  	<a href="<c:url value="/view/${article.id}"/>">
+		                  	<p>
+		                  		<span class="arrow">▶</span> 
+		                  		${article.title}
+		                  	</p>
+	                  	</a>
 	                  	
 	                  	</c:forEach>
 	                  </div>
@@ -80,7 +90,12 @@
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
 	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>"><p>- ${article.title}</p></a>
+	                  	<a href="<c:url value="/view/${article.id}"/>">
+		                  	<p>
+		                  		<span class="arrow">▶</span> 
+		                  		${article.title}
+		                  	</p>
+	                  	</a>
 	                  	
 	                  	</c:forEach>
 	                  </div>
@@ -95,7 +110,12 @@
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
 	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>"><p>- ${article.title}</p></a>
+	                  	<a href="<c:url value="/view/${article.id}"/>">
+		                  	<p>
+		                  		<span class="arrow">▶</span> 
+		                  		${article.title}
+		                  	</p>
+	                  	</a>
 	                  	
 	                  	</c:forEach>
 	                  </div>

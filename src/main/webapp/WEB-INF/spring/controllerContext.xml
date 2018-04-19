@@ -21,10 +21,12 @@
 		  <property name="email" ref="email"/>
 		  <property name="emailSender" ref="emailSender"/>
 		  <property name="memberService" ref="memberService"/>
-		  <property name="boarderService" ref="boarderService"/>
-		  
 	</bean>
 	
+	
+	<bean id="replyController" class="com.project.reply.web.ReplyController">
+		<property name="replyService" ref="replyService"/>
+	</bean>
 
 
 </beans>

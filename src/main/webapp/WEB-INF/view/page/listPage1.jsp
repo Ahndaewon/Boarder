@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/listPage.css"/>">
 
 
@@ -33,25 +34,39 @@
 			<tbody>
 				<c:forEach items="${articleList}" var="article">
 					
+					
 					<tr>
 						<td id="idTd">${article.id}</td>
-						<td id="titleTd">
+						<td id="titleTd" style="box-sizing:border-box; border-bottom: 1px solid #d7e0ef;">
 						
-							<a href="<c:url value="/view/${article.id}"/>">
+							<a href="<c:url value="/view/${article.id}?pagenum=${pagenum}"/>">
 								<span>${article.title}</span>
-							
-							</a>
+								<c:if test="${fn:contains(article.writeDate,'h')}">
+									<!--24시간 new-->
+									<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>
+								</c:if>
 								<c:if test="${not empty article.fileName}">
+									<!-- 파일 존재 유무 -->
 									<img src="<c:url value="/static/img/fileIcon.png"/>"/>
 								</c:if>
 								<c:if test="${article.recommendCount > 0 }">
+									<!-- 좋아요가 있으면 -->
 									<img src="<c:url value="/static/img/like2.PNG"/>"/>[${article.recommendCount}]
 								</c:if>
-						
-							
+							</a>
 							
 						</td>
-						<td id="dateTd">${article.writeDate}</td>
+						<td id="dateTd">
+							<c:choose>
+								<c:when test="${fn:contains(article.writeDate, 'h')}">
+									${fn:replace(article.writeDate, "h", "")}
+								</c:when>
+								<c:otherwise>
+									${article.writeDate}
+								</c:otherwise>
+							</c:choose>			
+										
+						</td>
 						<td>${article.viewCount}</td>
 					</tr>
 					

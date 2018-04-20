@@ -10,10 +10,6 @@
 <script type="text/javascript">
 	$().ready(function(){
 		
-		
-		
-		
-		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
 			alert("잘못된 경로로 접근하셨습니다.");
 			<c:remove var="__REMOVE__" scope="session" />
@@ -36,6 +32,33 @@
 			$("#like").append(likeOff);
 			$("#like").append(likeCount);
 		}
+		
+		
+		
+		function loadReplies(){
+			
+		}
+		
+		
+		$("#writeReplyBtn").click(function(){
+			
+			$.post("<c:url value="/reply/${article.id}"/>"
+					, $("#writeReplyFrom").serialize(),
+					function(response){
+						
+						if( response.isSuccess == "isSuccess" ){
+							alert("댓글등록 성공");
+						}
+						
+						else {
+							alert("댓글등록 실패");
+						}
+				
+					});
+		});
+		
+		
+		
 		
 		
 		
@@ -81,11 +104,6 @@
 		$("#modifyBtn").click(function(){
 			$(location).attr("href", "<c:url value="/modify/${article.id}"/>");
 		});
-		
-		
-		
-		
-		
 	});
 	
 </script>
@@ -143,7 +161,9 @@
 		
 		<div id="replies"></div>
 		<div id="createReplyDiv">
+			<!-- 댓글 달기  -->
 			<div id="createReply">
+			
 				<form id="writeReplyFrom">
 					<input type="hidden" id="parentReplyId" name="parentReplyId" value="0"/>
 					<div>

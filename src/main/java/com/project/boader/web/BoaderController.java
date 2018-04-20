@@ -142,7 +142,7 @@ public class BoaderController {
 			return new ModelAndView("redirect:/404");
 		}
 		
-		
+		view.addObject("pagenum", pagenum);
 		view.addObject("articleList", articleList);
 		view.addObject("pager", pager);
 		view.setViewName("/category/category1");
@@ -155,7 +155,9 @@ public class BoaderController {
 	
 	//category1 글보기
 	@RequestMapping("/view/{id}")
-	public ModelAndView viewPage(@PathVariable int id, HttpSession session, HttpServletRequest request) {
+	public ModelAndView viewPage(@PathVariable int id, HttpSession session, HttpServletRequest request
+									,@RequestParam(defaultValue="1") int pagenum) {
+		
 		
 		ModelAndView view = new ModelAndView();
 		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
@@ -181,7 +183,7 @@ public class BoaderController {
 		}
 		
 		int count = boarderService.likeCount(id);
-		
+		view.addObject("pagenum", pagenum);
 		view.addObject("count", count);
 		view.addObject("article", article);
 		view.setViewName("/category/categoryView1");

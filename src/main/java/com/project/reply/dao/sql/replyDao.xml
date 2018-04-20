@@ -39,5 +39,26 @@
   		</association>
   	</resultMap>
   
+  
+ 	<insert id="insertReply" parameterType="ReplyVO">
+ 		INSERT INTO REPLY (
+ 					ID
+ 					,MEMBER_ID
+ 					,ARTICLE_ID
+ 					,BODY
+ 					,REGIST_DATE
+ 					,PARENT_REPLY_ID	
+ 		)
+ 		VALUES (
+ 					REPLY_SEQ.NEXTVAL
+ 					,#{memberId}
+ 					,#{articleId}
+ 					,#{body}
+ 					,SYSDATE
+ 					,#{parentReplyId}
+ 		)
+ 	</insert>
+  	
+  
   </mapper>
   

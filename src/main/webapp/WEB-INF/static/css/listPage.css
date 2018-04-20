@@ -169,11 +169,13 @@ td#titleTd > a > span{
 	
 	
 }
-#list {
-	
-}
+
 
 img {
 	cursor: pointer;
+}
+
+#pageBox a {
+	text-decoration: none;
 }
 	

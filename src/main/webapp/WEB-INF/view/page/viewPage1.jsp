@@ -9,18 +9,21 @@
 
 <style>
 
-.reply:last-child {
-	border-bottom : 2px solid #c0c0c0;
-} 
 
 .reply {
 	text-align: left;
 	border-collapse :collapse;
 	border-top: 2px solid #c0c0c0;
-	border-left: 1px solid #c0c0c0;
-	border-right: 1px solid #c0c0c0;
+	border-bottom: 2px solid #c0c0c0;
+	/* border-left: 1px solid #c0c0c0;
+	border-right: 1px solid #c0c0c0; */
 	word-break: break-word;
+	margin-top: 10px;
 	
+}
+ 
+.reply:last-child {
+	border-bottom : 1px solid #c0c0c0;
 }
 .body {
 	border-top: 1px solid #c0c0c0;
@@ -29,10 +32,41 @@
 	background-color: #FFF;
 }
 .replyInfo {
-	text-align : right;
-	background-color : #d6d6e2;
-	padding: 5px;
-	padding-right: 15px;
+	width : 100%;
+	background-color : #f5f5f5;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#idSpan {
+	float: left;
+	font-size: 15px;
+	color: #000;
+	font-weight: bold;
+	padding-left: 10px;
+	
+}
+#dateSpan {
+	float: right;
+	font-size: 12px;
+	color: #8e8e8e;
+	padding-right: 10px;
+}
+#createReply {
+	margin-top : 10px;
+	text-align: right;
+}
+#writeReplyBtn {
+	margin-right: 20px;
+}
+.reReply{
+	margin: 10px;
+	border: 3px solid #dcdcdc;
+	width: 40px;
+	text-align: center;
+	cursor: pointer;
+	border-style: outset;
 }
 </style>
 
@@ -76,12 +110,14 @@
 						
 						for( var i in response) {
 							var replyDiv = $("<div class='reply'></div>");
-							var replyInfo = $("<div class='replyInfo'><span>" + response[i].memberId +"("+ response[i].memberVO.nickname+")</span></div>");
-							var replyDate = $("<span>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp"+ response[i].registDate +"</span>");
+							var replyInfo = $("<div class='replyInfo'><span id='idSpan'>" + response[i].memberId +"("+ response[i].memberVO.nickname+")</span></div>");
+							var replyDate = $("<span id='dateSpan'>"+ response[i].registDate +"</span>");
 							var body = $("<div class='body'>" + response[i].body  + "</div>");
+							var reReply = $("<div class='reReply'>댓글</div>");
 							replyDiv.append(replyInfo);
 							replyInfo.append(replyDate);
 							replyDiv.append(body);
+							replyDiv.append(reReply);
 							$("#replies").append(replyDiv);
 						}
 						changeHeight();
@@ -106,9 +142,7 @@
 						
 						if( response.isSuccess == "isSuccess" ){
 							/* alert("댓글등록 성공"); */
-							
 						}
-						
 						else {
 							alert("댓글등록 실패");
 						}
@@ -118,6 +152,11 @@
 						
 					});
 		});
+		
+		$("#replies").on("click", ".reReply", function(){
+			alert();
+		});
+		
 		
 		$("#like").on("click", "#likeImg" ,function(){
 			$.get("<c:url value="/like/${article.id}"/>", {}, function(response){
@@ -208,26 +247,6 @@
 			</div>
 		</div>
 		
-		<div id="replies"></div>
-		<div id="createReplyDiv">
-			<!-- 댓글 달기  -->
-			<div id="createReply">
-			
-				<form id="writeReplyFrom">
-					<input type="hidden" id="parentReplyId" name="parentReplyId" value="0"/>
-					<div>
-					<textarea id="body" name="body" style="width: 592px; height: 65px;"></textarea>
-					</div> 
-					
-					<div>
-						<input type="button" id="writeReplyBtn" value="등록"/>
-					</div>
-				</form>
-			
-			</div>
-		</div>
-		
-	</div>
 		<c:if test="${ sessionScope.__USER__.id ne	article.memberId}">
 			<div id="listBtn2" class="selectBtn">
 			목록
@@ -249,5 +268,31 @@
 				삭제
 			</div>
 		</c:if>
+		
+		
+		
+		
+		<div id="createReply">
+			
+				<form id="writeReplyFrom">
+					<input type="hidden" id="parentReplyId" name="parentReplyId" value="0"/>
+					<div>
+					<textarea id="body" name="body" style="width: 592px; height: 65px;"></textarea>
+					</div> 
+					
+					<div>
+						<input type="button" id="writeReplyBtn" value="등록"/>
+					</div>
+				</form>
+			
+		</div>
+		<div id="replies"></div>
+		<div id="createReplyDiv">
+			<!-- 댓글 달기  -->
+			
+		</div>
+		
+	</div>
+		
 		
 </body>

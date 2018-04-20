@@ -16,12 +16,28 @@
 		var pagenum = idx;
 		location.href="/category1?pagenum="+ pagenum;
 }
+	
+	$().ready(function(){
+		
+		
+		$(".titleTd").mouseover(function(){
+			
+			$(this).css("font-weight", "bold");
+			
+		});
+		$(".titleTd").mouseout(function(){
+			
+			$(this).css("font-weight", "normal");
+			
+		});
+		
+	});
+	
+	
 </script>
 
 
 	<div class="list" style="margin-top: 50px; min-height: 600px;">
-		
-		
 		
 		
 		<table style="margin-top: 30px; ">
@@ -39,7 +55,7 @@
 					
 					<tr>
 						<td id="idTd">${article.id}</td>
-						<td id="titleTd" style="box-sizing:border-box; border-bottom: 1px solid #d7e0ef;">
+						<td id="titleTd" class="titleTd" style="box-sizing:border-box; border-bottom: 1px solid #d7e0ef;">
 						
 							<a href="<c:url value="/view/${article.id}?pagenum=${pagenum}"/>">
 								<span>${article.title}</span>
@@ -92,16 +108,16 @@
 		
 			<div id="pageBox">
 				<c:if test="${pager.prev}">
-							<a style="text-decoration: none;" href="javascript:page(${pager.startPage}-1)">이전&nbsp</a>
+							<a href="javascript:page(${pager.startPage}-1)">이전&nbsp</a>
 						</c:if>
 						
 						<c:forEach begin="${pager.startPage}" end="${pager.endPage}" var="idx"> 
 							<c:choose>
 								<c:when test="${pager.pageNum eq idx}">
-									<a style="text-decoration: none; font-weight: bold; color: #000;" href="javascript:page(${idx})">${idx}&nbsp</a>
+									<a style="font-weight: bold; color: #000;" href="javascript:page(${idx})">${idx}&nbsp</a>
 								</c:when>
 								<c:otherwise>
-									<a style="text-decoration: none;" href="javascript:page(${idx})">${idx}&nbsp</a>
+									<a href="javascript:page(${idx})">${idx}&nbsp</a>
 								</c:otherwise>
 								
 							</c:choose>
@@ -109,7 +125,7 @@
 						</c:forEach>
 						
 						<c:if test="${pager.next}">
-							<a style="text-decoration: none;" href="javascript:page(${pager.getEndPage()+1})">다음</a>
+							<a href="javascript:page(${pager.getEndPage()+1})">다음</a>
 						</c:if>
 			</div>
 		

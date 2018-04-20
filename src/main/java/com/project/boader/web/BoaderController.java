@@ -164,12 +164,6 @@ public class BoaderController {
 	            System.out.println(key+" : "+value);
 	 
 	        }*/
-		
-		
-		
-		
-		
-		
 		view.addObject("replyCountList", replyCountList );
 		view.addObject("pagenum", pagenum);
 		view.addObject("articleList", articleList);

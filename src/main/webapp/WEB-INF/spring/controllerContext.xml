@@ -6,7 +6,8 @@
 	
 	<bean id="boaderController" 
 		class="com.project.boader.web.BoaderController">
-		<property name="boarderService" ref="boarderService"></property>
+		<property name="boarderService" ref="boarderService"/>
+		<property name="replyService" ref="replyService"/>
 	</bean>
 
 	<bean id="memberController"

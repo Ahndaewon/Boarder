@@ -43,9 +43,6 @@ public class ReplyController {
 		
 		System.out.println(replyList.size() + "list size");
 		
-		if ( replyList == null ) {
-			return null;
-		}
 		
 		return replyList;
 	}
@@ -72,10 +69,15 @@ public class ReplyController {
 			replyMap.put("isSuccess","isSuccess");
 		}
 		
+		replyService.repliesCount();
+		
+		
 		return replyMap;
 		
 		
 	}
+	
+	
 
 	
 	

@@ -1,6 +1,8 @@
 package com.project.reply.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -17,6 +19,11 @@ public class ReplyDaoImpl extends SqlSessionDaoSupport implements ReplyDao{
 	@Override
 	public List<ReplyVO> selectAllreplies( int id ) {
 		return getSqlSession().selectList("ReplyDao.selectAllreplies", id );
+	}
+
+	@Override
+	public List<HashMap<String, Integer>> repliesCount() {
+		return getSqlSession().selectList("ReplyDao.repliesCount");
 	}
 
 }

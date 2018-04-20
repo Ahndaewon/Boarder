@@ -22,6 +22,8 @@
 	<div class="list" style="margin-top: 50px; min-height: 600px;">
 		
 		
+		
+		
 		<table style="margin-top: 30px; ">
 			<thead>
 				<tr>
@@ -41,6 +43,16 @@
 						
 							<a href="<c:url value="/view/${article.id}?pagenum=${pagenum}"/>">
 								<span>${article.title}</span>
+								
+								<!--댓글 개수 -->
+								<c:forEach items="${replyCountList}" var="list">
+									
+									<c:if test="${list.get('ID') == article.id && list.get('COUNT') > 0 }">
+									[${list.get("COUNT")}]
+									</c:if>	
+			
+								</c:forEach>
+								
 								<c:if test="${fn:contains(article.writeDate,'h')}">
 									<!--24시간 new-->
 									<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>

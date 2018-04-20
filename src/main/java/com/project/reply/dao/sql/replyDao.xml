@@ -65,7 +65,15 @@
  	<select id="selectAllreplies" resultMap="ReplyVOMap" parameterType="_int">
  		SELECT	R.MEMBER_ID			R_MEMBER_ID
  				,R.BODY				R_BODY
- 				,R.REGIST_DATE
+ 				, CASE 
+       					WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') = 0 
+       					THEN  TO_CHAR(R.REGIST_DATE,'hh24:ss')<!-- 당일글 -->
+      					
+   					    WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') >= 10000 
+   					    THEN   TO_CHAR(R.REGIST_DATE,'YYYY-MM-DD')<!-- 일년전 -->
+     					    
+       					ELSE TO_CHAR(R.REGIST_DATE,'MM-DD')
+       			END as REGIST_DATE
  				,R.PARENT_REPLY_ID
  				,R_M.NICKNAME
  		FROM	REPLY R, ARTICLE A, MEMBER R_M, MEMBER A_M
@@ -75,6 +83,15 @@
  		AND		A.ID = #{id}		
 
  	</select>
+  	
+  	
+  	<select id="repliesCount" resultType="hashMap">
+  		SELECT	A.ID ID
+  				, COUNT(A.ID) COUNT
+		FROM	REPLY R, ARTICLE A
+		WHERE	R.ARTICLE_ID = A.ID
+		GROUP   BY  A.ID
+  	</select>
   	
   
   </mapper>

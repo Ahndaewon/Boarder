@@ -8,12 +8,31 @@
 </script>
 
 <style>
+
+.reply:last-child {
+	border-bottom : 2px solid #c0c0c0;
+} 
+
 .reply {
 	text-align: left;
-	border-top: 1px solid #c0c0c0;
-	border-buttom: 1px solid #c0c0c0;
-	padding: 10px;
+	border-collapse :collapse;
+	border-top: 2px solid #c0c0c0;
+	border-left: 1px solid #c0c0c0;
+	border-right: 1px solid #c0c0c0;
 	word-break: break-word;
+	
+}
+.body {
+	border-top: 1px solid #c0c0c0;
+	padding : 10px 10px;
+	min-height : 50px;
+	background-color: #FFF;
+}
+.replyInfo {
+	text-align : right;
+	background-color : #d6d6e2;
+	padding: 5px;
+	padding-right: 15px;
 }
 </style>
 
@@ -27,6 +46,9 @@
 			<c:remove var="__REMOVE__" scope="session" />
 			location.href = "<c:url value="/"/>";
 		</c:if>
+		
+		
+		
 		
 		
 		var likeOff = "<img id='likeImg' style='width: 30px;' src='<c:url value='/static/img/like1.PNG'/>'>";
@@ -53,14 +75,25 @@
 					function(response){
 						
 						for( var i in response) {
-							
-							console.log(response[i].body);
-							var replyDiv = $("<div class='reply'>" + response[i].memberId +"("+ response[i].memberVO.nickname+")" +"</div>");
-							var body = $("<div class='reply'>" + response[i].body  + "</div>");
+							var replyDiv = $("<div class='reply'></div>");
+							var replyInfo = $("<div class='replyInfo'><span>" + response[i].memberId +"("+ response[i].memberVO.nickname+")</span></div>");
+							var replyDate = $("<span>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp"+ response[i].registDate +"</span>");
+							var body = $("<div class='body'>" + response[i].body  + "</div>");
+							replyDiv.append(replyInfo);
+							replyInfo.append(replyDate);
 							replyDiv.append(body);
 							$("#replies").append(replyDiv);
 						}
+						changeHeight();
 			});
+			
+		}
+		
+		function changeHeight(){
+			var height = $(".innerBox").height();
+			if ( height > 700 ) {
+				$(".login").css("height", height);	
+			}
 			
 		}
 		
@@ -72,7 +105,8 @@
 					function(response){
 						
 						if( response.isSuccess == "isSuccess" ){
-							alert("댓글등록 성공");
+							/* alert("댓글등록 성공"); */
+							
 						}
 						
 						else {
@@ -80,14 +114,10 @@
 						}
 						$("#replies").html("");
 						loadReplies();
+						$("#body").val("");
 						
 					});
 		});
-		
-		
-		
-		
-		
 		
 		$("#like").on("click", "#likeImg" ,function(){
 			$.get("<c:url value="/like/${article.id}"/>", {}, function(response){
@@ -132,18 +162,10 @@
 			$(location).attr("href", "<c:url value="/modify/${article.id}"/>");
 		});
 	});
-	
 </script>
 
 <body>
-
-	
-
-
 	<div class="list" style="margin-top: 50px;">
-		
-		
-
 		
 		<div id="articleTitle">
 			<span>${article.title}

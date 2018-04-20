@@ -34,6 +34,7 @@ import com.project.constants.Article;
 import com.project.constants.Member;
 import com.project.member.vo.LoginVO;
 import com.project.member.vo.MemberVO;
+import com.project.reply.service.ReplyService;
 import com.project.util.DownloadUtil;
 import com.project.util.Pager;
 
@@ -41,9 +42,13 @@ import com.project.util.Pager;
 public class BoaderController {
 	
 	private BoarderService boarderService;
+	private ReplyService replyService;
+
 	
 
-
+	public void setReplyService(ReplyService replyService) {
+		this.replyService = replyService;
+	}
 
 	public void setBoarderService(BoarderService boarderService) {
 		this.boarderService = boarderService;
@@ -142,6 +147,30 @@ public class BoaderController {
 			return new ModelAndView("redirect:/404");
 		}
 		
+		List<HashMap<String, Integer>> replyCountList;
+		
+		replyCountList = replyService.repliesCount();
+		/*Map<String, Integer> test;*/
+		/*test = replyService.repliesCount().get(0);*/
+		
+		/*System.out.println("alsdkfja;slkdfj;laskjdf;laksjdf;lkajsd;lfaksdj" + test.get("ID"));*/
+		
+		
+		 /*for(Map.Entry<String, Integer> elem : test.entrySet()){
+			 
+	            String key = elem.getKey();
+	            Object value = (Object) elem.getValue();
+	 
+	            System.out.println(key+" : "+value);
+	 
+	        }*/
+		
+		
+		
+		
+		
+		
+		view.addObject("replyCountList", replyCountList );
 		view.addObject("pagenum", pagenum);
 		view.addObject("articleList", articleList);
 		view.addObject("pager", pager);

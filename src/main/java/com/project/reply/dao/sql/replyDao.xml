@@ -40,6 +40,9 @@
   	</resultMap>
   
   
+  
+  
+  
  	<insert id="insertReply" parameterType="ReplyVO">
  		INSERT INTO REPLY (
  					ID
@@ -58,6 +61,20 @@
  					,#{parentReplyId}
  		)
  	</insert>
+ 	
+ 	<select id="selectAllreplies" resultMap="ReplyVOMap" parameterType="_int">
+ 		SELECT	R.MEMBER_ID			R_MEMBER_ID
+ 				,R.BODY				R_BODY
+ 				,R.REGIST_DATE
+ 				,R.PARENT_REPLY_ID
+ 				,R_M.NICKNAME
+ 		FROM	REPLY R, ARTICLE A, MEMBER R_M, MEMBER A_M
+ 		WHERE	A.MEMBER_ID = A_M.ID
+ 		AND		R.MEMBER_ID = R_M.ID
+ 		AND		R.ARTICLE_ID = A.ID 
+ 		AND		A.ID = #{id}		
+
+ 	</select>
   	
   
   </mapper>

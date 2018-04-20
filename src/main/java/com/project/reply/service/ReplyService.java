@@ -8,5 +8,5 @@ public interface ReplyService {
 
 	public boolean insertReply(ReplyVO replyVO);
 	
-	public List<ReplyVO> selectAllreplies(ReplyVO replyVO);
+	public List<ReplyVO> selectAllreplies(int id);
 }

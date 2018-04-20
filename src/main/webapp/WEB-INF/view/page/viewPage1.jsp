@@ -7,6 +7,18 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>">
 </script>
 
+<style>
+.reply {
+	text-align: left;
+	border-top: 1px solid #c0c0c0;
+	border-buttom: 1px solid #c0c0c0;
+	padding: 10px;
+	word-break: break-word;
+}
+</style>
+
+
+
 <script type="text/javascript">
 	$().ready(function(){
 		
@@ -33,9 +45,22 @@
 			$("#like").append(likeCount);
 		}
 		
-		
+		loadReplies();
 		
 		function loadReplies(){
+			
+			$.get("<c:url value="/reply/${article.id}"/>",{},
+					function(response){
+						
+						for( var i in response) {
+							
+							console.log(response[i].body);
+							var replyDiv = $("<div class='reply'>" + response[i].memberId +"("+ response[i].memberVO.nickname+")" +"</div>");
+							var body = $("<div class='reply'>" + response[i].body  + "</div>");
+							replyDiv.append(body);
+							$("#replies").append(replyDiv);
+						}
+			});
 			
 		}
 		
@@ -53,7 +78,9 @@
 						else {
 							alert("댓글등록 실패");
 						}
-				
+						$("#replies").html("");
+						loadReplies();
+						
 					});
 		});
 		

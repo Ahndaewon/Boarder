@@ -8,6 +8,6 @@ public interface ReplyDao {
 	
 	public int insertReply(ReplyVO replyVO);
 	
-	public List<ReplyVO> selectAllreplies(ReplyVO replyVO);
+	public List<ReplyVO> selectAllreplies( int id );
 	
 }

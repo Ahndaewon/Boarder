@@ -1,6 +1,7 @@
 package com.project.reply.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -26,22 +27,27 @@ public class ReplyController {
 		this.replyService = replyService;
 	}
 	
-	/*@RequestMapping("test1")
-	public void test1() {
-		
-		System.out.println("aksjdfhaklsjdhflkasjfh");
-	}*/
+
 	
 	
 	@RequestMapping(value="/reply/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> replyGet(@PathVariable int id ,HttpSession session, ReplyVO replyVO){
+	public List<ReplyVO> replyGet(@PathVariable int id ,HttpSession session, ReplyVO replyVO){
 	
-		Map<String, Object> replyMap = new HashMap<String, Object>();
 		
+		List<ReplyVO> replyList;
 		
+		replyList = replyService.selectAllreplies(id);
 		
-		return replyMap;
+		replyList.get(0).getMemberId();
+		
+		System.out.println(replyList.size() + "list size");
+		
+		if ( replyList == null ) {
+			return null;
+		}
+		
+		return replyList;
 	}
 	
 	

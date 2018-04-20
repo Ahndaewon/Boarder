@@ -15,8 +15,8 @@ public class ReplyDaoImpl extends SqlSessionDaoSupport implements ReplyDao{
 	}
 
 	@Override
-	public List<ReplyVO> selectAllreplies(ReplyVO replyVO) {
-		return getSqlSession().selectList("ReplyDao.selectAllreplies", replyVO );
+	public List<ReplyVO> selectAllreplies( int id ) {
+		return getSqlSession().selectList("ReplyDao.selectAllreplies", id );
 	}
 
 }

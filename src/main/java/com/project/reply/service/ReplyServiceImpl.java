@@ -22,9 +22,9 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public List<ReplyVO> selectAllreplies(ReplyVO replyVO) {
+	public List<ReplyVO> selectAllreplies(int id ) {
 		
-		return replyDao.selectAllreplies(replyVO);
+		return replyDao.selectAllreplies(id);
 	}
 
 	

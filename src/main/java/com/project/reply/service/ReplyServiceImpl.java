@@ -29,9 +29,9 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public List<ReplyVO> selectAllreplies(int id ) {
+	public List<ReplyVO> selectAllreplies(Map<String, Object> replyMap ) {
 		
-		return replyDao.selectAllreplies(id);
+		return replyDao.selectAllreplies(replyMap);
 	}
 
 	@Override
@@ -41,6 +41,11 @@ public class ReplyServiceImpl implements ReplyService{
 		listMap = replyDao.repliesCount();
 		
 		return listMap;
+	}
+
+	@Override
+	public int articleReplyCount(int id) {
+		return replyDao.articleReplyCount(id);
 	}
 
 	

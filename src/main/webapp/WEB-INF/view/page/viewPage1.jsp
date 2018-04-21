@@ -73,6 +73,15 @@
 
 
 <script type="text/javascript">
+
+	function page(idx){
+		var replyPagenum = idx;
+		location.href="/view/"+ ${article.id} +"?replyPagenum=" + replyPagenum;
+		
+	}
+
+
+
 	$().ready(function(){
 		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
@@ -105,7 +114,7 @@
 		
 		function loadReplies(){
 			
-			$.get("<c:url value="/reply/${article.id}"/>",{},
+			$.get("<c:url value="/reply/${article.id}"/>",{  },
 					function(response){
 						
 						for( var i in response) {
@@ -121,6 +130,8 @@
 							$("#replies").append(replyDiv);
 						}
 						changeHeight();
+						
+						
 			});
 			
 		}
@@ -142,6 +153,7 @@
 						
 						if( response.isSuccess == "isSuccess" ){
 							/* alert("댓글등록 성공"); */
+							
 						}
 						else {
 							alert("댓글등록 실패");
@@ -151,6 +163,8 @@
 						$("#body").val("");
 						
 					});
+						var idx = "${replyPager.pageNum}";
+						page(idx);
 		});
 		
 		$("#replies").on("click", ".reReply", function(){
@@ -215,14 +229,14 @@
 			</span>   
 			<span id="articleInfo">${article.memberVO.nickname}( ${article.memberId} )
 			 | 조회수 : ${article.viewCount} |
-			  <c:choose>
-			<c:when test="${fn:contains(article.writeDate, 'h')}">
-				${fn:replace(article.writeDate, "h", "")}
-			</c:when>
-			<c:otherwise>
-				${article.writeDate}
-			</c:otherwise>
-		</c:choose>	
+				<c:choose>
+					<c:when test="${fn:contains(article.writeDate, 'h')}">
+						${fn:replace(article.writeDate, "h", "")}
+					</c:when>
+					<c:otherwise>
+						${article.writeDate}
+					</c:otherwise>
+				</c:choose>	
 			</span>
 		</div>
 		
@@ -291,7 +305,30 @@
 			<!-- 댓글 달기  -->
 			
 		</div>
-		
+		<div id="pageBox">
+			<c:if test="${replyPager.totalCount > 0 }">
+				<c:if test="${replyPager.prev}">
+							<a href="javascript:page(${replyPager.startPage}-1)">이전&nbsp</a>
+						</c:if>
+						
+						<c:forEach begin="${replyPager.startPage}" end="${replyPager.endPage}" var="idx"> 
+							<c:choose>
+								<c:when test="${replyPager.pageNum eq idx}">
+									<a style="font-weight: bold; color: #000;" href="javascript:page(${idx})">${idx}&nbsp</a>
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:page(${idx})">${idx}&nbsp</a>
+								</c:otherwise>
+								
+							</c:choose>
+					
+						</c:forEach>
+						
+						<c:if test="${replyPager.next}">
+							<a href="javascript:page(${replyPager.getEndPage()+1})">다음</a>
+						</c:if>
+				</c:if>			
+		</div>
 	</div>
 		
 		

@@ -63,25 +63,35 @@
  	</insert>
  	
  	<select id="selectAllreplies" resultMap="ReplyVOMap" parameterType="_int">
- 		SELECT	R.MEMBER_ID			R_MEMBER_ID
- 				,R.BODY				R_BODY
- 				, CASE 
-       					WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') = 0 
-       					THEN  TO_CHAR(R.REGIST_DATE,'hh24:ss')<!-- 당일글 -->
-      					
-   					    WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') >= 10000 
-   					    THEN   TO_CHAR(R.REGIST_DATE,'YYYY-MM-DD')<!-- 일년전 -->
-     					    
-       					ELSE TO_CHAR(R.REGIST_DATE,'MM-DD')
-       			END as REGIST_DATE
- 				,R.PARENT_REPLY_ID
- 				,R_M.NICKNAME
- 		FROM	REPLY R, ARTICLE A, MEMBER R_M, MEMBER A_M
- 		WHERE	A.MEMBER_ID = A_M.ID
- 		AND		R.MEMBER_ID = R_M.ID
- 		AND		R.ARTICLE_ID = A.ID 
- 		AND		A.ID = #{id}		
-
+ 			   SELECT *
+	   FROM (
+	   
+	        SELECT ROWNUM RNUM, R.*
+	        FROM (
+ 		
+			 		SELECT	R.ID	R_ID
+			 				,R.MEMBER_ID			R_MEMBER_ID
+			 				,R.BODY				R_BODY
+			 				, CASE 
+			   					WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') = 0 
+			   					THEN  TO_CHAR(R.REGIST_DATE,'hh24:ss')<!-- 당일글 -->
+			  					
+							    WHEN TO_CHAR(SYSDATE,'yyyy') - TO_CHAR((R.REGIST_DATE),'yyyy') >= 1 
+							    THEN   TO_CHAR(R.REGIST_DATE,'YYYY-MM-DD')<!-- 일년전 -->
+			 					    
+			   					ELSE TO_CHAR(R.REGIST_DATE,'MM-DD')
+			       			END as REGIST_DATE
+			 				,R.PARENT_REPLY_ID
+			 				,R_M.NICKNAME
+			 		FROM	REPLY R, ARTICLE A, MEMBER R_M, MEMBER A_M
+			 		WHERE	A.MEMBER_ID = A_M.ID
+			 		AND		R.MEMBER_ID = R_M.ID
+			 		AND		R.ARTICLE_ID = A.ID 
+			 		AND		A.ID = #{id}		
+				)	R
+				WHERE   ROWNUM <![CDATA[<=]]> #{endRow}     
+	        ) 
+	    WHERE    RNUM >= #{startRow} 
  	</select>
   	
   	
@@ -93,6 +103,13 @@
 		GROUP   BY  A.ID
   	</select>
   	
+  	
+  	<select id="articleReplyCount" parameterType="_int" resultType="_int">
+  		SELECT	COUNT(A.ID)
+		FROM	REPLY R, ARTICLE A
+		WHERE	R.ARTICLE_ID = A.ID
+		AND		A.ID = #{id}
+  	</select>
   
   </mapper>
   

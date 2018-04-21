@@ -193,7 +193,7 @@ public class MemberController {
 		
 		
 		
-		
+		//TODO TOKENTIME STRING --> LONG
 		String tokenTimeStr = member.getTokenTime();
 		long tokenTime;
 		try {

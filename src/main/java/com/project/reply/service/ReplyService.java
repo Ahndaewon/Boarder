@@ -10,7 +10,9 @@ public interface ReplyService {
 
 	public boolean insertReply(ReplyVO replyVO);
 	
-	public List<ReplyVO> selectAllreplies(int id);
+	public List<ReplyVO> selectAllreplies(Map<String, Object> replyMap );
 	
 	public List<HashMap<String, Integer>> repliesCount();
+	
+	public int articleReplyCount(int id);
 }

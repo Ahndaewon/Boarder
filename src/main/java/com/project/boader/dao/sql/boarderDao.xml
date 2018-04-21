@@ -89,8 +89,8 @@
         					WHEN WRITE_DATE > SYSDATE-1 
         					THEN   'h' || TO_CHAR(WRITE_DATE,'MM-DD')<!-- 24시간 -->
         					
-       					    WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') >= 10000 
-       					    THEN   TO_CHAR(WRITE_DATE,'YYYY-MM-DD')<!-- 일년전 -->
+       					    WHEN TO_CHAR(SYSDATE,'yyyy') - TO_CHAR((WRITE_DATE),'yyyy') >= 1
+       					    THEN   TO_CHAR(WRITE_DATE,'YYYY.MM.DD')<!-- 일년전 -->
        					    
         					ELSE TO_CHAR(WRITE_DATE,'MM-DD')
         					END as WRITE_DATE		
@@ -123,8 +123,8 @@
         		WHEN WRITE_DATE > SYSDATE-1 
         		THEN   'h' || TO_CHAR(WRITE_DATE,'MM-DD')<!-- 24시간 -->
         		
-       			WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((WRITE_DATE),'yyyymmdd') >= 10000 
-       			THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')<!-- 일년전 -->
+       			WHEN TO_CHAR(SYSDATE,'yyyy') - TO_CHAR((WRITE_DATE),'yyyy') >= 1 
+       			THEN   TO_CHAR(WRITE_DATE,'YYYY.MM.DD')<!-- 일년전 -->
        			
         		ELSE TO_CHAR(WRITE_DATE,'MM-DD')
         		END as WRITE_DATE	
@@ -181,7 +181,12 @@
 	                        , MEMBER_ID 		
 	                        , TITLE
 	                        , BODY
-	                        , TO_CHAR(WRITE_DATE, 'YY.MM.DD HH24:MI') WRITE_DATE	
+	                        ,  CASE 
+        					WHEN WRITE_DATE > SYSDATE-1 
+        					THEN   'h' || TO_CHAR(WRITE_DATE,'MM-DD')<!-- 24시간 -->
+        					       					    
+        					ELSE TO_CHAR(WRITE_DATE,'MM-DD')
+        					END as WRITE_DATE			
 	                        , VIEW_COUNT		
 	                        , RECOMMEND_COUNT	
 	                        , IP_ID		

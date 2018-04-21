@@ -111,9 +111,7 @@ public class BoaderController {
 	}
 	
 	@RequestMapping("/category1")
-	public ModelAndView category1(HttpServletRequest request
-			, @RequestParam(defaultValue="1") int pagenum
-			) {
+	public ModelAndView category1(HttpServletRequest request, @RequestParam(defaultValue="1") int pagenum) {
 		Pager pager = new Pager();
 		List<ArticleVO> articleList;
 		ModelAndView view = new ModelAndView();
@@ -122,17 +120,16 @@ public class BoaderController {
 		int totalCount = boarderService.selectAllcount();
 		
 		//TODO pager 정리
-		
 		pager.setTotalCount(totalCount); //전체 게시글 개수
 		pager.setPageNum(pagenum); // 현재 페이지
 		
 		pager.setCurrentBlock(pagenum); // 현재 페이지 블록이 몇번째 블록인지
 		pager.setLastBlock(); // 마지막 블록 번호
 		
-		pager.setStartRow(pagenum);
-		pager.setEndRow(pagenum);
+		pager.setStartRow(pagenum);//현재 페이지의 시작번호
+		pager.setEndRow(pagenum);//현재 페이지의 마지막 번호
 		
-		pager.prevNext(pagenum);
+		pager.prevNext(pagenum); // 다음, 이전 페이지 존재 유무
 		//현재 페이지 번호로 화살표를 나타낼지 정한다
 		pager.setStartPage();
 		//해당 블럭의 시작페이지
@@ -150,20 +147,8 @@ public class BoaderController {
 		List<HashMap<String, Integer>> replyCountList;
 		
 		replyCountList = replyService.repliesCount();
-		/*Map<String, Integer> test;*/
-		/*test = replyService.repliesCount().get(0);*/
+	
 		
-		/*System.out.println("alsdkfja;slkdfj;laskjdf;laksjdf;lkajsd;lfaksdj" + test.get("ID"));*/
-		
-		
-		 /*for(Map.Entry<String, Integer> elem : test.entrySet()){
-			 
-	            String key = elem.getKey();
-	            Object value = (Object) elem.getValue();
-	 
-	            System.out.println(key+" : "+value);
-	 
-	        }*/
 		view.addObject("replyCountList", replyCountList );
 		view.addObject("pagenum", pagenum);
 		view.addObject("articleList", articleList);
@@ -179,9 +164,9 @@ public class BoaderController {
 	//category1 글보기
 	@RequestMapping("/view/{id}")
 	public ModelAndView viewPage(@PathVariable int id, HttpSession session, HttpServletRequest request
-									,@RequestParam(defaultValue="1") int pagenum) {
+									,@RequestParam(defaultValue="1") int pagenum, @RequestParam(defaultValue="1") int replyPagenum ) {
 		
-		
+		Pager replyPager = new Pager ();
 		ModelAndView view = new ModelAndView();
 		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
 		
@@ -194,6 +179,26 @@ public class BoaderController {
 			return new ModelAndView("redirect:/category1");
 		}
 		
+		int replyCount = replyService.articleReplyCount(id);
+		replyPager.setContentNum(7); // 한페이지 리플개수 
+		replyPager.setTotalCount(replyCount); //전체 게시글 개수
+		replyPager.setPageNum(replyPagenum); // 현재 페이지
+		
+		replyPager.setCurrentBlock(replyPagenum); // 현재 페이지 블록이 몇번째 블록인지
+		replyPager.setLastBlock(); // 마지막 블록 번호
+		
+		replyPager.setStartRow(replyPagenum);//현재 페이지의 시작번호
+		replyPager.setEndRow(replyPagenum);//현재 페이지의 마지막 번호
+		
+		replyPager.prevNext(replyPagenum); // 다음, 이전 페이지 존재 유무
+		//현재 페이지 번호로 화살표를 나타낼지 정한다
+		replyPager.setStartPage();
+		//해당 블럭의 시작페이지
+		replyPager.setEndPage();
+		//해당블럭의 마지막 페이지
+		//pageNation
+		
+		session.setAttribute("replyPager", replyPager);
 		
 		int like = boarderService.selectLike(id, memberId);
 		
@@ -206,6 +211,7 @@ public class BoaderController {
 		}
 		
 		int count = boarderService.likeCount(id);
+		view.addObject("replyPager", replyPager);
 		view.addObject("pagenum", pagenum);
 		view.addObject("count", count);
 		view.addObject("article", article);

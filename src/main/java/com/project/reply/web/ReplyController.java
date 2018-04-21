@@ -17,6 +17,7 @@ import com.project.constants.Member;
 import com.project.member.vo.MemberVO;
 import com.project.reply.service.ReplyService;
 import com.project.reply.vo.ReplyVO;
+import com.project.util.Pager;
 
 @Controller
 public class ReplyController {
@@ -32,16 +33,21 @@ public class ReplyController {
 	
 	@RequestMapping(value="/reply/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public List<ReplyVO> replyGet(@PathVariable int id ,HttpSession session, ReplyVO replyVO){
+	public List<ReplyVO> replyGet(@PathVariable int id ,HttpSession session, ReplyVO replyVO,
+			@RequestParam(defaultValue="1") int replyPagenum ){
 	
+		
+		Pager replyPager = (Pager) session.getAttribute("replyPager");
+	
+		Map<String, Object> replyMap = new HashMap<String, Object>();
+		
+		replyMap.put("id", id);
+		replyMap.put("startRow", replyPager.getStartRow());
+		replyMap.put("endRow", replyPager.getEndRow());
 		
 		List<ReplyVO> replyList;
 		
-		replyList = replyService.selectAllreplies(id);
-		
-		replyList.get(0).getMemberId();
-		
-		System.out.println(replyList.size() + "list size");
+		replyList = replyService.selectAllreplies(replyMap);
 		
 		
 		return replyList;

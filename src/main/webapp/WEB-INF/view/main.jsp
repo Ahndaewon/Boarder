@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -45,14 +46,21 @@
 	                  <div class="categoryInner" >자유게시판</div>
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
-	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>">
-		                  	<p>
-		                  		<span class="arrow">▶</span> 
-		                  		${article.title}
-		                  	</p>
-	                  	</a>
-	                  	
+	                  	<p>
+		                  	<a href="<c:url value="/view/${article.id}"/>">
+			                  	
+			                  		<span class="arrow">▶</span> 
+			                  		${article.title}
+			                  	
+		                  	</a>
+		                  	<c:if test="${fn:contains(article.writeDate,'h')}">
+									<!--24시간 new-->
+									<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>
+							</c:if>
+			                  	
+			                  	
+	                  	</p>
+	                  	<hr/>
 	                  	</c:forEach>
 	                  </div>
 	                 </div>
@@ -63,18 +71,25 @@
 	                 <div class="listInner">
 	                 
 	                  <div class="categoryInner" >자유게시판</div>
-	                  <div class="titleBox">
-	                  	<c:forEach items="${articleList}" var="article">
-	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>">
-		                  	<p>
-		                  		<span class="arrow">▶</span> 
-		                  		${article.title}
-		                  	</p>
-	                  	</a>
-	                  	
+		                 <div class="titleBox">
+		                  	<c:forEach items="${articleList}" var="article">
+			                  	<p>
+				                  	<a href="<c:url value="/view/${article.id}"/>">
+					                  	
+					                  		<span class="arrow">▶</span> 
+					                  		${article.title}
+					                  	
+				                  	</a>
+				                  	<c:if test="${fn:contains(article.writeDate,'h')}">
+											<!--24시간 new-->
+											<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>
+									</c:if>
+					                  	
+					                  	
+			                 	</p>
+			                  	<hr/>
 	                  	</c:forEach>
-	                  </div>
+		                  </div>
 	                 </div>
 	              </div>
 	            </div>
@@ -89,14 +104,21 @@
 	                  <div class="categoryInner" >자유게시판</div>
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
-	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>">
-		                  	<p>
-		                  		<span class="arrow">▶</span> 
-		                  		${article.title}
-		                  	</p>
-	                  	</a>
-	                  	
+	                  		<p>
+			                  	<a href="<c:url value="/view/${article.id}"/>">
+				                  	
+				                  		<span class="arrow">▶</span> 
+				                  		${article.title}
+				                  	
+			                  	</a>
+			                  	<c:if test="${fn:contains(article.writeDate,'h')}">
+										<!--24시간 new-->
+										<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>
+								</c:if>
+				                  	
+			                  	
+	                  		</p>
+	                  	<hr/>
 	                  	</c:forEach>
 	                  </div>
 	                 </div>
@@ -109,14 +131,21 @@
 	                  <div class="categoryInner" >자유게시판</div>
 	                  <div class="titleBox">
 	                  	<c:forEach items="${articleList}" var="article">
-	                  		
-	                  	<a href="<c:url value="/view/${article.id}"/>">
 		                  	<p>
-		                  		<span class="arrow">▶</span> 
-		                  		${article.title}
+			                  	<a href="<c:url value="/view/${article.id}"/>">
+				                  	
+				                  		<span class="arrow">▶</span> 
+				                  		${article.title}
+				                  	
+			                  	</a>
+			                  	<c:if test="${fn:contains(article.writeDate,'h')}">
+										<!--24시간 new-->
+										<img style="width: 10px; height: 10px;" src="<c:url value="/static/img/iconew.gif"/>"/>
+								</c:if>
+				                  	
+				                  	
 		                  	</p>
-	                  	</a>
-	                  	
+	                  		<hr/>
 	                  	</c:forEach>
 	                  </div>
 	                 </div>

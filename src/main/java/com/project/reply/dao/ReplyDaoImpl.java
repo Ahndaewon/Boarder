@@ -17,13 +17,18 @@ public class ReplyDaoImpl extends SqlSessionDaoSupport implements ReplyDao{
 	}
 
 	@Override
-	public List<ReplyVO> selectAllreplies( int id ) {
-		return getSqlSession().selectList("ReplyDao.selectAllreplies", id );
+	public List<ReplyVO> selectAllreplies(Map<String, Object> replyMap ) {
+		return getSqlSession().selectList("ReplyDao.selectAllreplies", replyMap );
 	}
 
 	@Override
 	public List<HashMap<String, Integer>> repliesCount() {
 		return getSqlSession().selectList("ReplyDao.repliesCount");
+	}
+
+	@Override
+	public int articleReplyCount(int id) {
+		return getSqlSession().selectOne("ReplyDao.articleReplyCount", id);
 	}
 
 }

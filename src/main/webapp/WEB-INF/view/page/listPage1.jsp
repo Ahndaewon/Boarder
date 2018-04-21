@@ -45,7 +45,7 @@
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
-					<th>날짜</th>
+					<th style="width: 73px;">날짜</th>
 					<th>조회수</th>
 				</tr>
 			</thead>	
@@ -64,7 +64,7 @@
 								<c:forEach items="${replyCountList}" var="list">
 									
 									<c:if test="${list.get('ID') == article.id && list.get('COUNT') > 0 }">
-									[${list.get("COUNT")}]
+									<span style="color: #e91b23">[${list.get("COUNT")}]</span>
 									</c:if>	
 			
 								</c:forEach>
@@ -107,26 +107,28 @@
 		</table>
 		
 			<div id="pageBox">
-				<c:if test="${pager.prev}">
+				<c:if test="${replyPager.totalCount > 0 }">
+					<c:if test="${pager.prev}">
 							<a href="javascript:page(${pager.startPage}-1)">이전&nbsp</a>
-						</c:if>
+					</c:if>
 						
-						<c:forEach begin="${pager.startPage}" end="${pager.endPage}" var="idx"> 
-							<c:choose>
-								<c:when test="${pager.pageNum eq idx}">
+					<c:forEach begin="${pager.startPage}" end="${pager.endPage}" var="idx"> 
+						<c:choose>
+							<c:when test="${pager.pageNum eq idx}">
 									<a style="font-weight: bold; color: #000;" href="javascript:page(${idx})">${idx}&nbsp</a>
-								</c:when>
-								<c:otherwise>
-									<a href="javascript:page(${idx})">${idx}&nbsp</a>
-								</c:otherwise>
+							</c:when>
+							<c:otherwise>
+								<a href="javascript:page(${idx})">${idx}&nbsp</a>
+							</c:otherwise>
 								
-							</c:choose>
+						</c:choose>
 					
-						</c:forEach>
+					</c:forEach>
 						
-						<c:if test="${pager.next}">
+					<c:if test="${pager.next}">
 							<a href="javascript:page(${pager.getEndPage()+1})">다음</a>
-						</c:if>
+					</c:if>
+				</c:if>
 			</div>
 		
 		

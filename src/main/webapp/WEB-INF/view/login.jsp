@@ -122,10 +122,12 @@
        		
 				
      		</div>
-     		
-     		<p><a href="<c:url value="/join"/>">회원가입</a>&nbsp;&nbsp;
-     		   <a href="<c:url value="/find"/>">아이디/비밀번호 찾기</a></p>
-     	
+     		<c:if test="${empty sessionScope.__USER__}">
+	     		<p>
+	     			<a href="<c:url value="/join"/>">회원가입</a>&nbsp;&nbsp;
+	     			<a href="<c:url value="/find"/>">아이디/비밀번호 찾기</a>
+	     		</p>
+			</c:if>     	
      	
      	</form:form>
      </div>  

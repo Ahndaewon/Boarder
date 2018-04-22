@@ -64,7 +64,7 @@
 								<c:forEach items="${replyCountList}" var="list">
 									
 									<c:if test="${list.get('ID') == article.id && list.get('COUNT') > 0 }">
-									<span style="color: #e91b23">[${list.get("COUNT")}]</span>
+									<span style="color: #e91b23; font-weight: bold;">[${list.get("COUNT")}]</span>
 									</c:if>	
 			
 								</c:forEach>
@@ -107,7 +107,7 @@
 		</table>
 		
 			<div id="pageBox">
-				<c:if test="${replyPager.totalCount > 0 }">
+				<c:if test="${pager.totalCount > 0 }">
 					<c:if test="${pager.prev}">
 							<a href="javascript:page(${pager.startPage}-1)">이전&nbsp</a>
 					</c:if>

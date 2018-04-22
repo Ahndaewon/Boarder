@@ -308,7 +308,7 @@
 </script>
 
 
-	<div class="list">
+	<div class="list" style="margin-top: 100px;">
 		 <h3>회원가입</h3>
 		 <hr/>
 		 

@@ -131,20 +131,20 @@
 							}
 							var replyDiv = $("<div style='padding-left:" + padding + "px;' class='reply' data-id=" + response[i].id + "></div>");
 							
-							var replyInfo = $("<div class='replyInfo' data-memberid=" + response[i].memberId + " data-level="+ response[i].level +"><span id='idSpan'>" + response[i].memberId +"("+ response[i].memberVO.nickname+")</span></div>");
+							var replyInfo = $("<div class='replyInfo' data-memberid=" + response[i].memberId + 
+											" data-level="+ response[i].level +"><span id='idSpan'>" + response[i].memberId + 
+											"("+ response[i].memberVO.nickname+")</span></div>");
 							
 							var replyDate = $("<span id='dateSpan'>"+ response[i].registDate +"</span>");
 							var body = $("<div class='body'>" + response[i].body  + "</div>");
 							
 							
 							if ( response[i].level >= 3) {
-								/* var memberId = $(".reply").children().data("level"); */
+
 								var memberId = $(".replyInfo[ data-level='"+ (response[i].level-1) + "']").data("memberid");
-								
 								console.log( memberId );
-								
- 
 								body = $("<div class='body'><span style='font-weight : bold'>@" + memberId + "</span> "+ response[i].body  + "</div>");
+
 							}
 							 
 							replyDiv.append(replyInfo);

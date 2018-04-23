@@ -51,7 +51,7 @@ public class EmailController {
 		
 		memberService.updateToken(token, id);
 		
-		String url = "http://localhost:8080/changepw/"+ token +"/"+id;
+		String url = "http://121.165.187.129:8080/changepw/"+ token +"/"+id;
 		
 		
 		if ( id != null ) {

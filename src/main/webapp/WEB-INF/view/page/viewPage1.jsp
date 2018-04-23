@@ -118,19 +118,47 @@
 					function(response){
 						
 						for( var i in response) {
-							var replyDiv = $("<div class='reply'></div>");
-							var replyInfo = $("<div class='replyInfo'><span id='idSpan'>" + response[i].memberId +"("+ response[i].memberVO.nickname+")</span></div>");
+							var padding = 0;
+							var loginId = "${sessionScope.__USER__.id}"
+							if ( response[i].level == 2 ) {
+								padding = 30;
+							}
+							else if ( response[i].level >= 3 ) {
+								padding = 50;
+							}
+							else {
+								padding = 0;
+							}
+							var replyDiv = $("<div style='padding-left:" + padding + "px;' class='reply' data-id=" + response[i].id + "></div>");
+							
+							var replyInfo = $("<div class='replyInfo' data-memberid=" + response[i].memberId + " data-level="+ response[i].level +"><span id='idSpan'>" + response[i].memberId +"("+ response[i].memberVO.nickname+")</span></div>");
+							
 							var replyDate = $("<span id='dateSpan'>"+ response[i].registDate +"</span>");
 							var body = $("<div class='body'>" + response[i].body  + "</div>");
-							var reReply = $("<div class='reReply'>댓글</div>");
+							
+							
+							if ( response[i].level >= 3) {
+								/* var memberId = $(".reply").children().data("level"); */
+								var memberId = $(".replyInfo[ data-level='"+ (response[i].level-1) + "']").data("memberid");
+								
+								console.log( memberId );
+								
+ 
+								body = $("<div class='body'><span style='font-weight : bold'>@" + memberId + "</span> "+ response[i].body  + "</div>");
+							}
+							 
 							replyDiv.append(replyInfo);
 							replyInfo.append(replyDate);
 							replyDiv.append(body);
-							replyDiv.append(reReply);
+							
+							if ( loginId != response[i].memberId ) { 
+								var reReply = $("<div class='reReply'>댓글</div>");
+								replyDiv.append(reReply);
+							}
+							
 							$("#replies").append(replyDiv);
 						}
 						changeHeight();
-						
 						
 			});
 			
@@ -153,7 +181,6 @@
 						
 						if( response.isSuccess == "isSuccess" ){
 							/* alert("댓글등록 성공"); */
-							
 						}
 						else {
 							alert("댓글등록 실패");
@@ -168,8 +195,15 @@
 		});
 		
 		$("#replies").on("click", ".reReply", function(){
-			alert();
+			var parentReplyId = $(this).closest(".reply").data("id");
+			$("#parentReplyId").val(parentReplyId);
+			$("#createReply").appendTo($(this).closest(".reply"));
+			/* var level = $(".reply").children(".replyInfo").data("level");
+			if ( level >= 2 ) { */
+				
+			/* } */
 		});
+		
 		
 		
 		$("#like").on("click", "#likeImg" ,function(){

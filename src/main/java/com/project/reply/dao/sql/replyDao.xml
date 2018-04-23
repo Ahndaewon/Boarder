@@ -69,10 +69,11 @@
 	        SELECT ROWNUM RNUM, R.*
 	        FROM (
  		
-			 		SELECT	R.ID	R_ID
+			 		SELECT	LEVEL
+			 				,R.ID	R_ID
 			 				,R.MEMBER_ID			R_MEMBER_ID
-			 				,R.BODY				R_BODY
-			 				, CASE 
+			 				,R.BODY					R_BODY
+			 				, CASE 	
 			   					WHEN TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') = 0 
 			   					THEN  TO_CHAR(R.REGIST_DATE,'hh24:ss')<!-- 당일글 -->
 			  					
@@ -87,7 +88,10 @@
 			 		WHERE	A.MEMBER_ID = A_M.ID
 			 		AND		R.MEMBER_ID = R_M.ID
 			 		AND		R.ARTICLE_ID = A.ID 
-			 		AND		A.ID = #{id}		
+			 		AND		A.ID = #{id}
+			 		START	WITH R.PARENT_REPLY_ID = 0
+					CONNECT BY PRIOR R.ID = R.PARENT_REPLY_ID
+					ORDER	SIBLINGS BY R.ID ASC		
 				)	R
 				WHERE   ROWNUM <![CDATA[<=]]> #{endRow}     
 	        ) 

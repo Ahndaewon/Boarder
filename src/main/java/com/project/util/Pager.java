@@ -56,8 +56,6 @@ public class Pager {
 		
 	}
 	
-	
-
 	public int getTotalCount() {
 		return totalCount;
 	}

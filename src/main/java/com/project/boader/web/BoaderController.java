@@ -137,7 +137,6 @@ public class BoaderController {
 		//해당블럭의 마지막 페이지
 		//pageNation
 		
-		
 		//게시글 받아오기
 		articleList = boarderService.selectAll(pager);
 		if ( articleList == null ) {
@@ -274,13 +273,10 @@ public class BoaderController {
 		LoginVO member = (LoginVO)session.getAttribute(Member.USER);
 		ArticleVO article = boarderService.selectViewPage(id);
 		
-		
 		//존재하지 않는 글이면
 		if ( article == null ) {
 			return "redirect:/";
 		}
-		
-		
 		System.out.println(id);
 		session.removeAttribute(Article.REMOVE);
 		
@@ -302,16 +298,11 @@ public class BoaderController {
 			file.delete();
 		}
 		//iptatable에서 
-		
 		boolean isDelete = boarderService.removeArticle(id);
 		
-		
 		if ( isDelete ) {
-
 			return "redirect:/category1";
-			
 		}
-		
 		return "redirect:/view/"+ id;
 	}
 	
@@ -381,6 +372,8 @@ public class BoaderController {
 		System.out.println(originalIp);
 		ArticleIpVO newArticleIpVO = new ArticleIpVO();
 		
+		
+		//TODO 아이피 테이블 수정
 		if ( !ip.equals( originalIp ) ) {
 			newArticleIpVO.setRequestIp(ip);
 			System.out.println("1");

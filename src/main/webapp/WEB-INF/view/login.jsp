@@ -138,7 +138,7 @@
  	<p>&nbsp;</p>
  	<p>&nbsp;</p>
      
-     <p><a href="<c:url value="/category1"/>">category1</a></p>
+     <p><a href="<c:url value="/category1"/>">자유게시판</a></p>
      <p>&nbsp;</p>
      <p><a href="<c:url value="/category2"/>">category2</a></p>
      <p>&nbsp;</p>

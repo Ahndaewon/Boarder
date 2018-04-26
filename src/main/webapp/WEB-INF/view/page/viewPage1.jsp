@@ -15,8 +15,6 @@
 	border-collapse :collapse;
 	border-top: 2px solid #c0c0c0;
 	border-bottom: 2px solid #c0c0c0;
-	/* border-left: 1px solid #c0c0c0;
-	border-right: 1px solid #c0c0c0; */
 	word-break: break-word;
 	margin-top: 10px;
 	
@@ -53,11 +51,11 @@
 	color: #8e8e8e;
 	padding-right: 10px;
 }
-#createReply {
+#createReply, #createReReply {
 	margin-top : 10px;
 	text-align: right;
 }
-#writeReplyBtn {
+#writeReplyBtn, #writeReReplyBtn {
 	margin-right: 20px;
 }
 .reReply{
@@ -84,14 +82,12 @@
 
 	$().ready(function(){
 		
+		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
 			alert("잘못된 경로로 접근하셨습니다.");
 			<c:remove var="__REMOVE__" scope="session" />
 			location.href = "<c:url value="/"/>";
 		</c:if>
-		
-		
-		
 		
 		
 		var likeOff = "<img id='likeImg' style='width: 30px;' src='<c:url value='/static/img/like1.PNG'/>'>";
@@ -116,6 +112,8 @@
 			
 			$.get("<c:url value="/reply/${article.id}"/>",{  },
 					function(response){
+				
+						
 						
 						for( var i in response) {
 							var padding = 0;
@@ -129,7 +127,8 @@
 							else {
 								padding = 0;
 							}
-							var replyDiv = $("<div style='padding-left:" + padding + "px;' class='reply' data-id=" + response[i].id + "></div>");
+							var replyDiv = $("<div style='padding-left:" + padding + "px;' class='reply' data-memberId="+ response[i].memberId +
+											" data-id=" + response[i].id + "></div>");
 							
 							var replyInfo = $("<div class='replyInfo' data-memberid=" + response[i].memberId + 
 											" data-level="+ response[i].level +"><span id='idSpan'>" + response[i].memberId + 
@@ -139,13 +138,14 @@
 							var body = $("<div class='body'>" + response[i].body  + "</div>");
 							
 							
+							/* var memberId = $(".replyInfo[ data-level='"+ (response[i].level-1) + "']").data("memberid");
+							
 							if ( response[i].level >= 3) {
 
-								var memberId = $(".replyInfo[ data-level='"+ (response[i].level-1) + "']").data("memberid");
 								console.log( memberId );
-								body = $("<div class='body'><span style='font-weight : bold'>@" + memberId + "</span> "+ response[i].body  + "</div>");
+								body = $("<div class='body'><span style='font-weight : bold'>@" + memberId + "</span> "+ response[i].body  + "</div>"); 
 
-							}
+							} */
 							 
 							replyDiv.append(replyInfo);
 							replyInfo.append(replyDate);
@@ -164,16 +164,72 @@
 			
 		}
 		
+		$("#body").click(function(){
+			$("#createReReply").css("display", "none");
+		});
+		
 		function changeHeight(){
 			var height = $(".innerBox").height();
 			if ( height > 700 ) {
 				$(".login").css("height", height);	
 			}
-			
 		}
 		
 		
+		
+		/* 			  대댓글			 */
+		$("#writeReReplyBtn").click(function(){
+			
+			var length = $("textarea.body").val().length;
+			
+			if ( length == 0 ) {
+				alert("내용을 입력하세요");
+				$("textarea.body").focus();
+				return false;
+			}
+			
+			var level = $(this).closest(".reply").children(".replyInfo").data("level");
+			
+			if ( level >= 2 ) {
+				var memberId = $(this).closest(".reply").data("memberid");
+				var textarea = "<span style='font-weight : bold'>┗  @" + memberId + "&nbsp&nbsp&nbsp</span>";
+				textarea += $("textarea.body").val();
+				$("textarea.body").val(textarea);
+			} 
+			
+			
+			$.post("<c:url value="/reply/${article.id}"/>"
+					, $("#writeReReplyFrom").serialize(),
+					function(response){
+						
+						if( response.isSuccess == "isSuccess" ){
+							/* alert("댓글등록 성공"); */
+						}
+						else {
+							alert("댓글등록 실패");
+						}
+						$("#replies").html("");
+						loadReplies();
+						$(".body").val("");
+						
+					});
+						var idx = "${replyPager.pageNum}";
+						page(idx);
+		});
+		
+		
+		
+		/*        댓글       */
 		$("#writeReplyBtn").click(function(){
+			
+			
+			var length = $("textarea#body").val().length;
+			
+			if ( length == 0 ) {
+				alert("내용을 입력하세요");
+				$("textarea#body").focus();
+				return false;
+			}
 			
 			$.post("<c:url value="/reply/${article.id}"/>"
 					, $("#writeReplyFrom").serialize(),
@@ -196,12 +252,13 @@
 		
 		$("#replies").on("click", ".reReply", function(){
 			var parentReplyId = $(this).closest(".reply").data("id");
-			$("#parentReplyId").val(parentReplyId);
-			$("#createReply").appendTo($(this).closest(".reply"));
-			/* var level = $(".reply").children(".replyInfo").data("level");
-			if ( level >= 2 ) { */
-				
-			/* } */
+			$("textarea.body").val("");
+			/* ToDO - 대댓글 나갈때 확인버튼 */
+			$(".parentReplyId").val(parentReplyId);
+			$("#createReReply").css("display", "block");
+			$("#createReReply").appendTo($(this).closest(".reply"));
+			changeHeight();
+			
 		});
 		
 		
@@ -317,23 +374,37 @@
 			</div>
 		</c:if>
 		
-		
-		
-		
 		<div id="createReply">
 			
 				<form id="writeReplyFrom">
 					<input type="hidden" id="parentReplyId" name="parentReplyId" value="0"/>
 					<div>
-					<textarea id="body" name="body" style="width: 592px; height: 65px;"></textarea>
+					<textarea id="body" name="body" style="width: 99%; height: 65px;"></textarea>
 					</div> 
-					
 					<div>
 						<input type="button" id="writeReplyBtn" value="등록"/>
 					</div>
 				</form>
-			
 		</div>
+		
+		<div id="createReReply" style="display: none">
+			
+				<form id="writeReReplyFrom" >
+					<input type="hidden" class="parentReplyId" name="parentReplyId" value="0"/>
+					<div>
+					<textarea class="body" name="Body" style="width: 96%; height: 65px;"></textarea>
+					</div> 
+					<div>
+						<input type="button" id="writeReReplyBtn" value="등록"/>
+					</div>
+				</form>
+		</div>
+		
+		
+	
+		
+		
+		
 		<div id="replies"></div>
 		<div id="createReplyDiv">
 			<!-- 댓글 달기  -->

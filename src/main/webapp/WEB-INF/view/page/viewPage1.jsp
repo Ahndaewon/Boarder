@@ -72,16 +72,18 @@
 
 <script type="text/javascript">
 
-	function page(idx){
+	function page(idx, scroll){
+		
 		var replyPagenum = idx;
 		location.href="/view/"+ ${article.id} +"?replyPagenum=" + replyPagenum;
+		$("html").stop().animate( {scrollTop : 500} );
+		alert(scroll+ " 스크롤 ");
 		
 	}
 
 
 
 	$().ready(function(){
-		
 		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">
 			alert("잘못된 경로로 접근하셨습니다.");
@@ -109,11 +111,8 @@
 		loadReplies();
 		
 		function loadReplies(){
-			
 			$.get("<c:url value="/reply/${article.id}"/>",{  },
 					function(response){
-				
-						
 						
 						for( var i in response) {
 							var padding = 0;
@@ -157,14 +156,15 @@
 							}
 							
 							$("#replies").append(replyDiv);
+							
 						}
 						changeHeight();
-						
 			});
-			
+							
 		}
 		
 		$("#body").click(function(){
+			$(".reReply").css("display", "block");
 			$("#createReReply").css("display", "none");
 		});
 		
@@ -175,13 +175,13 @@
 			}
 		}
 		
-		
-		
+		/* 			  대댓글			 */
+		/* 			  대댓글			 */
 		/* 			  대댓글			 */
 		$("#writeReReplyBtn").click(function(){
-			
+			var scroll = $(window).scrollTop();
 			var length = $("textarea.body").val().length;
-			
+			var idx = "${replyPager.pageNum}";
 			if ( length == 0 ) {
 				alert("내용을 입력하세요");
 				$("textarea.body").focus();
@@ -208,21 +208,25 @@
 						else {
 							alert("댓글등록 실패");
 						}
-						$("#replies").html("");
+						
+						
 						loadReplies();
+						$("#replies").html("");
 						$(".body").val("");
 						
 					});
-						var idx = "${replyPager.pageNum}";
-						page(idx);
+						
+						page(idx, scroll);
+						
 		});
 		
 		
 		
 		/*        댓글       */
+		/*        댓글       */
 		$("#writeReplyBtn").click(function(){
-			
-			
+			var scroll = $(window).scrollTop();
+			var idx = "${replyPager.pageNum}";
 			var length = $("textarea#body").val().length;
 			
 			if ( length == 0 ) {
@@ -241,14 +245,19 @@
 						else {
 							alert("댓글등록 실패");
 						}
-						$("#replies").html("");
+						
+						
 						loadReplies();
+						$("#replies").html("");
 						$("#body").val("");
 						
 					});
-						var idx = "${replyPager.pageNum}";
-						page(idx);
+						
+						page(idx, scroll);
+						
 		});
+		
+		
 		
 		$("#replies").on("click", ".reReply", function(){
 			var parentReplyId = $(this).closest(".reply").data("id");
@@ -257,6 +266,8 @@
 			$(".parentReplyId").val(parentReplyId);
 			$("#createReReply").css("display", "block");
 			$("#createReReply").appendTo($(this).closest(".reply"));
+			$(".reReply").css("display", "block");
+			$(this).css("display", "none");
 			changeHeight();
 			
 		});

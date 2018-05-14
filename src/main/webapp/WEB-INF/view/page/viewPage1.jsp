@@ -80,9 +80,10 @@
 		alert(scroll+ " 스크롤 ");
 		
 	}
-
-
-
+	
+	
+	
+	
 	$().ready(function(){
 		
 		<c:if test="${sessionScope.__REMOVE__ eq 'fail'}">

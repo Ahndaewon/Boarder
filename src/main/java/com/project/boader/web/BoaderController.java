@@ -53,7 +53,7 @@ public class BoaderController {
 	public void setBoarderService(BoarderService boarderService) {
 		this.boarderService = boarderService;
 	}
-
+	
 	// 다중파일업로드
     @RequestMapping(value = "/fileUploader",
                   method = RequestMethod.POST)
